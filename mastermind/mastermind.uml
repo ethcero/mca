@@ -1,0 +1,27 @@
+@startuml
+
+class Juego{
+}
+
+
+class Partida {
+}
+class Jugada {
+}
+
+class Resultado{
+}
+
+class Combinacion{
+}
+
+enum Color{
+}
+
+Partida *--> Jugada
+Juego *--> Partida
+Jugada *--> Resultado
+Combinacion *--> Jugada
+Color *--> Combinacion
+
+@enduml
