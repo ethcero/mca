@@ -1,4 +1,4 @@
-package com.ethcero.mca.mastermind;
+package es.ethcero.mca.mastermind;
 
 import java.util.ArrayList;
 import java.util.Arrays;
