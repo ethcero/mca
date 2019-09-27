@@ -17,10 +17,6 @@ public class Jugada {
         evaluaResultado();
     }
 
-    public Resultado getResultado() {
-        return resultado;
-    }
-
     public boolean esGanadora() {
         return resultado.getNegros() == CombinacionBuilder.LENGTH;
     }
@@ -54,6 +50,7 @@ public class Jugada {
 
     @Override
     public String toString() {
+        //Imprime combinacion inicial solo para demo
         return String.format("%s -- > %s --> %d negros y %d blancos",this.combinacionInicial.toString(),this.combinacion.toString(), this.resultado.getNegros(), this.resultado.getBlancos());
     }
 

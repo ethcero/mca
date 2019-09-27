@@ -18,7 +18,11 @@ class Combinacion{
 enum Color{
 }
 
+interface Consola {
+}
+
 Partida *--> Jugada
+Consola *--> Partida
 Juego *--> Partida
 Jugada *--> Resultado
 Combinacion *--> Jugada

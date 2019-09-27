@@ -11,7 +11,12 @@ import java.util.stream.Collectors;
  */
 public class CombinacionBuilder {
 
-    public static int LENGTH = 4;
+    public static final int LENGTH = 4;
+    private Consola consola;
+
+    public CombinacionBuilder(Consola consola) {
+        this.consola = consola;
+    }
 
     public List<Color> aleatoria() {
         List<Color> combinacion = new ArrayList<Color>();
@@ -41,14 +46,14 @@ public class CombinacionBuilder {
                 if (esColorValido(Character.toString(cadena.charAt(i)))) {
                     combinacion.add(Color.valueOf(Character.toString(cadena.charAt(i)).toUpperCase()));
                 } else {
-                    System.out.println(String.format("Color %s inválido. Permitidos: %s", cadena.charAt(i),
+                    this.consola.imprimirSalida(String.format("Color %s inválido. Permitidos: %s", cadena.charAt(i),
                             Arrays.stream(Color.values()).map(Color::getValor).collect(Collectors.joining(","))));
                     return null;
                 }
             }
             return combinacion;
         } else {
-            System.out.println(String.format("Longitud inválida. Máximo %d colores", LENGTH));
+            this.consola.imprimirSalida(String.format("Longitud inválida. Máximo %d colores", LENGTH));
         }
         return null;
     }
