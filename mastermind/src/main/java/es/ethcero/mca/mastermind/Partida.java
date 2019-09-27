@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2019 Deveryware S.A. All Rights Reserved.
- */
 package es.ethcero.mca.mastermind;
 
 import java.util.ArrayList;
