@@ -24,7 +24,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>es.ethcero.mca.mastermind.Juego</mainClass>
+                            <mainClass>es.ethcero.mca.mastermind.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,31 +1,50 @@
 @startuml
 
-class Juego{
-}
-
-
-class Partida {
-}
-class Jugada {
+class Mastermind{
+historicoPropuestas
+iniciarJuego()
+hayGanador()
+reiniciar()
+imprimeIntentos()
+imprimePropuestas()
 }
 
 class Resultado{
+imprimeResultado()
+esGanador()
 }
 
-class Combinacion{
+abstract Combinacion{
+vector
 }
-
 enum Color{
 }
 
-interface Consola {
+class CombinacionSecreta{
+nuevaAleatoria()
+evaluaResultado(CombinacionPropuesta)
+imprimeSecreto()
 }
 
-Partida *--> Jugada
-Consola *--> Partida
-Juego *--> Partida
-Jugada *--> Resultado
-Combinacion *--> Jugada
-Color *--> Combinacion
+class CombinacionPropuesta{
+leeEntradaUsuario()
+contiene(Color)
+contiene(Color, posicion)
+esGanadora()
+set(Resultado)
+imprimePropuesta()
+}
+
+
+
+
+Combinacion *--> Color
+Combinacion <|-- CombinacionPropuesta
+Combinacion <|-- CombinacionSecreta
+CombinacionPropuesta *--> Resultado
+CombinacionSecreta ..> Resultado
+CombinacionSecreta ..> CombinacionPropuesta
+Mastermind --> CombinacionSecreta
+Mastermind --> CombinacionPropuesta
 
 @enduml
