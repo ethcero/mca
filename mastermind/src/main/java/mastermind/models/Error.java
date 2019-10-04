@@ -1,8 +1,6 @@
-package mastermind;
+package mastermind.models;
 
-import santaTecla.utils.Console;
-
-enum Error {
+public enum Error {
 	DUPLICATED("Repeated colors"),
 	WRONG_CHARACTERS("Wrong colors, they must be: " + Color.allInitials()),
 	WRONG_LENGTH("Wrong proposed combination length");
@@ -13,8 +11,8 @@ enum Error {
 		this.message = message;
 	}
 
-	void writeln() {
-		new Console().writeln(this.message);		
+	public String getMessage() {
+		return message;
 	}
 	
 }

@@ -1,9 +1,9 @@
-package mastermind;
+package mastermind.models;
 
-import java.util.Random;
 import java.util.Collections;
+import java.util.Random;
 
-class SecretCombination extends Combination {
+public class SecretCombination extends Combination {
 
 	SecretCombination() {
 		for(Color color : Color.values()){
@@ -32,12 +32,4 @@ class SecretCombination extends Combination {
 		}
 		return new Result(blacks, whites - blacks);
 	}
-
-	void writeln() {
-		for (int i = 0; i < this.colors.size(); i++) {
-			Message.SECRET.write();
-		}
-		Message.NEW_LINE.write();
-	}
-
 }

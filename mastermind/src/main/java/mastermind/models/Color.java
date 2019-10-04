@@ -1,8 +1,8 @@
-package mastermind;
+package mastermind.models;
 
 import santaTecla.utils.Console;
 
-enum Color {
+public enum Color {
 	RED('r'), 
 	BLUE('b'), 
 	YELLOW('y'), 
@@ -24,12 +24,12 @@ enum Color {
 		return result;
 	}
 
-	static Color getInstance(int code) {
+	public static Color getInstance(int code) {
 		assert 0 <= code && code < Color.length();
 		return Color.values()[code];
 	}
 
-	static Color getInstance(char character) {
+	public static Color getInstance(char character) {
 		for (Color color : Color.values()) {
 			if (color.initial == character) {
 				return color;
