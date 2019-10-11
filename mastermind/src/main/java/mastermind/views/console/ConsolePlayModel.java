@@ -1,6 +1,6 @@
 package mastermind.views.console;
 
-import mastermind.controllers.ProposeController;
+import mastermind.controllers.PlayController;
 import mastermind.models.Color;
 import mastermind.models.Combination;
 import mastermind.models.ProposedCombination;
@@ -11,9 +11,9 @@ import santaTecla.utils.WithConsoleModel;
  */
 public class ConsolePlayModel extends WithConsoleModel {
 
-    private ProposeController controller;
+    private PlayController controller;
 
-    public ConsolePlayModel(ProposeController controller) {
+    public ConsolePlayModel(PlayController controller) {
         this.controller = controller;
     }
 

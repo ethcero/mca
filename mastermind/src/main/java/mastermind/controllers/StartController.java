@@ -6,7 +6,7 @@ import mastermind.models.State;
 /**
  * @author fran
  */
-public class StartController extends Controller {
+public class StartController extends AcceptorController {
 
     public StartController(Game game, State state) {
         super(game, state);

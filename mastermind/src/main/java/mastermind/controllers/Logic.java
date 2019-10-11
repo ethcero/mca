@@ -21,7 +21,7 @@ public class Logic {
         state = new State();
         controllers = new HashMap<>();
         controllers.put(StateValue.INITIAL, new StartController(game, state));
-        controllers.put(StateValue.IN_GAME, new ProposeController(game, state));
+        controllers.put(StateValue.IN_GAME, new PlayController(game, state));
         controllers.put(StateValue.FINAL, new ResumeController(game, state));
         controllers.put(StateValue.EXIT, null);
     }

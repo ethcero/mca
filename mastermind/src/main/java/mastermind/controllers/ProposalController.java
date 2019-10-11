@@ -7,15 +7,10 @@ import mastermind.models.State;
 /**
  * @author fran
  */
-public class ProposeController extends Controller{
+public class ProposalController extends Controller{
 
-    public ProposeController(Game game, State state) {
+    public ProposalController(Game game, State state) {
         super(game, state);
-    }
-
-    @Override
-    public void accept(ControllerVisitor visitor) {
-        visitor.visit(this);
     }
 
     @Override

@@ -70,4 +70,10 @@ public class Game {
         return this.proposedCombinations.size();
     }
 
+    public void redo(){
+
+    }
+    public void undo(){
+
+    }
 }

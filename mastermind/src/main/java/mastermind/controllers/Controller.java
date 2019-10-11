@@ -9,15 +9,13 @@ import mastermind.models.State;
  */
 public abstract class Controller{
 
-    Game game;
-    State state;
+    protected Game game;
+    protected State state;
 
     public Controller(Game game, State state) {
         this.game = game;
         this.state = state;
     }
-
-    public abstract void accept(ControllerVisitor visitor);
 
     public void next() {
         this.state.next();

@@ -12,8 +12,18 @@ public class GameView extends ConsoleViewModel {
         super(controller);
     }
 
-    public void writeln(){
+    public void writeStartln(){
         console.writeln(Message.TITLE.getMessage());
+        this.writeln();
+    }
+
+    public void writeln(){
+        this.writeAttemptsln();
         new SecretView(controller).writeln();
+        new ProposalView(controller).writeln();
+    }
+
+    public void writeAttemptsln() {
+        console.writeln(String.format(Message.ATTEMPTS.getMessage(), controller.getAttempts()));
     }
 }

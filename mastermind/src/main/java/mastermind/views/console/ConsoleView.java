@@ -1,9 +1,11 @@
 package mastermind.views.console;
 
-import mastermind.controllers.ProposeController;
+import mastermind.controllers.PlayController;
+import mastermind.controllers.ProposalController;
 import mastermind.controllers.ResumeController;
 import mastermind.controllers.StartController;
 import mastermind.views.View;
+import mastermind.views.console.menu.MenuView;
 import santaTecla.utils.YesNoDialog;
 
 /**
@@ -14,16 +16,15 @@ public class ConsoleView extends View {
     @Override
     public void visit(StartController controller) {
 
-        new GameView(controller).writeln();
+        new GameView(controller).writeStartln();
         controller.start();
     }
 
     @Override
-    public void visit(ProposeController controller) {
+    public void visit(PlayController controller) {
 
-        new ConsolePlayModel(controller).play();
-        new ProposeView(controller).writeln();
-
+        new MenuView(controller).execute();
+        new GameView(controller).writeln();
     }
 
     @Override
