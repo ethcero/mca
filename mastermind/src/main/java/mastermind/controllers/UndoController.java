@@ -1,5 +1,6 @@
 package mastermind.controllers;
 
+import mastermind.controllers.implementantion.SessionImplementation;
 import mastermind.models.Game;
 import mastermind.models.Session;
 import mastermind.models.State;
@@ -14,6 +15,6 @@ public class UndoController extends Controller {
     }
 
     public void undo() {
-        this.session.undo();
+        ((SessionImplementation)session).undo();
     }
 }

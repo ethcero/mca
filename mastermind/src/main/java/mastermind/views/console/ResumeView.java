@@ -1,6 +1,7 @@
 package mastermind.views.console;
 
 import mastermind.controllers.Controller;
+import mastermind.controllers.PlayController;
 
 /**
  * @author fran
@@ -12,9 +13,9 @@ public class ResumeView extends ConsoleViewModel{
     }
 
     public void writeln() {
-        if(controller.isWinner()) {
+        if(((PlayController)controller).isWinner()) {
             console.writeln(Message.WINNER.getMessage());
-        }else if(controller.isLooser()) {
+        }else if(((PlayController)controller).isLooser()) {
             console.writeln(Message.LOOSER.getMessage());
         }
         console.write(Message.RESUME.getMessage());

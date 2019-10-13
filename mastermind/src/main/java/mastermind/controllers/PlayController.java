@@ -1,5 +1,6 @@
 package mastermind.controllers;
 
+import mastermind.controllers.implementantion.SessionImplementation;
 import mastermind.models.*;
 import mastermind.models.Error;
 
@@ -20,6 +21,21 @@ public abstract class PlayController extends AcceptorController{
     public abstract void redo();
 
     public abstract void undo();
+
+    public abstract boolean isWinner();
+
+    public abstract boolean isLooser();
+
+    public abstract int getBlacksOf(int index);
+    public abstract int getWhitesOf(int index);
+
+    public abstract int getAttempts();
+
+    public abstract ProposedCombination getProposed(int index);
+
+    public abstract boolean isRedoable();
+
+    public abstract boolean isUndoable();
 
 
     @Override

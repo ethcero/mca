@@ -2,6 +2,7 @@
 package mastermind.views.console;
 
 import mastermind.controllers.Controller;
+import mastermind.controllers.PlayController;
 
 /**
  * @author fran
@@ -24,6 +25,6 @@ public class GameView extends ConsoleViewModel {
     }
 
     public void writeAttemptsln() {
-        console.writeln(String.format(Message.ATTEMPTS.getMessage(), controller.getAttempts()));
+        console.writeln(String.format(Message.ATTEMPTS.getMessage(), ((PlayController)controller).getAttempts()));
     }
 }

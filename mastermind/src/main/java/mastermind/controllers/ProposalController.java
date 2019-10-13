@@ -1,5 +1,6 @@
 package mastermind.controllers;
 
+import mastermind.controllers.implementantion.SessionImplementation;
 import mastermind.models.*;
 import mastermind.models.Error;
 
@@ -15,10 +16,9 @@ public class ProposalController extends Controller{
         super(session);
     }
 
-    @Override
     public void next() {
-        if(session.isFinished()) {
-            super.next();
+        if(((SessionImplementation)session).isFinished()) {
+            ((SessionImplementation)session).nextState();
         }
     }
 
@@ -47,10 +47,7 @@ public class ProposalController extends Controller{
     }
 
     private void addProposedCombination(ProposedCombination combination) {
-        session.addProposedCombination(combination);
+        ((SessionImplementation)session).addProposedCombination(combination);
         next();
     }
-
-
-
 }
