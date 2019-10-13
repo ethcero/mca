@@ -7,7 +7,7 @@ import mastermind.models.State;
 /**
  * @author fran
  */
-public class ResumeController extends AcceptorController {
+public abstract class ResumeController extends AcceptorController {
 
     public ResumeController(Session session) {
         super(session);
@@ -18,12 +18,5 @@ public class ResumeController extends AcceptorController {
         visitor.visit(this);
     }
 
-    public void resume(boolean resume) {
-        if(resume) {
-            session.resume(resume);
-            session.reset();
-        }else{
-            this.next();
-        }
-    }
+    public abstract void resume(boolean resume);
 }

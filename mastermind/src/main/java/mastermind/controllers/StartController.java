@@ -7,7 +7,7 @@ import mastermind.models.State;
 /**
  * @author fran
  */
-public class StartController extends AcceptorController {
+public abstract class StartController extends AcceptorController {
 
     public StartController(Session session) {
         super(session);
@@ -18,7 +18,5 @@ public class StartController extends AcceptorController {
         visitor.visit(this);
     }
 
-    public void start() {
-        this.next();
-    }
+    public abstract void start();
 }

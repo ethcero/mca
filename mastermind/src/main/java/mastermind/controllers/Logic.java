@@ -11,18 +11,13 @@ import mastermind.models.StateValue;
 /**
  * @author fran
  */
-public class Logic {
+public abstract class Logic {
 
-    private Session session;
-    private Map<StateValue, AcceptorController> controllers;
+    protected Session session;
+    protected Map<StateValue, AcceptorController> controllers;
 
     public Logic() {
-        session = new Session();
         controllers = new HashMap<>();
-        controllers.put(StateValue.INITIAL, new StartController(session));
-        controllers.put(StateValue.IN_GAME, new PlayController(session));
-        controllers.put(StateValue.FINAL, new ResumeController(session));
-        controllers.put(StateValue.EXIT, null);
     }
 
     public AcceptorController getController() {

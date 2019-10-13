@@ -3,6 +3,8 @@
  */
 package mastermind;
 
+import mastermind.controllers.Logic;
+import mastermind.controllers.implementantion.LogicImplementation;
 import mastermind.views.View;
 import mastermind.views.console.ConsoleView;
 
@@ -13,6 +15,11 @@ public class MastermindConsole extends Mastermind {
 
     public MastermindConsole(View view) {
         super(view);
+    }
+
+    @Override
+    public Logic getLogic() {
+        return new LogicImplementation();
     }
 
     public static void main(String[] args) {
