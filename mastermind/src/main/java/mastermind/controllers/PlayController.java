@@ -1,8 +1,9 @@
 package mastermind.controllers;
 
-import mastermind.models.Game;
-import mastermind.models.ProposedCombination;
-import mastermind.models.State;
+import mastermind.models.*;
+import mastermind.models.Error;
+
+import java.util.List;
 
 /**
  * @author fran
@@ -13,20 +14,17 @@ public class PlayController extends AcceptorController{
     private UndoController undoController;
     private RedoController redoController;
 
-    public PlayController(Game game, State state) {
-        super(game, state);
-        this.proposalController = new ProposalController(game,state);
-        this.undoController = new UndoController(game,state);
-        this.redoController = new RedoController(game,state);
+    public PlayController(Session session) {
+        super(session);
+        this.proposalController = new ProposalController(session);
+        this.undoController = new UndoController(session);
+        this.redoController = new RedoController(session);
     }
 
-    public void addProposedCombination(ProposedCombination combination) {
-        this.proposalController.addProposedCombination(combination);
+    public Error addProposal(List<Color> colorList) {
+        return this.proposalController.addProposal(colorList);
     }
 
-    public void calculateResult(ProposedCombination combination) {
-        this.proposalController.calculateResult(combination);
-    }
 
     public void redo(){
         this.redoController.redo();

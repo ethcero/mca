@@ -1,32 +1,56 @@
 package mastermind.controllers;
 
-import mastermind.models.Game;
-import mastermind.models.ProposedCombination;
-import mastermind.models.State;
+import mastermind.models.*;
+import mastermind.models.Error;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fran
  */
 public class ProposalController extends Controller{
 
-    public ProposalController(Game game, State state) {
-        super(game, state);
+    public ProposalController(Session session) {
+        super(session);
     }
 
     @Override
     public void next() {
-        if(game.isFinished()) {
+        if(session.isFinished()) {
             super.next();
         }
     }
 
-    public void addProposedCombination(ProposedCombination combination) {
-        game.addProposedCombination(combination);
+    public Error addProposal(List<Color> colorList) {
+        List<Color> selected = new ArrayList<>();
+        if (colorList.size() != Combination.getWidth()) {
+            return mastermind.models.Error.WRONG_LENGTH;
+        } else {
+            for (Color c : colorList) {
+                if(selected.size() == 0) {
+                    selected.add(c);
+                }else {
+
+                    if(selected.contains(c)) {
+                        return mastermind.models.Error.DUPLICATED;
+                    }else {
+                        selected.add(c);
+                    }
+                }
+            }
+        }
+
+        this.addProposedCombination(new ProposedCombination(colorList));
+
+        return null;
     }
 
-    public void calculateResult(ProposedCombination combination) {
-        game.calculateResult(combination);
+    private void addProposedCombination(ProposedCombination combination) {
+        session.addProposedCombination(combination);
+        next();
     }
+
 
 
 }

@@ -1,6 +1,7 @@
 package mastermind.controllers;
 
 import mastermind.models.Game;
+import mastermind.models.Session;
 import mastermind.models.State;
 
 /**
@@ -8,8 +9,8 @@ import mastermind.models.State;
  */
 public class ResumeController extends AcceptorController {
 
-    public ResumeController(Game game, State state) {
-        super(game, state);
+    public ResumeController(Session session) {
+        super(session);
     }
 
     @Override
@@ -19,8 +20,8 @@ public class ResumeController extends AcceptorController {
 
     public void resume(boolean resume) {
         if(resume) {
-            game.resume(resume);
-            state.reset();
+            session.resume(resume);
+            session.reset();
         }else{
             this.next();
         }

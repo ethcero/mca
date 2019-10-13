@@ -1,6 +1,7 @@
 package mastermind.controllers;
 
 import mastermind.models.Game;
+import mastermind.models.Session;
 import mastermind.models.State;
 
 /**
@@ -8,11 +9,11 @@ import mastermind.models.State;
  */
 public class RedoController extends Controller {
 
-    public RedoController(Game game, State state) {
-        super(game, state);
+    public RedoController(Session session) {
+        super(session);
     }
 
     public void redo() {
-        this.game.redo();
+        this.session.redo();
     }
 }

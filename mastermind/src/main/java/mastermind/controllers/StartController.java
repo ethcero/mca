@@ -1,6 +1,7 @@
 package mastermind.controllers;
 
 import mastermind.models.Game;
+import mastermind.models.Session;
 import mastermind.models.State;
 
 /**
@@ -8,8 +9,8 @@ import mastermind.models.State;
  */
 public class StartController extends AcceptorController {
 
-    public StartController(Game game, State state) {
-        super(game, state);
+    public StartController(Session session) {
+        super(session);
     }
 
     @Override

@@ -1,8 +1,14 @@
 package mastermind.models;
 
+import java.util.List;
+
 public class ProposedCombination extends Combination {
 
-	boolean contains(Color color, int position) {
+    public ProposedCombination(List<Color> colors) {
+        super(colors);
+    }
+
+    boolean contains(Color color, int position) {
 		return this.colors.get(position) == color;
 	}
 

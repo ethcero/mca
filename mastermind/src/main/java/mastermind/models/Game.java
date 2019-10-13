@@ -18,15 +18,12 @@ public class Game {
         this.clear();
     }
 
-    public SecretCombination getSecretCombination() {
-        return secretCombination;
-    }
-
     public void addProposedCombination(ProposedCombination combination) {
         this.proposedCombinations.add(combination);
+        this.calculateResult(combination);
     }
 
-    public void calculateResult(ProposedCombination combination) {
+    private void calculateResult(ProposedCombination combination) {
         this.results.add(this.secretCombination.getResult(combination));
     }
 
@@ -70,10 +67,14 @@ public class Game {
         return this.proposedCombinations.size();
     }
 
-    public void redo(){
-
+    public void restore(GameSnapshot snapshot) {
+        this.proposedCombinations.clear();
+        this.proposedCombinations.addAll(snapshot.getProposedCombinations());
+        this.results.clear();
+        this.results.addAll(snapshot.getResults());
     }
-    public void undo(){
 
+    public GameSnapshot createSnapshot() {
+        return new GameSnapshot(this, this.proposedCombinations, this.results);
     }
 }

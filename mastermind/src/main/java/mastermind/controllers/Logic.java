@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mastermind.models.Game;
+import mastermind.models.Session;
 import mastermind.models.State;
 import mastermind.models.StateValue;
 
@@ -12,22 +13,20 @@ import mastermind.models.StateValue;
  */
 public class Logic {
 
-    private Game game;
-    private State state;
-    private Map<StateValue, Controller> controllers;
+    private Session session;
+    private Map<StateValue, AcceptorController> controllers;
 
     public Logic() {
-        game = new Game();
-        state = new State();
+        session = new Session();
         controllers = new HashMap<>();
-        controllers.put(StateValue.INITIAL, new StartController(game, state));
-        controllers.put(StateValue.IN_GAME, new PlayController(game, state));
-        controllers.put(StateValue.FINAL, new ResumeController(game, state));
+        controllers.put(StateValue.INITIAL, new StartController(session));
+        controllers.put(StateValue.IN_GAME, new PlayController(session));
+        controllers.put(StateValue.FINAL, new ResumeController(session));
         controllers.put(StateValue.EXIT, null);
     }
 
-    public Controller getController() {
-       return controllers.get(this.state.getStateValue());
+    public AcceptorController getController() {
+       return controllers.get(this.session.getState());
     }
 
 }

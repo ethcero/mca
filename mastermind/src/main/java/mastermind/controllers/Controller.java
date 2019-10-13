@@ -2,6 +2,7 @@ package mastermind.controllers;
 
 import mastermind.models.Game;
 import mastermind.models.ProposedCombination;
+import mastermind.models.Session;
 import mastermind.models.State;
 
 /**
@@ -9,39 +10,44 @@ import mastermind.models.State;
  */
 public abstract class Controller{
 
-    protected Game game;
-    protected State state;
+    protected Session session;
 
-    public Controller(Game game, State state) {
-        this.game = game;
-        this.state = state;
+    public Controller(Session session) {
+        this.session = session;
     }
 
     public void next() {
-        this.state.next();
+        this.session.nextState();
     }
 
     public boolean isWinner(){
-        return this.game.isWinner();
+        return this.session.isWinner();
     }
 
     public boolean isLooser(){
-        return this.game.isLooser();
+        return this.session.isLooser();
     }
 
     public int getBlacksOf(int index) {
-        return this.game.getBlacksOf(index);
+        return this.session.getBlacksOf(index);
     }
     public int getWhitesOf(int index) {
-        return this.game.getWhitesOf(index);
+        return this.session.getWhitesOf(index);
     }
 
     public int getAttempts() {
-        return game.getAttempts();
+        return session.getAttempts();
     }
 
     public ProposedCombination getProposed(int index) {
-        return game.getProposed(index);
+        return session.getProposed(index);
     }
 
+    public boolean isRedoable() {
+        return this.session.isRedoable();
+    }
+
+    public boolean isUndoable() {
+        return this.session.isUndoable();
+    }
 }

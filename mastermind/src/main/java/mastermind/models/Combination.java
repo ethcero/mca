@@ -8,6 +8,10 @@ public abstract class Combination {
 	private static final int WIDTH = 4;
 
 	protected List<Color> colors;
+
+	protected Combination(List<Color> colors) {
+	    this.colors = colors;
+    }
 	
 	protected Combination (){
 		this.colors = new ArrayList<Color>();

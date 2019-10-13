@@ -1,6 +1,7 @@
 package mastermind.controllers;
 
 import mastermind.models.Game;
+import mastermind.models.Session;
 import mastermind.models.State;
 
 /**
@@ -8,8 +9,8 @@ import mastermind.models.State;
  */
 public abstract class AcceptorController extends Controller {
 
-    public AcceptorController(Game game, State state) {
-        super(game, state);
+    public AcceptorController(Session session) {
+        super(session);
     }
 
 

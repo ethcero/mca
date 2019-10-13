@@ -5,7 +5,7 @@ package mastermind.models;
  */
 public class State {
 
-    StateValue stateValue;
+    private StateValue stateValue;
 
     public State() {
         stateValue = StateValue.INITIAL;
