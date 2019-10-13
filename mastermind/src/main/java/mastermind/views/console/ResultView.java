@@ -1,6 +1,7 @@
 package mastermind.views.console;
 
 import mastermind.controllers.Controller;
+import mastermind.controllers.PlayController;
 
 /**
  * @author fran
@@ -15,6 +16,6 @@ public class ResultView extends ConsoleViewModel{
     }
 
     public void writeln(){
-        console.writeln(String.format(Message.RESULT.getMessage(),controller.getBlacksOf(index),controller.getWhitesOf(index) ));
+        console.writeln(String.format(Message.RESULT.getMessage(),((PlayController)controller).getBlacksOf(index),((PlayController)controller).getWhitesOf(index) ));
     }
 }

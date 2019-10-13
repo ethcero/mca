@@ -21,6 +21,6 @@ public class StartControllerImplementation extends StartController {
 
     @Override
     public void start() {
-        this.next();
+        ((SessionImplementation)session).nextState();
     }
 }

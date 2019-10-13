@@ -22,10 +22,10 @@ public class ResumeControllerImplementation extends ResumeController {
     @Override
     public void resume(boolean resume) {
         if(resume) {
-            session.resume(resume);
-            session.reset();
+            ((SessionImplementation)session).resume(resume);
+            ((SessionImplementation)session).reset();
         }else{
-            this.next();
+            ((SessionImplementation)session).nextState();
         }
     }
 }
