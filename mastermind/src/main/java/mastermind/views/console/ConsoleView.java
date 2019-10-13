@@ -1,9 +1,6 @@
 package mastermind.views.console;
 
-import mastermind.controllers.PlayController;
-import mastermind.controllers.ProposalController;
-import mastermind.controllers.ResumeController;
-import mastermind.controllers.StartController;
+import mastermind.controllers.*;
 import mastermind.views.View;
 import mastermind.views.console.menu.MenuView;
 import santaTecla.utils.YesNoDialog;
@@ -33,4 +30,13 @@ public class ConsoleView extends View {
         controller.resume(new YesNoDialog().read());
     }
 
+    @Override
+    public void visit(LoadController controller) {
+
+    }
+
+    @Override
+    public void visit(SaveController controller) {
+
+    }
 }
