@@ -5,3 +5,12 @@
     - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
  * Practica 2: 
     - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+ * Practica 3: 
+    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)   
+ * Practica 4: 
+    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
+ * Practica 5: 
+    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
+ * Practica 6: 
+    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
+ 
