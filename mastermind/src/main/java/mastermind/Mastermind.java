@@ -1,28 +1,38 @@
 package mastermind;
 
 import mastermind.controllers.Controller;
-import mastermind.controllers.Logic;
-import mastermind.views.View;
-import mastermind.views.console.ConsoleView;
-import santaTecla.utils.WithConsoleModel;
+import mastermind.controllers.ProposalController;
+import mastermind.controllers.ResumeController;
+import mastermind.controllers.StartController;
+import mastermind.models.Session;
+import mastermind.models.StateValue;
+import mastermind.views.AbstractFactoryView;
 
-public class Mastermind extends WithConsoleModel {
+import java.util.HashMap;
+import java.util.Map;
 
-    private void play() {
+public abstract class Mastermind  {
 
-        Logic logic = new Logic();
-        View view = new ConsoleView();
+    private Map<StateValue,Controller> controllers;
+    private Session session;
+    public Mastermind() {
+         session = new Session();
+        AbstractFactoryView factoryView = createFactoryView(session);
+        controllers = new HashMap<>();
+        controllers.put(StateValue.INITIAL, new StartController(factoryView,session));
+        controllers.put(StateValue.IN_GAME, new ProposalController(factoryView,session));
+        controllers.put(StateValue.FINAL, new ResumeController(factoryView,session));
+        controllers.put(StateValue.EXIT, null);
+    }
 
-        Controller controller = logic.getController();
-
+    protected void play() {
+        Controller controller = this.controllers.get(this.session.getState());
         do {
-            controller.accept(view);
-            controller = logic.getController();
+            controller.control();
+            controller = this.controllers.get(this.session.getState());
         } while (controller != null);
     }
 
-    public static void main(String[] args) {
-        new Mastermind().play();
-    }
+    public abstract AbstractFactoryView createFactoryView(Session session);
 
 }

@@ -1,23 +1,19 @@
 package mastermind.controllers;
 
-import mastermind.models.Game;
-import mastermind.models.State;
+import mastermind.models.Session;
+import mastermind.views.AbstractFactoryView;
 
 /**
  * @author fran
  */
 public class StartController extends Controller {
-
-    public StartController(Game game, State state) {
-        super(game, state);
+    public StartController(AbstractFactoryView factoryView, Session session) {
+        super(factoryView, session);
     }
 
     @Override
-    public void accept(ControllerVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public void start() {
+    public void control() {
+        this.factoryView.createStartView().writeln();
         this.next();
     }
 }

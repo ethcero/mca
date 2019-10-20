@@ -1,6 +1,6 @@
 package mastermind.views.console;
 
-import mastermind.controllers.Controller;
+import mastermind.models.Session;
 import santaTecla.utils.WithConsoleModel;
 
 /**
@@ -8,9 +8,9 @@ import santaTecla.utils.WithConsoleModel;
  */
 public class ConsoleViewModel extends WithConsoleModel {
 
-    protected Controller controller;
+    protected Session session;
 
-    public ConsoleViewModel(Controller controller) {
-        this.controller = controller;
+    public ConsoleViewModel(Session session) {
+        this.session = session;
     }
 }

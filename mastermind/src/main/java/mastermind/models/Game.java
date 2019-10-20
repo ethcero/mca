@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Game {
 
-    private static final int MAX_LONG = 10;
+    private static final int MAX_LONG = 2;
 
     private SecretCombination secretCombination;
     private List<ProposedCombination> proposedCombinations;
@@ -18,15 +18,13 @@ public class Game {
         this.clear();
     }
 
-    public SecretCombination getSecretCombination() {
-        return secretCombination;
-    }
-
     public void addProposedCombination(ProposedCombination combination) {
+
         this.proposedCombinations.add(combination);
+        this.calculateResult(combination);
     }
 
-    public void calculateResult(ProposedCombination combination) {
+    private void calculateResult(ProposedCombination combination) {
         this.results.add(this.secretCombination.getResult(combination));
     }
 
@@ -34,10 +32,6 @@ public class Game {
         secretCombination = new SecretCombination();
         proposedCombinations = new ArrayList<>();
         results = new ArrayList<>();
-    }
-
-    public boolean isFinished() {
-        return isWinner() || isLooser();
     }
 
     public boolean isWinner(){
@@ -53,7 +47,6 @@ public class Game {
             this.clear();
         }
     }
-
 
     public ProposedCombination getProposed(int index) {
         return this.proposedCombinations.get(index);

@@ -1,8 +1,6 @@
 package mastermind.models;
 
-import santaTecla.utils.WithConsoleModel;
-
-class Result extends WithConsoleModel{
+class Result{
 
 	private int blacks = 0;
 

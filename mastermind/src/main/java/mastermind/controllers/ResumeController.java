@@ -1,28 +1,36 @@
 package mastermind.controllers;
 
-import mastermind.models.Game;
-import mastermind.models.State;
+import mastermind.models.Session;
+import mastermind.views.AbstractFactoryView;
+import mastermind.views.interfaces.ResumeView;
 
 /**
  * @author fran
  */
 public class ResumeController extends Controller {
 
-    public ResumeController(Game game, State state) {
-        super(game, state);
+    public ResumeController(AbstractFactoryView factoryView, Session session) {
+        super(factoryView, session);
     }
 
-    @Override
-    public void accept(ControllerVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    public void resume(boolean resume) {
+    private void resume(boolean resume) {
         if(resume) {
-            game.resume(resume);
-            state.reset();
+            this.session.resume(resume);
+            this.session.reset();
         }else{
             this.next();
         }
+    }
+
+    @Override
+    public void control() {
+        ResumeView resumeView = this.factoryView.createResumeView();
+        if(this.session.isWinner()){
+            resumeView.writeWinner();
+        }else {
+            resumeView.writeLooser();
+        }
+        resumeView.writeln();
+        this.resume(resumeView.read());
     }
 }

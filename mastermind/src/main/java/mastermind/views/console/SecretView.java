@@ -1,15 +1,15 @@
 package mastermind.views.console;
 
-import mastermind.controllers.Controller;
 import mastermind.models.SecretCombination;
+import mastermind.models.Session;
 
 /**
  * @author fran
  */
 public class SecretView extends ConsoleViewModel {
 
-    public SecretView(Controller controller) {
-        super(controller);
+    public SecretView(Session session) {
+        super(session);
     }
 
     void writeln() {

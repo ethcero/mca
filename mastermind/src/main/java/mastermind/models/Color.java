@@ -42,8 +42,4 @@ public enum Color {
 		return Color.values().length;
 	}
 
-	void write() {
-		new Console().write(this.initial);
-	}
-	
 }
