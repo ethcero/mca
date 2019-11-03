@@ -1,28 +1,40 @@
 package models;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import org.junit.Test;
 
 public class BoardTest {
 
-    Board board;
+    private Board board;
 
-    @Before
-    public void before(){
-        board = new Board();
-        board.setPiece(new ManPiece(Color.BLACK), new Coordinate(2,2));
+    public BoardTest() {
+        this.board = new Board();
     }
 
     @Test
-    public void givenCoordinateWhenOccupiedSquareThenReturnPiece() {
-        assertNotNull(board.getPiece(new Coordinate(2,2)));
-    }
-
-    @Test
-    public void givenCoordinateWhenUnoccupiedSquareThenReturnNull() {
-        assertNull(board.getPiece(new Coordinate(3,3)));
+    public void testGivenNewBoardThenGoodLocations() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < Board.DIMENSION; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                Color color = board.getColor(coordinate);
+                if (coordinate.isBlack()){
+                    assertEquals(Color.BLACK, color);
+                } else {
+                    assertNull(color);
+                }
+            }
+        }
+        for (int i = 5; i < Board.DIMENSION; i++) {
+            for (int j = 0; j < Board.DIMENSION; j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                Color color = board.getColor(coordinate);
+                if (coordinate.isBlack()){
+                    assertEquals(Color.WHITE, color);
+                } else {
+                    assertNull(color);
+                }
+            }
+        }
     }
 }

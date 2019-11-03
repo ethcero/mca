@@ -1,16 +1,28 @@
 package models;
 
-public class Turn {
+class Turn {
 
-    public Turn(Color startColor){
+    private Color color;
 
+    Turn(){
+        this.color = Color.WHITE;
     }
 
-    public void next(){
-
+    void change(){
+        this.color = Color.values()[(this.color.ordinal()+1)%2];
     }
 
-    public Color getTurn(){
-        return null;
+	public boolean isColor(Color color) {
+		return this.color == color;
     }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    @Override
+    public String toString(){
+        return this.color.name();
+    }
+
 }
