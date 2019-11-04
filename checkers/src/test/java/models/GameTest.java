@@ -48,7 +48,7 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenMoveEmptySquareThenEmptySquareError() {
-        setValidOfOriginTargetTo(true,true);
+        mockValidMovement(Color.WHITE, 1);
         when(board.isEmpty(origin)).thenReturn(true);
 
        assertEquals(Error.EMPTY_ORIGIN, game.move(origin,target));
@@ -56,27 +56,21 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenMoveOppositePieceThenError() {
-        setValidOfOriginTargetTo(true,true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
+        mockValidMovement(Color.WHITE, 1);
         when(turn.isColor(any(Color.class))).thenReturn(false);
         assertEquals(Error.OPPOSITE_PIECE, game.move(origin,target));
     }
 
     @Test
     public void testGivenGameWhenNotDiagonalMovementThenError() {
-        setValidOfOriginTargetTo(true,true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
+        mockValidMovement(Color.WHITE, 1);
         when(origin.isDiagonal(target)).thenReturn(false);
         assertEquals(Error.NOT_DIAGONAL, this.game.move(origin,target));
     }
 
     @Test
     public void testGivenGameWhenMoveWithNotAdvancedThenError() {
-        setValidOfOriginTargetTo(true,true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
-        when(origin.isDiagonal(target)).thenReturn(true);
+        mockValidMovement(Color.WHITE, 1);
         Piece piece = mock(Piece.class);
         when(piece.isAdvanced(origin,target)).thenReturn(false);
         when(board.getPiece(origin)).thenReturn(piece);
@@ -86,13 +80,7 @@ public class GameTest {
     @Test
     public void testGivenGameWhenNotEmptyTargetThenError() {
 
-        setValidOfOriginTargetTo(true,true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
-        when(origin.isDiagonal(target)).thenReturn(true);
-        Piece pieceOrigin = mock(Piece.class);
-        when(pieceOrigin.isAdvanced(origin,target)).thenReturn(true);
-        when(board.getPiece(origin)).thenReturn(pieceOrigin);
+        mockValidMovement(Color.WHITE, 1);
         when(board.isEmpty(target)).thenReturn(false);
 
         assertEquals(Error.NOT_EMPTY_TARGET, game.move(origin,target));
@@ -100,16 +88,7 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenBadDistanceThenError() {
-
-        setValidOfOriginTargetTo(true,true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
-        when(origin.isDiagonal(target)).thenReturn(true);
-        Piece pieceOrigin = mock(Piece.class);
-        when(pieceOrigin.isAdvanced(origin,target)).thenReturn(true);
-        when(board.getPiece(origin)).thenReturn(pieceOrigin);
-        when(origin.diagonalDistance(target)).thenReturn(3);
-
+        mockValidMovement(Color.WHITE, 3);
         assertEquals(Error.BAD_DISTANCE, game.move(origin,target));
     }
 
