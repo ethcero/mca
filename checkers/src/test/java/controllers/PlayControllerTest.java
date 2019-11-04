@@ -1,48 +1,50 @@
 package controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import models.*;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import models.Color;
+import models.Game;
+import models.State;
+import views.CommandView;
+import views.GameView;
+
+@RunWith(MockitoJUnitRunner.class)
 public class PlayControllerTest {
 
-    public PlayControllerTest() {
+    @Mock
+    private GameView gameView;
+    @Mock
+    private CommandView commandView;
+    @Mock
+    private Game game;
+    @Mock
+    private State state;
 
+    @InjectMocks
+    PlayController playController;
+
+    @Before
+    public void before() {
+        MockitoAnnotations.initMocks(this);
     }
+
 
     @Test
-    public void givenPlayControllerWhenMovementRequiereCorrectThenNotError() {
-        Game game = new Game();
-        Coordinate origin = new Coordinate(2, 1);
-        Coordinate target = new Coordinate(3, 2);
-        PlayController playController = new PlayController(game, new State());
-        assertNull(playController.move(origin, target));
-        assertNull(playController.getPiece(origin));
-        Piece pieceTarget = playController.getPiece(target);
-        assertNotNull(pieceTarget);
-        assertEquals(pieceTarget.getColor(), Color.WHITE);
+    public void givenPlayControllerWhenNextStateThenCallNext() {
+
+        when(game.getWinner()).thenReturn(Color.WHITE);
+        playController.control();
+        verify(gameView).interact();
+        verify(commandView).interact();
+        verify(state).next();
     }
-
-    // public void data(){
-    //     Coordinate[][] coordinates = new Coordinate[][] {
-    //         { new Coordinate(0,0), new Coordinate(0,0) },
-    //         { new Coordinate(0,0), new Coordinate(0,0), new Coordinate(0,0), new Coordinate(0,0) },
-    //         { new Coordinate(0,0), new Coordinate(0,0) },
-    //     };
-
-        // peon mueve una
-        // peon come una
-        // peon come varias
-        // peon se convierte en dama
-        // dama mueve una
-        // dama mueve varias
-        // dama come una
-        // dama come varias, atras
-
-    //}
-
-
 }

@@ -11,10 +11,15 @@ public class PlayController extends Controller{
 	private Game game;
 	private State state;
 
+	private GameView gameView;
+	private CommandView commandView;
+
     public PlayController(Game game, State state)
     {
 		this.game = game;
 		this.state = state;
+		this.gameView = new GameView(this);
+		this.commandView = new CommandView(this);
 	}
 
 	public Error move(Coordinate origin, Coordinate target){
@@ -42,8 +47,8 @@ public class PlayController extends Controller{
 
     @Override
 	public void control() {
-        new GameView(this).interact();
-        new CommandView(this).interact();
+        gameView.interact();
+        commandView.interact();
         this.next();
     }
 }
