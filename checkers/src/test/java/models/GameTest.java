@@ -1,19 +1,18 @@
 package models;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
-
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameTest {
@@ -39,19 +38,17 @@ public class GameTest {
     @Test()
     public void testGivenGameWhenMoveWithOuterCoordinateThenOutCoordinateError() {
 
-        setValidOfOriginTargetTo(false);
+        setValidOfOriginTargetTo(false,false);
         assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
-        when(origin.isValid()).thenReturn(true);
-        when(target.isValid()).thenReturn(false);
+        setValidOfOriginTargetTo(true,false);
         assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
-        when(origin.isValid()).thenReturn(false);
-        when(target.isValid()).thenReturn(true);
+        setValidOfOriginTargetTo(false,true);
         assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
     }
 
     @Test
     public void testGivenGameWhenMoveEmptySquareThenEmptySquareError() {
-        setValidOfOriginTargetTo(true);
+        setValidOfOriginTargetTo(true,true);
         when(board.isEmpty(origin)).thenReturn(true);
 
        assertEquals(Error.EMPTY_ORIGIN, game.move(origin,target));
@@ -59,7 +56,7 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenMoveOppositePieceThenError() {
-        setValidOfOriginTargetTo(true);
+        setValidOfOriginTargetTo(true,true);
         when(board.getColor(origin)).thenReturn(Color.WHITE);
         when(turn.isColor(any(Color.class))).thenReturn(false);
         assertEquals(Error.OPPOSITE_PIECE, game.move(origin,target));
@@ -67,7 +64,7 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenNotDiagonalMovementThenError() {
-        setValidOfOriginTargetTo(true);
+        setValidOfOriginTargetTo(true,true);
         when(board.getColor(origin)).thenReturn(Color.WHITE);
         when(turn.isColor(any(Color.class))).thenReturn(true);
         when(origin.isDiagonal(target)).thenReturn(false);
@@ -76,7 +73,7 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenMoveWithNotAdvancedThenError() {
-        setValidOfOriginTargetTo(true);
+        setValidOfOriginTargetTo(true,true);
         when(board.getColor(origin)).thenReturn(Color.WHITE);
         when(turn.isColor(any(Color.class))).thenReturn(true);
         when(origin.isDiagonal(target)).thenReturn(true);
@@ -87,62 +84,90 @@ public class GameTest {
     }
 
     @Test
-    public void testGivenGameWhenNotEmptyTargeThenError() {
-        Coordinate[][] coordinates = new Coordinate[][] { { new Coordinate(5, 6), new Coordinate(4, 7) },
-                { new Coordinate(2, 7), new Coordinate(3, 6) }, { new Coordinate(4, 7), new Coordinate(3, 6) }, };
-        Error error = null;
-        for (int i = 0; i < coordinates.length; i++) {
-            assertNull(error);
-            error = game.move(coordinates[i][0], coordinates[i][1]);
-        }
-        assertEquals(Error.NOT_EMPTY_TARGET, error);
+    public void testGivenGameWhenNotEmptyTargetThenError() {
+
+        setValidOfOriginTargetTo(true,true);
+        when(board.getColor(origin)).thenReturn(Color.WHITE);
+        when(turn.isColor(any(Color.class))).thenReturn(true);
+        when(origin.isDiagonal(target)).thenReturn(true);
+        Piece pieceOrigin = mock(Piece.class);
+        when(pieceOrigin.isAdvanced(origin,target)).thenReturn(true);
+        when(board.getPiece(origin)).thenReturn(pieceOrigin);
+        when(board.isEmpty(target)).thenReturn(false);
+
+        assertEquals(Error.NOT_EMPTY_TARGET, game.move(origin,target));
+    }
+
+    @Test
+    public void testGivenGameWhenBadDistanceThenError() {
+
+        setValidOfOriginTargetTo(true,true);
+        when(board.getColor(origin)).thenReturn(Color.WHITE);
+        when(turn.isColor(any(Color.class))).thenReturn(true);
+        when(origin.isDiagonal(target)).thenReturn(true);
+        Piece pieceOrigin = mock(Piece.class);
+        when(pieceOrigin.isAdvanced(origin,target)).thenReturn(true);
+        when(board.getPiece(origin)).thenReturn(pieceOrigin);
+        when(origin.diagonalDistance(target)).thenReturn(3);
+
+        assertEquals(Error.BAD_DISTANCE, game.move(origin,target));
     }
 
     @Test
     public void testGivenGameWhenCorrectMovementThenOk() {
-        Coordinate origin = new Coordinate(5, 0);
-        Coordinate target = new Coordinate(4, 1);
+        mockValidMovement(Color.WHITE, 1);
         this.game.move(origin, target);
-        assertNull(this.game.getColor(origin));
         assertEquals(Color.WHITE, this.game.getColor(target));
-        origin = new Coordinate(2, 3);
-        target = new Coordinate(3, 4);
+
+        mockValidMovement(Color.BLACK, 1);
         this.game.move(origin, target);
-        assertNull(this.game.getColor(origin));
         assertEquals(Color.BLACK, this.game.getColor(target));
     }
 
     @Test
     public void testGivenGameWhenMovementThenEatPiece() {
-        Coordinate[][] coordinates = new Coordinate[][] { { new Coordinate(5, 0), new Coordinate(4, 1) },
-                { new Coordinate(2, 1), new Coordinate(3, 0) }, { new Coordinate(5, 2), new Coordinate(4, 3) },
-                { new Coordinate(3, 0), new Coordinate(5, 2) }, };
-        Error error = null;
-        for (int i = 0; i < coordinates.length; i++) {
-            assertNull(error);
-            error = game.move(coordinates[i][0], coordinates[i][1]);
-        }
-        assertNull(error);
-        assertNull(game.getColor(new Coordinate(3, 0)));
-        assertNull(game.getColor(new Coordinate(4, 1)));
-        assertEquals(Color.BLACK, game.getColor(new Coordinate(5, 2)));
+        mockValidMovement(Color.WHITE, 2);
+        Coordinate between = mock(Coordinate.class);
+        when(origin.betweenDiagonal(target)).thenReturn(between);
+        when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
+        this.game.move(origin, target);
+        assertEquals(Color.WHITE, this.game.getColor(target));
+        verify(board).remove(between);
+
+        mockValidMovement(Color.BLACK, 2);
+        Coordinate between2 = mock(Coordinate.class);
+        when(origin.betweenDiagonal(target)).thenReturn(between2);
+        when(board.getPiece(between2)).thenReturn(new Piece(Color.WHITE));
+        this.game.move(origin, target);
+        assertEquals(Color.BLACK, this.game.getColor(target));
+        verify(board).remove(between2);
     }
 
     @Test
     public void testGivenGameWhenEatEmptyPieceThenError() {
-        assertEquals(Error.EATING_EMPTY, this.game.move(new Coordinate(5, 4), new Coordinate(3, 2)));
-    }
-
-    @Test
-    public void testGivenGameWhenMoveBadDistanceThenError() {
-        assertEquals(Error.BAD_DISTANCE, this.game.move(new Coordinate(5, 0), new Coordinate(2, 3)));
+        mockValidMovement(Color.BLACK, 2);
+        when(origin.betweenDiagonal(target)).thenReturn(null);
+        assertEquals(Error.EATING_EMPTY, this.game.move(origin, target));
     }
 
 
-    private void setValidOfOriginTargetTo(boolean valid){
-        when(origin.isValid()).thenReturn(valid);
-        when(target.isValid()).thenReturn(valid);
+    private void setValidOfOriginTargetTo(boolean origin, boolean target){
+        when(this.origin.isValid()).thenReturn(origin);
+        when(this.target.isValid()).thenReturn(target);
+    }
 
+    private void mockValidMovement(Color turn, int distance) {
+        setValidOfOriginTargetTo(true,true);
+        when(board.getColor(origin)).thenReturn(turn);
+        when(board.getColor(target)).thenReturn(turn);
+        when(this.turn.getColor()).thenReturn(turn);
+        when(this.turn.isColor(any(Color.class))).thenReturn(true);
+        when(origin.isDiagonal(target)).thenReturn(true);
+        Piece pieceOrigin = mock(Piece.class);
+        when(pieceOrigin.isAdvanced(origin,target)).thenReturn(true);
+        when(board.getPiece(origin)).thenReturn(pieceOrigin);
+        when(board.isEmpty(target)).thenReturn(true);
+        when(origin.diagonalDistance(target)).thenReturn(distance);
     }
 
 }
