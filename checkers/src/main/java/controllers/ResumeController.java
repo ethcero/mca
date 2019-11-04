@@ -8,15 +8,17 @@ public class ResumeController extends Controller {
 
     private Game game;
     private State state;
+    private ResumeView resumeView;
 
     public ResumeController(Game game, State state)
     {
         this.game = game;
         this.state = state;
+        resumeView = new ResumeView(this);
     }
 
     public void control() {
-        new ResumeView(this).interact();
+        resumeView.interact();
         this.state.next();
     }
 }
