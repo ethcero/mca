@@ -1,5 +1,7 @@
 package models;
 
+import validator.BadDistanceValidator;
+
 public class Piece {
 
 	private Color color;
@@ -18,6 +20,10 @@ public class Piece {
 			return difference>0;
 		}
 		return difference<0;
+	}
+
+	public Error validateMovement(Coordinate origin, Coordinate target) {
+		return new BadDistanceValidator(origin, target, 3).validate();
 	}
 
 }

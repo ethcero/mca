@@ -1,5 +1,10 @@
 package models;
 
+import validator.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
 
 	private Board board;
@@ -36,29 +41,38 @@ public class Game {
 		return null;
 	}
 
+	private Error validateMovement(Coordinate origin, Coordinate target){
+        Error error = null;
+
+	    List<Validator> validators = new ArrayList<Validator>();
+		validators.add(new EmptyOriginValidator(board, origin));
+		validators.add(new OppositePieceValidator(turn,this.board.getColor(origin)));
+        validators.add(new NotDiagonalValidator(origin, target));
+        validators.add(new NotAdvancedValidator(this.board.getPiece(origin), origin, target));
+		validators.add(new NotEmptyTargetValidator(board,target));
+
+		for (Validator validator : validators) {
+			error = validator.validate();
+			if(error != null){
+			    return error;
+            }
+		}
+
+		error = this.board.getPiece(origin).validateMovement(origin, target);
+        if(error != null){
+            return error;
+        }
+		return null;
+	}
+
 	public Error move(Coordinate origin, Coordinate target) {
 		assert origin != null && target != null;
 
-		if (board.isEmpty(origin)) {
-			return Error.EMPTY_ORIGIN;
-		}
-		Color color = this.board.getColor(origin);
-		if (this.turn.getColor() != color) {
-			return Error.OPPOSITE_PIECE;
-		}
-		if (!origin.isDiagonal(target)) {
-			return Error.NOT_DIAGONAL;
-		}
-		Piece piece = this.board.getPiece(origin);
-		if (!piece.isAdvanced(origin, target)) {
-			return Error.NOT_ADVANCED;
-		}
-		if (origin.diagonalDistance(target) >= 3) {
-			return Error.BAD_DISTANCE;
-		}
-		if (!this.board.isEmpty(target)) {
-			return Error.NOT_EMPTY_TARGET;
-		}
+        Error error = validateMovement(origin, target);
+        if(error != null){
+            return error;
+        }
+
 		if (origin.diagonalDistance(target) == 2) {
 			Coordinate between = origin.betweenDiagonal(target);
 			if (this.board.getPiece(between) == null) {

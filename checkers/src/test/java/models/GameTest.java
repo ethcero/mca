@@ -138,7 +138,7 @@ public class GameTest {
     @Test
     public void testGivenGameWhenMoveBadDistanceThenError() {
         assertEquals(Error.BAD_DISTANCE, this.advance(new Coordinate[][] { 
-            { new Coordinate(5, 0), new Coordinate(2, 3) },
+            { new Coordinate(6, 1), new Coordinate(3, 4) },
         })); 
     }
 
