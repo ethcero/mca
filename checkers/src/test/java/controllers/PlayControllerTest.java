@@ -4,21 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import models.*;
 import org.junit.Test;
+
+import models.Coordinate;
+import models.Piece;
+import models.Session;
+import models.Color;
 
 public class PlayControllerTest {
 
-    public PlayControllerTest() {
-
-    }
-
     @Test
     public void givenPlayControllerWhenMovementRequiereCorrectThenNotError() {
-        Game game = new Game();
-        Coordinate origin = new Coordinate(2, 1);
-        Coordinate target = new Coordinate(3, 2);
-        PlayController playController = new PlayController(game, new State());
+        PlayController playController = new PlayController(new Session());
+        Coordinate origin = new Coordinate(5, 0);
+        Coordinate target = new Coordinate(4, 1);
         assertNull(playController.move(origin, target));
         assertNull(playController.getPiece(origin));
         Piece pieceTarget = playController.getPiece(target);

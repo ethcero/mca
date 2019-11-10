@@ -1,49 +1,40 @@
 package controllers;
 
-
-import models.*;
+import models.Color;
+import models.Coordinate;
+import models.Piece;
+import models.Session;
 import models.Error;
-import views.CommandView;
-import views.GameView;
 
-public class PlayController extends Controller{
+public class PlayController extends Controller {
 
-	private Game game;
-	private State state;
-
-    public PlayController(Game game, State state)
-    {
-		this.game = game;
-		this.state = state;
+    public PlayController(Session session) {
+		super(session);
 	}
 
 	public Error move(Coordinate origin, Coordinate target){
-
-    	return game.move(origin, target);
+		Error error = this.session.move(origin, target);
+		if (this.session.isBlocked()){
+			this.session.next();
+		}
+		return error;
     }
 
-	public Piece getPiece(Coordinate origin) {
-		return null;
+	public Piece getPiece(Coordinate coordinate) {
+		return session.getPiece(coordinate);
 	}
 
-	public Color getTurn() {
-		return this.game.getTurn();
+	public Color getColor() {
+		return session.getColor();
+	}
+	
+	public boolean isBlocked() {
+		return session.isBlocked();
+	}	
+
+	@Override
+	public void accept(ControllersVisitor controllersVisitor) {
+		controllersVisitor.visit(this);
 	}
 
-	public Game getGame() {
-        return this.game;
-    }
-
-    private void next(){
-        if(game.getWinner() != null) {
-            state.next();
-        }
-    }
-
-    @Override
-	public void control() {
-        new GameView(this).interact();
-        new CommandView(this).interact();
-        this.next();
-    }
 }

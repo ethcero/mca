@@ -1,5 +1,6 @@
 package views;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -11,22 +12,20 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import controllers.PlayController;
-import models.Color;
-import models.Coordinate;
-import utils.Console;
+import controllers.ResumeController;
+import utils.YesNoDialog;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CommandViewTest {
+public class ResumeViewTest {
 
     @Mock
-    PlayController playController;
+    ResumeController resumeController;
 
     @Mock
-    Console console;
+    YesNoDialog yesNoDialog;
 
     @InjectMocks
-    CommandView commandView;
+    ResumeView resumeView;
 
     @Before
     public void initMocks() {
@@ -35,10 +34,9 @@ public class CommandViewTest {
     
     @Test
     public void testInteract(){
-        when(playController.getColor()).thenReturn(Color.BLACK);
-        when(console.readString("Mueven las negras: ")).thenReturn("32.41\n");
-        commandView.interact(playController);
-        verify(playController).move(new Coordinate(2,1), new Coordinate(3, 0));
+        when(yesNoDialog.read(anyString())).thenReturn(true);
+        resumeView.interact(resumeController);
+        verify(resumeController).reset();
     }
 
 }

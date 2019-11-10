@@ -1,22 +1,24 @@
 package controllers;
 
-import models.Game;
-import models.State;
-import views.ResumeView;
+import models.Session;
 
 public class ResumeController extends Controller {
 
-    private Game game;
-    private State state;
-
-    public ResumeController(Game game, State state)
-    {
-        this.game = game;
-        this.state = state;
+	public ResumeController(Session session) {
+        super(session);
     }
+    
+    @Override
+	public void accept(ControllersVisitor controllersVisitor) {
+		controllersVisitor.visit(this);
+	}
 
-    public void control() {
-        new ResumeView(this).interact();
-        this.state.next();
-    }
+	public void next() {
+        this.session.next();
+	}
+
+	public void reset() {
+        this.session.reset();
+	}
+
 }

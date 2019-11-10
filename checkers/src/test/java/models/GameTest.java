@@ -2,100 +2,108 @@ package models;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoJUnitRunner;
-
-@RunWith(MockitoJUnitRunner.class)
 public class GameTest {
 
-    @Mock
-    private Coordinate origin;
-    @Mock
-    private Coordinate target;
-    @Mock
-    private Board board;
-    @Mock
-    private Turn turn;
-
-    @InjectMocks
     private Game game;
 
+    public GameTest() {
+        game = new Game();
+    }
 
-    @Before
-    public void before(){
-        MockitoAnnotations.initMocks(this);
+    @Test
+    public void testGivenNewBoardThenGoodLocations() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < game.getDimension(); j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                Color color = game.getColor(coordinate);
+                if (coordinate.isBlack()){
+                    assertEquals(Color.BLACK, color);
+                } else {
+                    assertNull(color);
+                }
+            }
+        }
+        for (int i = 5; i < game.getDimension(); i++) {
+            for (int j = 0; j < game.getDimension(); j++) {
+                Coordinate coordinate = new Coordinate(i,j);
+                Color color = game.getColor(coordinate);
+                if (coordinate.isBlack()){
+                    assertEquals(Color.WHITE, color);
+                } else {
+                    assertNull(color);
+                }
+            }
+        }
+    }
+
+    private Error advance(Coordinate[][] coordinates){
+        Error error = null;
+        for (int i = 0; i < coordinates.length; i++) {
+            assertNull(error);
+            System.out.println(game);
+            error = game.move(coordinates[i][0], coordinates[i][1]);
+        }
+        return error;
+    }
+
+    @Test
+    public void testGivenGameWhenConstructThenInitialDistribution(){
+        assertEquals(Color.WHITE, game.getColor(new Coordinate(5,0)));
+        assertEquals(Color.BLACK, game.getColor(new Coordinate(2,1)));
     }
 
     @Test()
     public void testGivenGameWhenMoveWithOuterCoordinateThenOutCoordinateError() {
-
-        setValidOfOriginTargetTo(false);
-        assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
-        when(origin.isValid()).thenReturn(true);
-        when(target.isValid()).thenReturn(false);
-        assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
-        when(origin.isValid()).thenReturn(false);
-        when(target.isValid()).thenReturn(true);
-        assertEquals(Error.OUT_COORDINATE, game.move(origin,target));
+        assertEquals(Error.OUT_COORDINATE, this.advance(new Coordinate[][] { 
+            { new Coordinate(4, 7), new Coordinate(3, 8) }, 
+        }));
     }
 
     @Test
-    public void testGivenGameWhenMoveEmptySquareThenEmptySquareError() {
-        setValidOfOriginTargetTo(true);
-        when(board.isEmpty(origin)).thenReturn(true);
-
-       assertEquals(Error.EMPTY_ORIGIN, game.move(origin,target));
+    public void testGivenGameWhenMoveEmptySquaerThenEmptySquareError() {
+        assertEquals(Error.EMPTY_ORIGIN, this.advance(new Coordinate[][] { 
+            {  new Coordinate(4, 3), new Coordinate(3, 4), }, 
+        }));
     }
 
     @Test
     public void testGivenGameWhenMoveOppositePieceThenError() {
-        setValidOfOriginTargetTo(true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(false);
-        assertEquals(Error.OPPOSITE_PIECE, game.move(origin,target));
+        assertEquals(Error.OPPOSITE_PIECE, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 6), new Coordinate(4, 7) },
+            { new Coordinate(2, 7), new Coordinate(3, 6) }, 
+            { new Coordinate(3, 6), new Coordinate(2, 7) }, 
+        }));
     }
 
     @Test
     public void testGivenGameWhenNotDiagonalMovementThenError() {
-        setValidOfOriginTargetTo(true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
-        when(origin.isDiagonal(target)).thenReturn(false);
-        assertEquals(Error.NOT_DIAGONAL, this.game.move(origin,target));
+        assertEquals(Error.NOT_DIAGONAL, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 2), new Coordinate(4, 2) },
+        }));
     }
 
     @Test
     public void testGivenGameWhenMoveWithNotAdvancedThenError() {
-        setValidOfOriginTargetTo(true);
-        when(board.getColor(origin)).thenReturn(Color.WHITE);
-        when(turn.isColor(any(Color.class))).thenReturn(true);
-        when(origin.isDiagonal(target)).thenReturn(true);
-        Piece piece = mock(Piece.class);
-        when(piece.isAdvanced(origin,target)).thenReturn(false);
-        when(board.getPiece(origin)).thenReturn(piece);
-        assertEquals(Error.NOT_ADVANCED, game.move(origin,target));
+        assertEquals(Error.NOT_ADVANCED, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 6), new Coordinate(4, 7) },
+            { new Coordinate(2, 7), new Coordinate(3, 6) }, 
+            { new Coordinate(5, 4), new Coordinate(4, 3) },
+            { new Coordinate(1, 6), new Coordinate(2, 7) }, 
+            { new Coordinate(4, 3), new Coordinate(3, 4) },
+            { new Coordinate(0, 7), new Coordinate(1, 6) }, 
+            { new Coordinate(3, 4), new Coordinate(4, 5) }, 
+        }));        
     }
 
     @Test
     public void testGivenGameWhenNotEmptyTargeThenError() {
-        Coordinate[][] coordinates = new Coordinate[][] { { new Coordinate(5, 6), new Coordinate(4, 7) },
-                { new Coordinate(2, 7), new Coordinate(3, 6) }, { new Coordinate(4, 7), new Coordinate(3, 6) }, };
-        Error error = null;
-        for (int i = 0; i < coordinates.length; i++) {
-            assertNull(error);
-            error = game.move(coordinates[i][0], coordinates[i][1]);
-        }
-        assertEquals(Error.NOT_EMPTY_TARGET, error);
+        assertEquals(Error.NOT_EMPTY_TARGET, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 6), new Coordinate(4, 7) },
+            { new Coordinate(2, 7), new Coordinate(3, 6) }, 
+            { new Coordinate(4, 7), new Coordinate(3, 6) }, 
+        })); 
     }
 
     @Test
@@ -114,15 +122,12 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenMovementThenEatPiece() {
-        Coordinate[][] coordinates = new Coordinate[][] { { new Coordinate(5, 0), new Coordinate(4, 1) },
-                { new Coordinate(2, 1), new Coordinate(3, 0) }, { new Coordinate(5, 2), new Coordinate(4, 3) },
-                { new Coordinate(3, 0), new Coordinate(5, 2) }, };
-        Error error = null;
-        for (int i = 0; i < coordinates.length; i++) {
-            assertNull(error);
-            error = game.move(coordinates[i][0], coordinates[i][1]);
-        }
-        assertNull(error);
+        assertNull(this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 0), new Coordinate(4, 1) },
+            { new Coordinate(2, 1), new Coordinate(3, 0) }, 
+            { new Coordinate(5, 2), new Coordinate(4, 3) },
+            { new Coordinate(3, 0), new Coordinate(5, 2) }, 
+        }));
         assertNull(game.getColor(new Coordinate(3, 0)));
         assertNull(game.getColor(new Coordinate(4, 1)));
         assertEquals(Color.BLACK, game.getColor(new Coordinate(5, 2)));
@@ -130,19 +135,16 @@ public class GameTest {
 
     @Test
     public void testGivenGameWhenEatEmptyPieceThenError() {
-        assertEquals(Error.EATING_EMPTY, this.game.move(new Coordinate(5, 4), new Coordinate(3, 2)));
+        assertEquals(Error.EATING_EMPTY, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 4), new Coordinate(3, 2) },
+        })); 
     }
 
     @Test
     public void testGivenGameWhenMoveBadDistanceThenError() {
-        assertEquals(Error.BAD_DISTANCE, this.game.move(new Coordinate(5, 0), new Coordinate(2, 3)));
-    }
-
-
-    private void setValidOfOriginTargetTo(boolean valid){
-        when(origin.isValid()).thenReturn(valid);
-        when(target.isValid()).thenReturn(valid);
-
+        assertEquals(Error.BAD_DISTANCE, this.advance(new Coordinate[][] { 
+            { new Coordinate(5, 0), new Coordinate(2, 3) },
+        })); 
     }
 
 }

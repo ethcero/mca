@@ -2,22 +2,22 @@ package models;
 
 public class State {
 
-    StateValue stateValue;
+    private StateValue stateValue;
 
-    public State() {
-        stateValue = StateValue.INITIAL;
-    }
+	public State() {
+		this.reset();
+	}
 
-    public void next() {
-        this.stateValue = StateValue.values()[this.stateValue.ordinal() + 1];
-    }
+	public void next() {
+        assert this.stateValue != StateValue.EXIT;
+		this.stateValue = StateValue.values()[this.stateValue.ordinal() + 1];
+	}
 
-    public void reset() {
+	public void reset() {
+		this.stateValue = StateValue.INITIAL;
+	}
 
-        this.stateValue = StateValue.INITIAL;
-    }
-
-    public StateValue getStateValue() {
-        return stateValue;
-    }
+	public StateValue getValueState() {
+		return this.stateValue;
+	}
 }

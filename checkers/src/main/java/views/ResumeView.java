@@ -1,19 +1,25 @@
 package views;
 
 import controllers.ResumeController;
-import utils.Console;
+import utils.YesNoDialog;
 
-public class ResumeView {
+public class ResumeView extends SubView {
 
-    private Console console;
-    private ResumeController controller;
+    private static final String MESSAGE = "¿Queréis jugar otra";
+    
+    private YesNoDialog yesNoDialog;
 
-    public ResumeView(ResumeController controller) {
-        this.controller = controller;
-        this.console = new Console();
+    public ResumeView(){
+        super();
+        this.yesNoDialog = new YesNoDialog();
     }
 
-    public void interact(){
-        this.console.writeln("FIN!!");
+    public void interact(ResumeController resumeController) {
+        if (this.yesNoDialog.read(ResumeView.MESSAGE)){
+            resumeController.reset();
+        } else {
+            resumeController.next();
+        }
+
     }
 }

@@ -1,44 +1,32 @@
+package es.urjccode.mastercloudapps.adcs.draughts;
+
+import controllers.Logic;
 import controllers.Controller;
-import controllers.PlayController;
-import controllers.ResumeController;
-import controllers.StartController;
-import models.Game;
-import models.State;
-import models.StateValue;
+import views.View;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+class Draughts {
+    
+    private View view;
 
-public class Draughts {
+    private Logic logic;
 
-    State state;
-    Map<StateValue,Controller> controllers;
-
-    Draughts(){
-
-        Game game = new Game();
-        state  = new State();
-        controllers = new HashMap<StateValue, Controller>();
-        controllers.put(StateValue.INITIAL, new StartController(game,state));
-        controllers.put(StateValue.IN_GAME, new PlayController(game,state));
-        controllers.put(StateValue.FINAL, new ResumeController(game,state));
-        controllers.put(StateValue.EXIT, null);
+    private Draughts(){
+        this.view = new View();
+        this.logic = new Logic();
     }
 
-    private Controller getController() {
-        return this.controllers.get(state.getStateValue());
+    private void play() {
+        Controller controller;
+		do {
+			controller = this.logic.getController();
+			if (controller != null){
+				this.view.interact(controller);
+			}
+		} while (controller != null); 
     }
 
-    public static void main(String args[]) {
-
-        Draughts draughts = new Draughts();
-        Controller controller = draughts.getController();
-
-        do {
-            controller.control();
-            controller = draughts.getController();
-        }while (controller != null);
+    public static void main(String[] args){
+        new Draughts().play();
     }
+    
 }
