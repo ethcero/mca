@@ -33,15 +33,12 @@ public class Coordinate {
     public Coordinate betweenDiagonal(Coordinate coordinate) {
         assert coordinate != null && coordinate.isValid();
         assert this.isValid() && this.diagonalDistance(coordinate) == 2;
-        int rowShift = 1;
-        if (coordinate.row - this.row < 0) {
-            rowShift = -1;
-        }
-        int columnShift = 1;
-        if (coordinate.column - this.column < 0) {
-            columnShift = -1;
-        }
-        return new Coordinate(this.row + rowShift, this.column + columnShift);
+        return new Coordinate(this.row + this.shift(this.row, coordinate.row),
+                this.column + this.shift(this.column, coordinate.column));
+    }
+
+    private int shift(int origin, int target){
+        return (target - origin < 0) ? -1 : 1;
     }
 
     public boolean isBlack() {
