@@ -17,20 +17,39 @@ public class CommandView extends SubView {
     public void interact(PlayController playController) {
         String color = CommandView.COLORS[playController.getColor().ordinal()];
         Error error = null;
-        GameView gameView = new GameView();
-        do {
+         do {
             String command = this.console.readString("Mueven las " + color + ": ");
             int origin = Integer.parseInt(command.substring(0, 2));
             int target = Integer.parseInt(command.substring(3, 5));
-            error = playController.move(new Coordinate(origin/10-1, origin%10-1), new Coordinate(target/10-1, target%10-1));
-            if (error != null){
-                console.writeln("Error!!!" + error.name());
-            gameView.write(playController);
-            }
+            error = this.move(playController,origin,target);
         } while (error != null); 
         if (playController.isBlocked()){
             this.console.write(CommandView.MESSAGE);
         }
+    }
+
+    private Error move(PlayController playController, int origin, int target){
+        GameView gameView = new GameView();
+        Error error = null;
+        Coordinate coordinateOrigin =new Coordinate(origin / 10 - 1, origin % 10 - 1);
+        Coordinate coordinateTarget = new Coordinate(target / 10 - 1, target % 10 - 1);
+
+        if((error = checkMovement(coordinateOrigin,coordinateTarget)) == null) {
+            error = playController.move(coordinateOrigin,coordinateTarget);
+        }
+        if (error != null){
+            console.writeln("Error!!!" + error.name());
+            gameView.write(playController);
+        }
+
+        return error;
+    }
+
+    private Error checkMovement(Coordinate origin, Coordinate target) {
+        if (!origin.isValid() || !target.isValid()) {
+            return Error.OUT_COORDINATE;
+        }
+        return null;
     }
 
 }
