@@ -67,36 +67,40 @@ public class Board {
 
     @Override
     public String toString() {
-        String string = "";
+        StringBuilder builder = new StringBuilder();
 
-        string += this.toStringHorizontalNumbers();
+        builder.append(this.toStringHorizontalNumbers());
         for (int i = 0; i < this.getDimension(); i++) {
-            string += this.toStringHorizontalPiecesWithNumbers(i);
+            builder.append(this.toStringHorizontalPiecesWithNumbers(i));
         }
-        string += this.toStringHorizontalNumbers();
-        return string;
+        builder.append(this.toStringHorizontalNumbers());
+        return builder.toString();
     }
 
     private String toStringHorizontalNumbers(){
-        String string = " ";
+        StringBuilder builder = new StringBuilder();
+        builder.append(" ");
         for (int j = 0; j < Board.DIMENSION; j++) {
-            string += j;
+            builder.append(j);
         }
-        return string + "\n";
+        builder.append("\n");
+        return builder.toString();
     }
 
     private String toStringHorizontalPiecesWithNumbers(int row){
-        String string = "" + row;
+        StringBuilder builder = new StringBuilder();
+        builder.append(row);
         for (int j = 0; j < this.getDimension(); j++) {
             Piece piece = this.getPiece(new Coordinate(row, j));
             if (piece == null) {
-                string += " ";
+                builder.append(" ");
             } else {
                 final String[] letters = {"b","n"};
-                string += letters[piece.getColor().ordinal()];
+                builder.append(letters[piece.getColor().ordinal()]);
             }
         }
-        return string + row + "\n";
+        builder.append(row).append("\n");
+        return builder.toString();
     }
 
 }
