@@ -3,6 +3,7 @@ package views;
 import controllers.PlayController;
 import models.Error;
 import models.Coordinate;
+import validator.OutCoordinateValidator;
 
 public class CommandView extends SubView {
 
@@ -34,7 +35,8 @@ public class CommandView extends SubView {
         Coordinate coordinateOrigin =new Coordinate(origin / 10 - 1, origin % 10 - 1);
         Coordinate coordinateTarget = new Coordinate(target / 10 - 1, target % 10 - 1);
 
-        if((error = checkMovement(coordinateOrigin,coordinateTarget)) == null) {
+        error = new OutCoordinateValidator(coordinateOrigin,  coordinateTarget).validate();
+        if(error == null) {
             error = playController.move(coordinateOrigin,coordinateTarget);
         }
         if (error != null){
@@ -44,12 +46,4 @@ public class CommandView extends SubView {
 
         return error;
     }
-
-    private Error checkMovement(Coordinate origin, Coordinate target) {
-        if (!origin.isValid() || !target.isValid()) {
-            return Error.OUT_COORDINATE;
-        }
-        return null;
-    }
-
 }
