@@ -76,7 +76,7 @@ public class Game {
             return error;
         }
 
-		if (origin.diagonalDistance(target) == 2) {
+		if (board.getPiece(origin).isEatingMovement(origin, target)) {
 			Coordinate between = origin.betweenDiagonal(target);
 			if (this.board.getPiece(between) == null) {
 				return Error.EATING_EMPTY;

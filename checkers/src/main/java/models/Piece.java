@@ -26,4 +26,7 @@ public class Piece {
 		return new BadDistanceValidator(origin, target, 3).validate();
 	}
 
+	public boolean isEatingMovement(Coordinate origin, Coordinate target){
+		return (origin.diagonalDistance(target) == 2);
+	}
 }
