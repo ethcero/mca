@@ -38,8 +38,7 @@ public class CommandView extends SubView {
         error = new OutCoordinateValidator(coordinateOrigin,  coordinateTarget).validate();
         if(error == null) {
             error = playController.move(coordinateOrigin,coordinateTarget);
-        }
-        if (error != null){
+        }else{
             console.writeln("Error!!!" + error.name());
             gameView.write(playController);
         }
