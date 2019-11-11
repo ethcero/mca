@@ -1,9 +1,14 @@
 package models;
 
-import validator.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import validator.EmptyOriginValidator;
+import validator.NotAdvancedValidator;
+import validator.NotDiagonalValidator;
+import validator.NotEmptyTargetValidator;
+import validator.OppositePieceValidator;
+import validator.Validator;
 
 public class Game {
 
@@ -59,10 +64,8 @@ public class Game {
 		}
 
 		error = this.board.getPiece(origin).validateMovement(origin, target);
-        if(error != null){
-            return error;
-        }
-		return null;
+
+		return error;
 	}
 
 	public Error move(Coordinate origin, Coordinate target) {
