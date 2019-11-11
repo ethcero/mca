@@ -22,3 +22,11 @@
 
  * Practica 7:
     - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
+ * Practica 8:
+    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+    
+## Programación Extrema
+
+ * Practica 9:
+    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
+ 
