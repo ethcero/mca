@@ -53,7 +53,7 @@ public class Board {
         List<Piece> pieces = new ArrayList<Piece>();
         for (int i = 0; i < this.getDimension(); i++) {
             for (int j = 0; j < this.getDimension(); j++) {
-                if(this.squares[i][j].getPiece().getColor().equals(color)) {
+                if(this.squares[i][j].getPiece() != null && this.squares[i][j].getPiece().getColor().equals(color)) {
                     pieces.add(this.squares[i][j].getPiece());
                 }
             }
@@ -68,6 +68,7 @@ public class Board {
     @Override
     public String toString() {
         String string = "";
+
         string += this.toStringHorizontalNumbers();
         for (int i = 0; i < this.getDimension(); i++) {
             string += this.toStringHorizontalPiecesWithNumbers(i);
