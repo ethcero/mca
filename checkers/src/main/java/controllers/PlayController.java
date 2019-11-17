@@ -3,37 +3,46 @@ package controllers;
 import models.Color;
 import models.Coordinate;
 import models.Piece;
-import models.Session;
+import models.State;
 import models.Error;
+import models.Game;
 
 public class PlayController extends Controller {
 
-    public PlayController(Session session) {
-		super(session);
+	public PlayController(Game game, State state) {
+		super(game, state);
 	}
 
-	public Error move(Coordinate origin, Coordinate target){
-		Error error = this.session.move(origin, target);
-		if (this.session.isBlocked()){
-			this.session.next();
+	public void move(Coordinate origin, Coordinate target) {
+		assert this.isCorrect(origin, target) == null;
+		this.game.move(origin, target);
+		if (this.game.isBlocked()) {
+			this.state.next();
 		}
-		return error;
-    }
+	}
+
+	public Error isCorrect(Coordinate origin, Coordinate target){
+		assert origin != null;
+		assert target != null;
+		return this.game.isCorrect(origin, target);
+	}	
 
 	public Piece getPiece(Coordinate coordinate) {
-		return session.getPiece(coordinate);
+		assert coordinate != null;
+		return this.game.getPiece(coordinate);
 	}
 
 	public Color getColor() {
-		return session.getColor();
+		return this.game.getColor();
 	}
-	
+
 	public boolean isBlocked() {
-		return session.isBlocked();
-	}	
+		return this.game.isBlocked();
+	}
 
 	@Override
 	public void accept(ControllersVisitor controllersVisitor) {
+		assert controllersVisitor != null;
 		controllersVisitor.visit(this);
 	}
 

@@ -1,6 +1,6 @@
 package models;
 
-public class Turn {
+class Turn {
 
     private Color color;
 
@@ -12,7 +12,11 @@ public class Turn {
         this.color = Color.values()[(this.color.ordinal()+1)%2];
     }
 
-    public Color getColor() {
+    boolean isColor(Color color2) {
+		return false;
+    }
+    
+    Color getColor() {
 		return this.color;
     }
     
@@ -20,9 +24,5 @@ public class Turn {
     public String toString(){
         return this.color.name();
     }
-
-	public boolean isColor(Color color2) {
-		return false;
-	}
 
 }

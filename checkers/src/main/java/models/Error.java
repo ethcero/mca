@@ -1,7 +1,7 @@
 package models;
 
 public enum Error {
-    OUT_COORDINATE, 
+    BAD_FORMAT,
     EMPTY_ORIGIN, 
     OPPOSITE_PIECE, 
     NOT_DIAGONAL, 

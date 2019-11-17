@@ -1,20 +1,22 @@
 package controllers;
 
-import models.Session;
+import models.Game;
+import models.State;
 
 public class StartController extends Controller {
 
-	public StartController(Session session) {
-        super(session);
+	public StartController(Game game, State state) {
+        super(game, state);
 	}
 
+	public void start() {
+        this.state.next();
+	}
+    
     @Override
 	public void accept(ControllersVisitor controllersVisitor) {
+		assert controllersVisitor != null;
 		controllersVisitor.visit(this);
     }
 
-	public void start() {
-        this.session.next();
-	}
-    
 }

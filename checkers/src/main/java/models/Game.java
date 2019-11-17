@@ -1,19 +1,8 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import validator.EmptyOriginValidator;
-import validator.NotAdvancedValidator;
-import validator.NotDiagonalValidator;
-import validator.NotEmptyTargetValidator;
-import validator.OppositePieceValidator;
-import validator.Validator;
-
 public class Game {
 
 	private Board board;
-
 	private Turn turn;
 
 	public Game() {
@@ -31,6 +20,7 @@ public class Game {
 	}
 
 	private Piece getInitialPiece(Coordinate coordinate) {
+		assert coordinate != null;
 		if (coordinate.isBlack()) {
 			final int row = coordinate.getRow();
 			Color color = null;
@@ -46,63 +36,38 @@ public class Game {
 		return null;
 	}
 
-	private Error validateMovement(Coordinate origin, Coordinate target){
-        Error error = null;
-
-	    List<Validator> validators = new ArrayList<Validator>();
-		validators.add(new EmptyOriginValidator(board, origin));
-		validators.add(new OppositePieceValidator(turn,this.board.getColor(origin)));
-        validators.add(new NotDiagonalValidator(origin, target));
-        validators.add(new NotAdvancedValidator(this.board.getPiece(origin), origin, target));
-		validators.add(new NotEmptyTargetValidator(board,target));
-
-		for (Validator validator : validators) {
-			error = validator.validate();
-			if(error != null){
-			    return error;
-            }
-		}
-
-		error = this.board.getPiece(origin).validateMovement(origin, target);
-
-		return error;
-	}
-
-	public Error move(Coordinate origin, Coordinate target) {
-		assert origin != null && target != null;
-
-        Error error = validateMovement(origin, target);
-        if(error != null){
-            return error;
-        }
-
-		if (board.getPiece(origin).isEatingMovement(origin, target)) {
-			Coordinate between = origin.betweenDiagonal(target);
-			if (this.board.getPiece(between) == null) {
-				return Error.EATING_EMPTY;
-			}
-			this.board.remove(between);
+	public void move(Coordinate origin, Coordinate target) {
+		assert this.isCorrect(origin, target) == null;
+		if (origin.diagonalDistance(target) == 2) {
+			this.board.remove(origin.betweenDiagonal(target));
 		}
 		this.board.move(origin, target);
+		if (this.board.getPiece(target).isLimit(target)){
+			this.board.remove(target);
+			this.board.put(target, new Draught(Color.WHITE));
+		}
 		this.turn.change();
-		return null;
+	}
+
+	public Error isCorrect(Coordinate origin, Coordinate target){
+		assert origin != null;
+		assert target != null;
+		if (board.isEmpty(origin)) {
+			return Error.EMPTY_ORIGIN;
+		}
+		if (this.turn.getColor() != this.board.getColor(origin)) {
+			return Error.OPPOSITE_PIECE;
+		}
+		return this.board.getPiece(origin).isCorrect(origin, target, board);
 	}
 
 	public Color getColor(Coordinate coordinate) {
+		assert coordinate != null;
 		return this.board.getColor(coordinate);
-	}
-
-	@Override
-	public String toString() {
-		return this.board + "\n" + this.turn;
 	}
 
 	public Color getColor() {
 		return this.turn.getColor();
-	}
-
-	public Piece getPiece(Coordinate coordinate) {
-		return this.board.getPiece(coordinate);
 	}
 
 	public boolean isBlocked() {
@@ -111,6 +76,16 @@ public class Game {
 
 	public int getDimension() {
 		return this.board.getDimension();
+	}
+
+	public Piece getPiece(Coordinate coordinate) {
+		assert coordinate != null;
+		return this.board.getPiece(coordinate);
+	}
+
+	@Override
+	public String toString() {
+		return this.board + "\n" + this.turn;
 	}
 
 }

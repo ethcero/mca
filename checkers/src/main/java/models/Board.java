@@ -3,10 +3,9 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+class Board implements PieceProvider {
 
     private static final int DIMENSION = 8;
-
     private Square[][] squares;
 
     Board() {
@@ -19,7 +18,7 @@ public class Board {
     }
 
     private Square getSquare(Coordinate coordinate){
-        assert coordinate!=null && coordinate.isValid();
+        assert coordinate!=null;
         return this.squares[coordinate.getRow()][coordinate.getColumn()];
     }
 
@@ -37,10 +36,12 @@ public class Board {
         this.put(target, this.remove(origin));
     }
 
-    Piece getPiece(Coordinate coordinate) {
+    @Override
+    public Piece getPiece(Coordinate coordinate) {
         return this.getSquare(coordinate).getPiece();
     }
 
+    @Override
     public boolean isEmpty(Coordinate coordinate) {
         return this.getSquare(coordinate).isEmpty();
     }
@@ -53,9 +54,7 @@ public class Board {
         List<Piece> pieces = new ArrayList<Piece>();
         for (int i = 0; i < this.getDimension(); i++) {
             for (int j = 0; j < this.getDimension(); j++) {
-                if(this.squares[i][j].getPiece() != null && this.squares[i][j].getPiece().getColor().equals(color)) {
-                    pieces.add(this.squares[i][j].getPiece());
-                }
+                pieces.add(this.squares[i][j].getPiece());
             }
         }
 		return pieces;
@@ -67,40 +66,35 @@ public class Board {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(this.toStringHorizontalNumbers());
+        String string = "";
+        string += this.toStringHorizontalNumbers();
         for (int i = 0; i < this.getDimension(); i++) {
-            builder.append(this.toStringHorizontalPiecesWithNumbers(i));
+            string += this.toStringHorizontalPiecesWithNumbers(i);
         }
-        builder.append(this.toStringHorizontalNumbers());
-        return builder.toString();
+        string += this.toStringHorizontalNumbers();
+        return string;
     }
 
     private String toStringHorizontalNumbers(){
-        StringBuilder builder = new StringBuilder();
-        builder.append(" ");
+        String string = " ";
         for (int j = 0; j < Board.DIMENSION; j++) {
-            builder.append(j);
+            string += j;
         }
-        builder.append("\n");
-        return builder.toString();
+        return string + "\n";
     }
 
     private String toStringHorizontalPiecesWithNumbers(int row){
-        StringBuilder builder = new StringBuilder();
-        builder.append(row);
+        String string = "" + row;
         for (int j = 0; j < this.getDimension(); j++) {
             Piece piece = this.getPiece(new Coordinate(row, j));
             if (piece == null) {
-                builder.append(" ");
+                string += " ";
             } else {
                 final String[] letters = {"b","n"};
-                builder.append(letters[piece.getColor().ordinal()]);
+                string += letters[piece.getColor().ordinal()];
             }
         }
-        builder.append(row).append("\n");
-        return builder.toString();
+        return string + row + "\n";
     }
 
 }

@@ -3,18 +3,19 @@ package views;
 import controllers.ResumeController;
 import utils.YesNoDialog;
 
-public class ResumeView extends SubView {
+class ResumeView extends SubView {
 
     private static final String MESSAGE = "¿Queréis jugar otra";
     
     private YesNoDialog yesNoDialog;
 
-    public ResumeView(){
+    ResumeView(){
         super();
         this.yesNoDialog = new YesNoDialog();
     }
 
-    public void interact(ResumeController resumeController) {
+    void interact(ResumeController resumeController) {
+        assert resumeController != null;
         if (this.yesNoDialog.read(ResumeView.MESSAGE)){
             resumeController.reset();
         } else {
@@ -22,4 +23,5 @@ public class ResumeView extends SubView {
         }
 
     }
+
 }

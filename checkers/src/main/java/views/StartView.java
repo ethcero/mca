@@ -2,17 +2,19 @@ package views;
 
 import controllers.StartController;
 
-public class StartView extends SubView {
+class StartView extends SubView {
 
     private static final String TITTLE = "Draughts";
 
-    public StartView(){
+    StartView(){
         super();
     }
 
-    public void interact(StartController startController) {
+    void interact(StartController startController) {
+        assert startController != null;
         this.console.writeln(StartView.TITTLE);
         new GameView().write(startController);
         startController.start();
     }
+
 }

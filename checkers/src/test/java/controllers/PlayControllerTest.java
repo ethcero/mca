@@ -1,28 +1,28 @@
 package controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
 import models.Coordinate;
-import models.Piece;
-import models.Session;
+import models.Game;
+import models.State;
 import models.Color;
 
 public class PlayControllerTest {
 
     @Test
     public void givenPlayControllerWhenMovementRequiereCorrectThenNotError() {
-        PlayController playController = new PlayController(new Session());
+        Game game = new Game();
+        State state = new State();
+        PlayController playController = new PlayController(game, state);
         Coordinate origin = new Coordinate(5, 0);
         Coordinate target = new Coordinate(4, 1);
-        assertNull(playController.move(origin, target));
+        assertNull(playController.isCorrect(origin, target));
+        playController.move(origin, target);
         assertNull(playController.getPiece(origin));
-        Piece pieceTarget = playController.getPiece(target);
-        assertNotNull(pieceTarget);
-        assertEquals(pieceTarget.getColor(), Color.WHITE);
+        assertEquals(playController.getColor(target), Color.WHITE);
     }
 
     // public void data(){
