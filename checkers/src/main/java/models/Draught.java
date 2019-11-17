@@ -10,8 +10,6 @@ class Draught extends Piece {
     boolean isAdvanced(Coordinate origin, Coordinate target) {
         assert origin != null;
         assert target != null;
-        int difference = origin.getRow() - target.getRow();
-
-        return Math.abs(difference) > 0;
+        return Math.abs(origin.getRow() - target.getRow()) > 0;
     }
 }
