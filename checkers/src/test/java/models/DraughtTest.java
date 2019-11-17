@@ -31,4 +31,16 @@ public class DraughtTest {
         Draught draught = new Draught(Color.WHITE);
         assertNull(draught.isCorrect(origin, target, board));
     }
+
+    @Test
+    public void testGivenDraughtWhenLongDistanceMovementThenNoError(){
+        Coordinate origin = new Coordinate(7,0);
+        Coordinate target = new Coordinate(0,7);
+
+        Board board = mock(Board.class);
+        when(board.isEmpty(target)).thenReturn(true);
+
+        Draught draught = new Draught(Color.WHITE);
+        assertNull(draught.isCorrect(origin, target, board));
+    }
 }
