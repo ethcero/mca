@@ -1,9 +1,11 @@
 package models;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.Assert;
 import org.junit.Before;
 
 import org.junit.Test;
@@ -78,6 +80,20 @@ public class GameWithDraughtsTest {
         verify(board).remove(origin.betweenDiagonal(target));
         verify(board).remove(target);
         verify(board).put(any(Coordinate.class), any(Draught.class));
+    }
+
+    @Test
+    public void testGivenGameWhenDraughtMovementThenEatPiece() {
+        Coordinate origin = mock(Coordinate.class);
+        Coordinate target =  mock(Coordinate.class);
+        mockValidMovement(origin, target, Color.WHITE);
+
+        Coordinate between = mock(Coordinate.class);
+        when(origin.betweenDiagonal(target)).thenReturn(between);
+        when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
+
+        this.game.move(origin, target);
+        verify(board).remove(between);
     }
 
     private void mockValidMovement(Coordinate origin, Coordinate target, Color pieceColor){
