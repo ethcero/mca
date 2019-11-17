@@ -13,6 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameWithDraughtsTest {
 
     @Mock
@@ -89,7 +92,9 @@ public class GameWithDraughtsTest {
         mockValidMovement(origin, target, Color.WHITE);
 
         Coordinate between = mock(Coordinate.class);
-        when(origin.betweenDiagonal(target)).thenReturn(between);
+        List<Coordinate> betweenAllDiagonalList = new ArrayList<Coordinate>();
+        betweenAllDiagonalList.add(between);
+        when(origin.betweenAllDiagonal(target)).thenReturn(betweenAllDiagonalList);
         when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
 
         this.game.move(origin, target);

@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Coordinate {
 
     private int row;
@@ -53,6 +56,27 @@ public class Coordinate {
             columnShift = -1;
         }
         return new Coordinate(this.row + rowShift, this.column + columnShift);
+    }
+
+    List<Coordinate> betweenAllDiagonal(Coordinate coordinate) {
+        assert coordinate != null;
+        List<Coordinate> coordinates = new ArrayList<Coordinate>();
+
+        int rowShift = 1;
+        int columnShift = 1;
+        if (coordinate.row - this.row < 0) {
+            rowShift = -1;
+        }
+        if (coordinate.column - this.column < 0) {
+            columnShift = -1;
+        }
+
+        for (int i = 1; i <= this.diagonalDistance(coordinate)-1; i++){
+            coordinates.add(new Coordinate(this.row + (i*rowShift), this.column + (i*columnShift)));
+        }
+
+        return coordinates;
+
     }
 
     boolean isBlack() {

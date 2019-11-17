@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 public class Game {
 
 	private Board board;
@@ -41,6 +43,9 @@ public class Game {
 		if (origin.diagonalDistance(target) == 2) {
 			this.board.remove(origin.betweenDiagonal(target));
 		}
+
+        this.eatIfAvailable(origin.betweenAllDiagonal(target));
+
 		this.board.move(origin, target);
 		if (this.board.getPiece(target).isLimit(target)){
 			this.board.remove(target);
@@ -48,6 +53,14 @@ public class Game {
 		}
 		this.turn.change();
 	}
+
+	private void eatIfAvailable(List<Coordinate> betweenCoordinates){
+        for (Coordinate coordinate: betweenCoordinates) {
+            if(this.getPiece(coordinate) != null){
+                this.board.remove(coordinate);
+            }
+        }
+    }
 
 	public Error isCorrect(Coordinate origin, Coordinate target){
 		assert origin != null;
