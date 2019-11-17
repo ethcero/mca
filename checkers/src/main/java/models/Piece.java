@@ -2,7 +2,7 @@ package models;
 
 public class Piece {
 
-	private Color color;
+	Color color;
 	private static final int MAX_DISTANCE = 2;
 
 	Piece(Color color) {
