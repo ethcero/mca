@@ -31,7 +31,7 @@ public class GameWithDraughtsTest {
     }
 
     @Test
-    public void testGivenGameWhenWhitePawnAtLimitThenNewDraugts(){
+    public void testGivenGameWhenWhitePawnAtLimitThenNewDraughts(){
         Coordinate origin = new Coordinate(1,0);
         Coordinate target = new Coordinate(0,1);
 
@@ -43,7 +43,19 @@ public class GameWithDraughtsTest {
     }
 
     @Test
-    public void testGivenGameWhenPawnAtLimitAndEatingThenNewDraugts(){
+    public void testGivenGameWhenBlackPawnAtLimitThenNewDraughts(){
+        Coordinate origin = new Coordinate(6,3);
+        Coordinate target = new Coordinate(7,2);
+
+        this.mockValidMovement(origin, target, Color.BLACK );
+
+        game.move(origin, target);
+        verify(board).remove(target);
+        verify(board).put(any(Coordinate.class), any(Draught.class));
+    }
+
+    @Test
+    public void testGivenGameWhenPawnAtLimitAndEatingThenNewDraughts(){
         Coordinate origin = new Coordinate(2,1);
         Coordinate target = new Coordinate(0,3);
 
@@ -55,17 +67,7 @@ public class GameWithDraughtsTest {
         verify(board).put(any(Coordinate.class), any(Draught.class));
     }
 
-    @Test
-    public void testGivenGameWhenBlackPawnAtLimitThenNewDraugts(){
-        Coordinate origin = new Coordinate(6,3);
-        Coordinate target = new Coordinate(7,2);
 
-        this.mockValidMovement(origin, target, Color.BLACK );
-
-        game.move(origin, target);
-        verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
-    }
 
     private void mockValidMovement(Coordinate origin, Coordinate target, Color pieceColor){
         when (turn.getColor()).thenReturn(pieceColor);
