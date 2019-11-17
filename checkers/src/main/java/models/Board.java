@@ -36,12 +36,12 @@ class Board implements PieceProvider {
         this.put(target, this.remove(origin));
     }
 
-    @Override
+
     public Piece getPiece(Coordinate coordinate) {
         return this.getSquare(coordinate).getPiece();
     }
 
-    @Override
+
     public boolean isEmpty(Coordinate coordinate) {
         return this.getSquare(coordinate).isEmpty();
     }
