@@ -41,7 +41,6 @@ class PlayView extends SubView {
                 this.console.writeln(PlayView.MESSAGE);
             }
         }
-        new GameView().write(playController);
     }
 
 }
