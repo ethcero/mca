@@ -10,6 +10,8 @@ class PlayView extends SubView {
     private static final String MESSAGE = "Derrota!!! No puedes mover tus fichas!!!";
     private static final String FORMAT = "xx.xx";
 
+    private GameView gameView;
+
     PlayView() {
         super();
     }
@@ -19,6 +21,7 @@ class PlayView extends SubView {
         Coordinate origin = null;
         Coordinate target = null;
         Error error;
+
         do {
             error = null;
             String color = PlayView.COLORS[playController.getColor().ordinal()];
@@ -41,6 +44,7 @@ class PlayView extends SubView {
                 this.console.writeln(PlayView.MESSAGE);
             }
         }
+        gameView.write(playController);
     }
 
 }
