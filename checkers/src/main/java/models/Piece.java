@@ -22,7 +22,7 @@ public class Piece {
 			return Error.BAD_DISTANCE;
 		}
 		if (distance == Piece.MAX_DISTANCE) {
-			if (pieceProvider.getPiece(origin.betweenDiagonal(target)) == null) {
+			if (pieceProvider.getPiece(origin.betweenDiagonal(target).get(0)) == null) {
 				return Error.EATING_EMPTY;
 			}
 		}

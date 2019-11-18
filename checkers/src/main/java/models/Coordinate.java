@@ -44,21 +44,7 @@ public class Coordinate {
         return Math.abs(this.row - coordinate.row);
     }
 
-    Coordinate betweenDiagonal(Coordinate coordinate) {
-        assert coordinate != null;
-        assert this.diagonalDistance(coordinate) == 2;
-        int rowShift = 1;
-        if (coordinate.row - this.row < 0) {
-            rowShift = -1;
-        }
-        int columnShift = 1;
-        if (coordinate.column - this.column < 0) {
-            columnShift = -1;
-        }
-        return new Coordinate(this.row + rowShift, this.column + columnShift);
-    }
-
-    List<Coordinate> betweenAllDiagonal(Coordinate coordinate) {
+    List<Coordinate> betweenDiagonal(Coordinate coordinate) {
         assert coordinate != null;
         List<Coordinate> coordinates = new ArrayList<Coordinate>();
 

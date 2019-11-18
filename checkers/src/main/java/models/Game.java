@@ -40,11 +40,7 @@ public class Game {
 
 	public void move(Coordinate origin, Coordinate target) {
 		assert this.isCorrect(origin, target) == null;
-		if (origin.diagonalDistance(target) == 2) {
-			this.board.remove(origin.betweenDiagonal(target));
-		}
-
-        this.eatIfAvailable(origin.betweenAllDiagonal(target));
+        this.eatIfAvailable(origin.betweenDiagonal(target));
 
 		this.board.move(origin, target);
 		if (this.board.getPiece(target).isLimit(target)){
