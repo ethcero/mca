@@ -2,6 +2,7 @@ package models;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -10,6 +11,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
@@ -41,7 +43,9 @@ public class GameWithDraughtsTest {
 
         game.move(origin, target);
         verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
+        ArgumentCaptor<Draught> argument = ArgumentCaptor.forClass(Draught.class);
+        verify(board).put(any(Coordinate.class), argument.capture());
+        assertEquals(Color.WHITE, argument.getValue().color);
     }
 
     @Test
@@ -53,7 +57,10 @@ public class GameWithDraughtsTest {
 
         game.move(origin, target);
         verify(board).remove(target);
-        verify(board).put(any(Coordinate.class), any(Draught.class));
+        ArgumentCaptor<Draught> argument = ArgumentCaptor.forClass(Draught.class);
+        verify(board).put(any(Coordinate.class), argument.capture());
+        assertEquals(Color.BLACK, argument.getValue().color);
+
     }
 
     @Test
