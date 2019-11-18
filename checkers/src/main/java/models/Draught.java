@@ -16,4 +16,8 @@ class Draught extends Piece {
     Error customIsCorrect(Coordinate origin, Coordinate target, PieceProvider pieceProvider) {
        return null;
     }
+
+    boolean isDraught() {
+        return true;
+    }
 }

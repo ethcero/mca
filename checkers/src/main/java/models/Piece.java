@@ -14,6 +14,7 @@ public abstract class Piece {
 
     abstract boolean isAdvanced(Coordinate origin, Coordinate target);
 
+    abstract boolean isDraught();
 
     Error isCorrect(Coordinate origin, Coordinate target, PieceProvider pieceProvider) {
 

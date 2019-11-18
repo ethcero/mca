@@ -38,4 +38,7 @@ class Pawn extends Piece {
         return difference < 0;
     }
 
+    boolean isDraught() {
+        return false;
+    }
 }

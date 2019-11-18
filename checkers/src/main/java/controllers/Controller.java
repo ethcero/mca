@@ -22,6 +22,10 @@ public abstract class Controller {
 		return this.game.getColor(coordinate);
 	}
 
+	public boolean isDraught(Coordinate coordinate){
+		assert coordinate != null;
+		return this.game.isDraught(coordinate);
+	}
 	public int getDimension() {
 		return this.game.getDimension();
 	}

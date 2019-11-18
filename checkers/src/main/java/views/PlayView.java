@@ -43,6 +43,8 @@ class PlayView extends SubView {
             if (playController.isBlocked()){
                 this.console.writeln(PlayView.MESSAGE);
             }
+        }else {
+            this.console.writeln(error.toString());
         }
         gameView.write(playController);
     }

@@ -75,6 +75,10 @@ public class Game {
 		return this.board.getColor(coordinate);
 	}
 
+	public boolean isDraught(Coordinate coordinate){
+	    return this.board.getPiece(coordinate).isDraught();
+    }
+
 	public Color getColor() {
 		return this.turn.getColor();
 	}

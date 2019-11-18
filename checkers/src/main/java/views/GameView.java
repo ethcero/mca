@@ -19,13 +19,19 @@ class GameView extends SubView {
                 if (color == null){
                     this.console.write(GameView.COLORS[2]);
                 } else {
-                    this.console.write(GameView.COLORS[color.ordinal()]);
+                    if(controller.isDraught(new Coordinate(i,j)))
+                    {
+                        this.console.write(GameView.COLORS[color.ordinal()].toUpperCase());
+                    }else {
+                        this.console.write(GameView.COLORS[color.ordinal()]);
+                    }
                 }
             }
             this.console.writeln((i+1)+"");
         }
         this.writeNumbersLine(DIMENSION);
 	}
+
 
     private void writeNumbersLine(final int DIMENSION) {
         assert DIMENSION > 0;
