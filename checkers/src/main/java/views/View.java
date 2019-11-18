@@ -23,19 +23,19 @@ public class View implements ControllersVisitor {
         controller.accept(this);
     }
 
-    @Override
+
     public void visit(StartController startController) {
         assert startController != null;
         this.startView.interact(startController);
     }
 
-    @Override
+
     public void visit(PlayController playController) {
         assert playController != null;
         this.playView.interact(playController);
     }
 
-    @Override
+
     public void visit(ResumeController resumeController) {
         assert resumeController != null;
         this.resumeView.interact(resumeController);

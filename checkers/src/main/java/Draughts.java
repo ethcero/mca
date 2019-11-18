@@ -1,7 +1,5 @@
-package es.urjccode.mastercloudapps.adcs.draughts;
-
-import controllers.Logic;
 import controllers.Controller;
+import controllers.Logic;
 import views.View;
 
 class Draughts {
@@ -15,6 +13,10 @@ class Draughts {
         this.logic = new Logic();
     }
 
+    public static void main(String[] args){
+        new Draughts().play();
+    }
+
     private void play() {
         Controller controller;
 		do {
@@ -22,11 +24,7 @@ class Draughts {
 			if (controller != null){
 				this.view.interact(controller);
 			}
-		} while (controller != null); 
-    }
-
-    public static void main(String[] args){
-        new Draughts().play();
+		} while (controller != null);
     }
     
 }

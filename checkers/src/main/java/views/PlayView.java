@@ -1,8 +1,8 @@
 package views;
 
 import controllers.PlayController;
-import models.Error;
 import models.Coordinate;
+import models.Error;
 
 class PlayView extends SubView {
 

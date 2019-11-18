@@ -2,10 +2,10 @@ package controllers;
 
 import models.Color;
 import models.Coordinate;
-import models.Piece;
-import models.State;
 import models.Error;
 import models.Game;
+import models.Piece;
+import models.State;
 
 public class PlayController extends Controller {
 
