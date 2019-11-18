@@ -16,29 +16,32 @@ public class CoordinateTest {
     }
 
     @Test
-    public void testGivenTwoCoordinatesWhenBetweenAllDiagonalThenOk() {
-        assertEquals(new Coordinate(1, 1), new Coordinate(2, 2).betweenDiagonal(new Coordinate(0, 0)).get(0));
-        assertEquals(new Coordinate(3, 1), new Coordinate(2, 2).betweenDiagonal(new Coordinate(4, 0)).get(0));
-        assertEquals(new Coordinate(3, 3), new Coordinate(2, 2).betweenDiagonal(new Coordinate(4, 4)).get(0));
-        assertEquals(new Coordinate(1, 3), new Coordinate(2, 2).betweenDiagonal(new Coordinate(0, 4)).get(0));
+    public void testGivenTwoCoordinatesWhenBetweenDiagonalAndDistance2ThenOk() {
+
+        Coordinate coord1 = new Coordinate(2, 2);
+
+        assertEquals(new Coordinate(1, 1), coord1.betweenDiagonal(new Coordinate(0, 0)).get(0));
+        assertEquals(new Coordinate(3, 1), coord1.betweenDiagonal(new Coordinate(4, 0)).get(0));
+        assertEquals(new Coordinate(3, 3), coord1.betweenDiagonal(new Coordinate(4, 4)).get(0));
+        assertEquals(new Coordinate(1, 3), coord1.betweenDiagonal(new Coordinate(0, 4)).get(0));
+    }
+
+    @Test
+    public void testGivenTwoCoordinatesWhenBetweenDiagonalAndLongDistanceThenOk() {
+
+        Coordinate coord1 = new Coordinate(3, 3);
 
         Coordinate[] array1 = {new Coordinate(1, 1),new Coordinate(2, 2)};
-        this.assertArrayContain( array1,
-                new Coordinate(3, 3).betweenDiagonal(new Coordinate(0, 0)));
+        this.assertArrayContain( array1, coord1.betweenDiagonal(new Coordinate(0, 0)));
 
         Coordinate[] array2 = {new Coordinate(2, 4),new Coordinate(1, 5)};
-        this.assertArrayContain( array2,
-                new Coordinate(3, 3).betweenDiagonal(new Coordinate(0, 6)));
+        this.assertArrayContain( array2, coord1.betweenDiagonal(new Coordinate(0, 6)));
 
         Coordinate[] array3 = {new Coordinate(4, 4),new Coordinate(5, 5)};
-        this.assertArrayContain( array3,
-                new Coordinate(3, 3).betweenDiagonal(new Coordinate(6, 6)));
+        this.assertArrayContain( array3, coord1.betweenDiagonal(new Coordinate(6, 6)));
 
         Coordinate[] array4 = {new Coordinate(4, 2),new Coordinate(5, 1)};
-        this.assertArrayContain( array4,
-                new Coordinate(3, 3).betweenDiagonal(new Coordinate(6, 0)));
-
-
+        this.assertArrayContain( array4, coord1.betweenDiagonal(new Coordinate(6, 0)));
 
     }
 
