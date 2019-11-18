@@ -64,7 +64,7 @@ public class GameWithDraughtsTest {
         this.mockValidMovement(origin, target, Color.WHITE );
 
         Coordinate between = origin.betweenDiagonal(target).get(0);
-        when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
+        when(board.getPiece(between)).thenReturn(new Pawn(Color.BLACK));
 
         game.move(origin, target);
         verify(board).remove(between);
@@ -80,7 +80,7 @@ public class GameWithDraughtsTest {
         this.mockValidMovement(origin, target, Color.BLACK );
 
         Coordinate between = origin.betweenDiagonal(target).get(0);
-        when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
+        when(board.getPiece(between)).thenReturn(new Pawn(Color.BLACK));
 
         game.move(origin, target);
         verify(board).remove(between);
@@ -96,7 +96,7 @@ public class GameWithDraughtsTest {
 
         Coordinate between = mock(Coordinate.class);
         when(origin.betweenDiagonal(target)).thenReturn(Arrays.asList(between));
-        when(board.getPiece(between)).thenReturn(new Piece(Color.BLACK));
+        when(board.getPiece(between)).thenReturn(new Pawn(Color.BLACK));
 
         this.game.move(origin, target);
         verify(board).remove(between);
@@ -108,7 +108,7 @@ public class GameWithDraughtsTest {
         when(board.getColor(origin)).thenReturn(pieceColor);
         when(board.getPiece(origin)).thenReturn(piece);
         when(piece.isCorrect(origin, target, board)).thenReturn(null);
-        when(board.remove(origin)).thenReturn(new Piece(pieceColor));
-        when(board.getPiece(target)).thenReturn(new Piece(pieceColor));
+        when(board.remove(origin)).thenReturn(new Pawn(pieceColor));
+        when(board.getPiece(target)).thenReturn(new Pawn(pieceColor));
     }
 }

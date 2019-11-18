@@ -13,8 +13,7 @@ class Draught extends Piece {
         return Math.abs(origin.getRow() - target.getRow()) > 0;
     }
 
-    @Override
-    Error isCorrect(Coordinate origin, Coordinate target, PieceProvider pieceProvider) {
-       return this.commonValidations(origin, target, pieceProvider);
+    Error customIsCorrect(Coordinate origin, Coordinate target, PieceProvider pieceProvider) {
+       return null;
     }
 }
