@@ -10,7 +10,7 @@ class PlayView extends SubView {
     private static final String MESSAGE = "Derrota!!! No puedes mover tus fichas!!!";
     private static final String FORMAT = "xx.xx";
 
-    private GameView gameView;
+    private GameView gameView = new GameView();
 
     PlayView() {
         super();
