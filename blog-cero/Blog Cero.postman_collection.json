@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "b9a9d153-7081-46b5-8ad1-c181e9fc0dd0",
+		"name": "Blog Cero",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create new post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92a430b3-024d-4420-b7b1-9fc093b33d0f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"post title1\",\n\t\"body\": \"post body\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new comment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "252b223e-28f2-4e58-a845-10c3d9938ccc",
+						"exec": [
+							"pm.sendRequest(\"localhost:8080/api/posts\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"postId\", data[0].id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb39e7d9-d8c3-44ac-88eb-a2a059a17964",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d188e818-e0f6-47da-9c9b-244edd4b0970",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"post only contain id and title\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].id).is.not.undefined;",
+							"    pm.expect(jsonData[0].title).is.not.undefined;",
+							"    pm.expect(jsonData[0].body).is.undefined;",
+							"    pm.expect(jsonData[0].comments).is.undefined;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get single post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1abeca25-a4fe-465b-9a3e-a0c991b15788",
+						"exec": [
+							"pm.sendRequest(\"localhost:8080/api/posts\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"postId\", data[0].id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a799fea-c81d-4cc8-94e8-0bdbf34024c3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"post contains body and comments\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.id).is.not.undefined;",
+							"    pm.expect(jsonData.title).is.not.undefined;",
+							"    pm.expect(jsonData.body).is.not.undefined;",
+							"    pm.expect(jsonData.comments).is.not.undefined;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all comment of the post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "37cedc81-c0b8-4f5f-82b4-cdb58fc11214",
+						"exec": [
+							"pm.sendRequest(\"localhost:8080/api/posts\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"postId\", data[0].id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b4278ec-6f60-4efc-a6e6-91593eacf724",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete comment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "66a132de-0c6e-4def-884c-0ae2c2c72109",
+						"exec": [
+							"pm.sendRequest(\"localhost:8080/api/posts\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"postId\", data[0].id);",
+							"    ",
+							"    pm.sendRequest(\"localhost:8080/api/posts/\" + data[0].id + \"/comments\" , function (err, response) {",
+							"    ",
+							"        var data = response.json();",
+							"        console.log(data);",
+							"        pm.environment.set(\"commentId\", data[0].id);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "41d178ca-53dc-4bf6-91a4-8f96bd8c078d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments/{{commentId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,4 +1,6 @@
 .idea
+.mvn
+.setting
 *.iml
 out/*
 */target
