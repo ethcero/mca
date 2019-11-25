@@ -1,34 +1,62 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
+## Practica 1
 
- * Practica 1: 
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2: 
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+### REST API
 
-## Patrones y arquitectura software
 
- * Practica 3: 
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)   
- * Practica 4: 
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5: 
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6: 
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
- 
-## Diseño y calidad software
+#### POST /api/posts
 
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+**Body:**   
+```
+{
+"title": "post title1",
+"body": "post body"
+}
+```
+**Response:**  
+```
+{"id":1,"title":"post title1","body":"post body","comments":[]}
+```
+
+#### GET /api/posts
+**Response:**
+```
+[{"id":1,"title":"post title1"}]
+```
     
-## Programación Extrema
+#### GET /api/posts/_{{postId}}_
+**Response:**
 
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
- 
+```
+{"id":1,"title":"post title1","body":"post body","comments":[{"id":2,"user":"comment user1","body":"comment body"}]}
+```
+
+
+#### POST /api/posts/_{{postId}}_/comments
+**Body:**
+```
+{
+"user": "comment user1",
+"body": "comment body"
+}
+```
+**Response:**
+```
+{"id":2,"user":"comment user1","body":"comment body"}
+```
+
+#### GET /api/posts/_{{postId}}_/comments
+**Response:**
+
+```
+[{"id":2,"user":"comment user1","body":"comment body"}]
+```
+
+#### DELETE /api/posts/_{{postId}}_/comments/_{{commentId}}_
+**Response:**
+
+```
+[{"id":2,"user":"comment user1","body":"comment body"}]
+```
+

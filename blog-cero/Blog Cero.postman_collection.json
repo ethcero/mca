@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b9a9d153-7081-46b5-8ad1-c181e9fc0dd0",
+		"_postman_id": "fdc5fa09-fd62-443c-a69a-a6562b407a8f",
 		"name": "Blog Cero",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -265,7 +265,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -338,7 +338,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
