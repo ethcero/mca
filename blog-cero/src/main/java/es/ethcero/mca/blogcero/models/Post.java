@@ -18,6 +18,13 @@ public class Post {
     private String body;
     private Map<Long, Comment> comments = new ConcurrentHashMap<>();
 
+    public Post(){}
+
+    public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
     public List<Comment> getComments() {
         return new ArrayList<>(comments.values());
     }

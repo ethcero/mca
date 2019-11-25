@@ -6,6 +6,14 @@ public class Comment {
     private String user;
     private String body;
 
+    public Comment() {
+    }
+
+    public Comment(String user, String body) {
+        this.user = user;
+        this.body = body;
+    }
+
     public long getId() {
         return id;
     }
