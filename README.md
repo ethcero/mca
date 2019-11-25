@@ -7,26 +7,26 @@
 
 #### POST /api/posts
 
-**Body:**   
+Body:   
 ```
 {
 "title": "post title1",
 "body": "post body"
 }
 ```
-**Response:**  
+Response:  
 ```
 {"id":1,"title":"post title1","body":"post body","comments":[]}
 ```
 
 #### GET /api/posts
-**Response:**
+Response:
 ```
 [{"id":1,"title":"post title1"}]
 ```
     
 #### GET /api/posts/_{{postId}}_
-**Response:**
+Response:
 
 ```
 {"id":1,"title":"post title1","body":"post body","comments":[{"id":2,"user":"comment user1","body":"comment body"}]}
@@ -34,27 +34,27 @@
 
 
 #### POST /api/posts/_{{postId}}_/comments
-**Body:**
+Body:
 ```
 {
 "user": "comment user1",
 "body": "comment body"
 }
 ```
-**Response:**
+Response:
 ```
 {"id":2,"user":"comment user1","body":"comment body"}
 ```
 
 #### GET /api/posts/_{{postId}}_/comments
-**Response:**
+Response:
 
 ```
 [{"id":2,"user":"comment user1","body":"comment body"}]
 ```
 
 #### DELETE /api/posts/_{{postId}}_/comments/_{{commentId}}_
-**Response:**
+Response:
 
 ```
 [{"id":2,"user":"comment user1","body":"comment body"}]
