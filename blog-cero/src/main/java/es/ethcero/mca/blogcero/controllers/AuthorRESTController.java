@@ -33,7 +33,7 @@ public class AuthorRESTController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    Author postPost(@RequestBody Author author){
+    Author addAuthor(@RequestBody Author author){
 
         return this.service.addAuthor(author);
     }
