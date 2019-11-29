@@ -1,5 +1,6 @@
 package es.ethcero.mca.blogcero.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,8 @@ public class AuthorRESTController {
     }
 
     @GetMapping("/{authorId}/comments")
-    ResponseEntity<List<Comment>> getPost(@PathVariable long authorId) {
+    @JsonView(Comment.NoAuthor.class)
+    ResponseEntity<List<Comment>> getComments(@PathVariable long authorId) {
 
         Optional<List<Comment>> comments = this.service.getAuthorComments(authorId);
 

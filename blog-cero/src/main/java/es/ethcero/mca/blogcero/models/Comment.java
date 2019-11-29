@@ -1,40 +1,42 @@
 package es.ethcero.mca.blogcero.models;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import es.ethcero.mca.blogcero.Views.Views;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Comment {
 
+    public interface NoAuthor{}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Views.Basic.class, NoAuthor.class})
     private long id;
-    @JsonView(Author.Basic.class)
-    @OneToOne
+
+    @ManyToOne
     private Author author;
+
+    @JsonView({Views.Basic.class, NoAuthor.class})
+    private Long postId;
+
+    @JsonView({Views.Full.class, NoAuthor.class})
     private String body;
 
-    public Comment() {
+    public Long getPostId() {
+        return postId;
     }
 
-    public Comment(Author author, String body) {
-        this.author = author;
-        this.body = body;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    @JsonView(Views.Basic.class)
     public Author getAuthor() {
         return author;
     }

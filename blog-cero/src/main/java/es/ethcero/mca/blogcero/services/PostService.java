@@ -1,5 +1,6 @@
 package es.ethcero.mca.blogcero.services;
 
+import es.ethcero.mca.blogcero.restModels.NewComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,33 +46,32 @@ public class PostService {
         this.commentRepository.deleteById(commentId);
     }
 
-    public Optional<Comment> addComment(long postId, Comment comment) {
+    public Optional<Comment> addComment(long postId, NewComment comment) {
+        Comment comment1 = new Comment();
+        comment1.setBody(comment.getBody());
 
-        Optional<Post> post = this.postRepository.findById(postId);
-        if( post.isPresent() && this.authorRepository.existsById(comment.getAuthor().getId())) {
-            post.get().addComment(comment);
-            this.postRepository.save(post.get());
+        Optional<Author> authorOp = this.authorRepository.findById(comment.getAuthorId());
 
-            return Optional.of(comment);
+        if(!authorOp.isPresent()) {
+            return Optional.empty();
+        }
+        if(!this.postRepository.existsById(postId)) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        comment1.setAuthor(authorOp.get());
+        comment1.setPostId(postId);
+        this.commentRepository.save(comment1);
+
+        return Optional.of(comment1);
     }
 
-/*    public Optional<Comment> getComment(long postId, long commentId) {
-        Optional<Post> post = this.postRepository.findById(postId);
-        if( post.isPresent()) {
-            return Optional.ofNullable(post.get().getComment(commentId));
-        }
-
-        return Optional.empty();
+    public Optional<Comment> getComment(long commentId) {
+        return this.commentRepository.findById(commentId);
     }
-*/
-    public Optional<List<Comment>> getComments(long postId) {
-        Optional<Post> post = this.postRepository.findById(postId);
 
-        return post.isPresent() ? Optional.of(post.get().getComments()): Optional.empty();
-
+    public List<Comment> getComments(long postId) {
+        return this.commentRepository.findByPostId(postId);
     }
 
     public Author addAuthor(Author author) {

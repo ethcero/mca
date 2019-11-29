@@ -1,7 +1,11 @@
 package es.ethcero.mca.blogcero.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import es.ethcero.mca.blogcero.Views.Views;
+import es.ethcero.mca.blogcero.models.Author;
+import es.ethcero.mca.blogcero.restModels.NewComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +35,14 @@ public class PostRESTController {
     private PostService service;
 
     @GetMapping("")
-    @JsonView(Post.Basic.class)
+    @JsonView(Views.Basic.class)
     List<Post> getPosts() {
 
         return this.service.getPosts();
     }
 
     @GetMapping("/{postId}")
+    @JsonView(Views.Full.class)
     ResponseEntity<Post> getPost(@PathVariable long postId) {
 
         Optional<Post> post = this.service.getPost(postId);
@@ -54,26 +59,25 @@ public class PostRESTController {
 
     @PostMapping("/{postId}/comments")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<Comment> postComment(@PathVariable long postId, @RequestBody Comment comment) {
+    ResponseEntity<Comment> postComment(@PathVariable long postId, @RequestBody NewComment comment) {
 
         Optional<Comment> comment1 = this.service.addComment(postId, comment);
         return (ResponseEntity<Comment>) new ResponseCreatedOrNotFound(comment1).response();
     }
 
     @GetMapping("/{postId}/comments")
-    ResponseEntity<List<Comment>> postComment(@PathVariable long postId) {
-
-        Optional<List<Comment>> comments = this.service.getComments(postId);
-        return (ResponseEntity<List<Comment>>) new ResponseObjectOrNotFound(comments).response();
+    @JsonView(Views.Full.class)
+    List<Comment> postComment(@PathVariable long postId) {
+        return this.service.getComments(postId);
     }
 
-/*    @GetMapping("/{postId}/comments/{commentId}")
+    @GetMapping("/{postId}/comments/{commentId}")
     ResponseEntity<Comment> postComment(@PathVariable long postId, @PathVariable long commentId) {
 
-        Optional<Comment> comment = this.service.getComment(postId, commentId);
+        Optional<Comment> comment = this.service.getComment(commentId);
         return (ResponseEntity<Comment>) new ResponseObjectOrNotFound(comment).response();
     }
-*/
+
     @DeleteMapping("/{postId}/comments/{commentId}")
     ResponseEntity deleteComment(@PathVariable long postId, @PathVariable long commentId) {
 

@@ -1,39 +1,33 @@
 package es.ethcero.mca.blogcero.models;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import es.ethcero.mca.blogcero.Views.Views;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Post {
 
-    public interface Basic {}
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView(Views.Basic.class)
     private long id;
-    @JsonView(Basic.class)
+
+    @JsonView(Views.Basic.class)
     private String title;
+
+    @JsonView(Views.Full.class)
     private String body;
 
-    @OneToMany
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
+    @JsonView(Views.Full.class)
+    private Set<Comment> comments = new HashSet<>();
 
-    public Post(){}
-
-    public Post(String title, String body) {
-        this.title = title;
-        this.body = body;
-    }
-
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 

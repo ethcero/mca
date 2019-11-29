@@ -12,5 +12,6 @@ import es.ethcero.mca.blogcero.models.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByAuthorId(Long authorId);
+    List<Comment> findByPostId(Long postId);
 
 }

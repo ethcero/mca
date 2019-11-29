@@ -1,11 +1,12 @@
 package es.ethcero.mca.blogcero.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import es.ethcero.mca.blogcero.Views.Views;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author fran
@@ -13,31 +14,25 @@ import javax.persistence.Id;
 @Entity
 public class Author {
 
-    public interface Basic{}
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Basic.class)
+    @JsonView(Views.Basic.class)
     private long id;
-    @JsonView(Basic.class)
+
+    @JsonView(Views.Basic.class)
     private String name;
+
     private int age;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getName() {
@@ -45,7 +40,4 @@ public class Author {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
