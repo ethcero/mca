@@ -56,7 +56,7 @@ Response:
 #### DELETE /api/posts/_{{postId}}_/comments/_{{commentId}}_
 Response:
 
-```
+``
 [{"id":2,"user":"comment user1","body":"comment body"}]
 ```
 

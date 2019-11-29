@@ -2,21 +2,29 @@ package es.ethcero.mca.blogcero.models;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Post {
 
     public interface Basic {}
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Basic.class)
     private long id;
     @JsonView(Basic.class)
     private String title;
     private String body;
-    private Map<Long, Comment> comments = new ConcurrentHashMap<>();
+
+    @OneToMany
+    private List<Comment> comments;
 
     public Post(){}
 
@@ -26,7 +34,7 @@ public class Post {
     }
 
     public List<Comment> getComments() {
-        return new ArrayList<>(comments.values());
+        return comments;
     }
 
     public long getId() {
@@ -53,16 +61,7 @@ public class Post {
         this.body = body;
     }
 
-    public Comment getComment(long id) {
-        return this.comments.get(id);
-    }
-
-    public Comment addComment(Comment comment) {
-       this.comments.put(comment.getId(), comment);
-       return this.comments.get(comment.getId());
-    }
-
-    public Comment removeComment(long id) {
-        return this.comments.remove(id);
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

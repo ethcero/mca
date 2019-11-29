@@ -1,16 +1,29 @@
 package es.ethcero.mca.blogcero.models;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Comment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String user;
+    @JsonView(Author.Basic.class)
+    @OneToOne
+    private Author author;
     private String body;
 
     public Comment() {
     }
 
-    public Comment(String user, String body) {
-        this.user = user;
+    public Comment(Author author, String body) {
+        this.author = author;
         this.body = body;
     }
 
@@ -22,12 +35,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getBody() {

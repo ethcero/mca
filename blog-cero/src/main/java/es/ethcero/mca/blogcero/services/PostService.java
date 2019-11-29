@@ -1,75 +1,95 @@
 package es.ethcero.mca.blogcero.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+import es.ethcero.mca.blogcero.models.Author;
 import es.ethcero.mca.blogcero.models.Comment;
 import es.ethcero.mca.blogcero.models.Post;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
+import es.ethcero.mca.blogcero.repository.AuthorRepository;
+import es.ethcero.mca.blogcero.repository.CommentRepository;
+import es.ethcero.mca.blogcero.repository.PostRepository;
 
 @Service
 public class PostService {
 
-    Map<Long, Post> posts = new ConcurrentHashMap<>();
-    AtomicLong lastId = new AtomicLong();
+    @Autowired
+    PostRepository postRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    AuthorRepository authorRepository;
 
     public List<Post> getPosts() {
-        return new ArrayList<>(this.posts.values());
+
+        return this.postRepository.findAll();
     }
 
-    public Post getPost(long id) {
-        return this.posts.get(id);
+    public Optional<Post> getPost(long id) {
+
+        return this.postRepository.findById(id);
     }
 
     public Post addPost(Post post) {
 
-        post.setId(lastId.incrementAndGet());
-        this.posts.put(post.getId(), post);
+        this.postRepository.save(post);
         return post;
     }
 
-    public Comment deleteComment(long postId, long commentId) {
-
-        Post post = this.posts.get(postId);
-        if( post != null) {
-            return post.removeComment(commentId);
-        }
-
-        return null;
+    public void deleteComment(long commentId) {
+        this.commentRepository.deleteById(commentId);
     }
 
-    public Comment addComment(long postId, Comment comment) {
-        Post post = this.posts.get(postId);
-        if( post != null) {
-            comment.setId(lastId.incrementAndGet());
-            return post.addComment(comment);
+    public Optional<Comment> addComment(long postId, Comment comment) {
+
+        Optional<Post> post = this.postRepository.findById(postId);
+        if( post.isPresent() && this.authorRepository.existsById(comment.getAuthor().getId())) {
+            post.get().addComment(comment);
+            this.postRepository.save(post.get());
+
+            return Optional.of(comment);
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public Comment getComment(long postId, long commentId) {
-        Post post = this.posts.get(postId);
-        if( post != null) {
-            return post.getComment(commentId);
+/*    public Optional<Comment> getComment(long postId, long commentId) {
+        Optional<Post> post = this.postRepository.findById(postId);
+        if( post.isPresent()) {
+            return Optional.ofNullable(post.get().getComment(commentId));
         }
 
-        return null;
+        return Optional.empty();
+    }
+*/
+    public Optional<List<Comment>> getComments(long postId) {
+        Optional<Post> post = this.postRepository.findById(postId);
+
+        return post.isPresent() ? Optional.of(post.get().getComments()): Optional.empty();
+
     }
 
-    public List<Comment> getComments(long postId) {
-        Post post = this.posts.get(postId);
-        if( post != null) {
-            return post.getComments();
-        }
+    public Author addAuthor(Author author) {
+        this.authorRepository.save(author);
+        return author;
+    }
 
-        return null;
+    public Optional<List<Comment>> getAuthorComments(long authorId) {
+
+        if(this.authorRepository.existsById(authorId)){
+            return Optional.of(this.commentRepository.findByAuthorId(authorId));
+        }
+        return Optional.empty();
+
+    }
+
+    public List<Author> getAuthors() {
+        return this.authorRepository.findAll();
     }
 
 }

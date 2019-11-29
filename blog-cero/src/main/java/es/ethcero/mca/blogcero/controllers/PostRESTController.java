@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 import es.ethcero.mca.blogcero.models.Comment;
 import es.ethcero.mca.blogcero.models.Post;
@@ -39,7 +40,7 @@ public class PostRESTController {
     @GetMapping("/{postId}")
     ResponseEntity<Post> getPost(@PathVariable long postId) {
 
-        Post post = this.service.getPost(postId);
+        Optional<Post> post = this.service.getPost(postId);
 
         return (ResponseEntity<Post>) new ResponseObjectOrNotFound(post).response();
     }
@@ -55,28 +56,29 @@ public class PostRESTController {
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<Comment> postComment(@PathVariable long postId, @RequestBody Comment comment) {
 
-        Comment comment1 = this.service.addComment(postId, comment);
+        Optional<Comment> comment1 = this.service.addComment(postId, comment);
         return (ResponseEntity<Comment>) new ResponseCreatedOrNotFound(comment1).response();
     }
 
     @GetMapping("/{postId}/comments")
     ResponseEntity<List<Comment>> postComment(@PathVariable long postId) {
 
-        List<Comment> comments = this.service.getComments(postId);
+        Optional<List<Comment>> comments = this.service.getComments(postId);
         return (ResponseEntity<List<Comment>>) new ResponseObjectOrNotFound(comments).response();
     }
 
-    @GetMapping("/{postId}/comments/{commentId}")
+/*    @GetMapping("/{postId}/comments/{commentId}")
     ResponseEntity<Comment> postComment(@PathVariable long postId, @PathVariable long commentId) {
 
-        Comment comment = this.service.getComment(postId, commentId);
+        Optional<Comment> comment = this.service.getComment(postId, commentId);
         return (ResponseEntity<Comment>) new ResponseObjectOrNotFound(comment).response();
     }
-
+*/
     @DeleteMapping("/{postId}/comments/{commentId}")
-    Comment deleteComment(@PathVariable long postId, @PathVariable long commentId) {
+    ResponseEntity deleteComment(@PathVariable long postId, @PathVariable long commentId) {
 
-        return this.service.deleteComment(postId, commentId);
+        this.service.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
     }
 
 }
