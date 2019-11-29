@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "fdc5fa09-fd62-443c-a69a-a6562b407a8f",
+		"_postman_id": "b9a9d153-7081-46b5-8ad1-c181e9fc0dd0",
 		"name": "Blog Cero",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -41,17 +41,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/posts",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts"
-					]
-				}
+				"url": "localhost:8080/api/posts"
 			},
 			"response": []
 		},
@@ -105,19 +95,7 @@
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/posts/{{postId}}/comments",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts",
-						"{{postId}}",
-						"comments"
-					]
-				}
+				"url": "localhost:8080/api/posts/{{postId}}/comments"
 			},
 			"response": []
 		},
@@ -148,17 +126,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/posts",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts"
-					]
-				}
+				"url": "localhost:8080/api/posts"
 			},
 			"response": []
 		},
@@ -204,18 +172,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/posts/{{postId}}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts",
-						"{{postId}}"
-					]
-				}
+				"url": "localhost:8080/api/posts/{{postId}}"
 			},
 			"response": []
 		},
@@ -265,26 +222,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/posts/{{postId}}/comments",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts",
-						"{{postId}}",
-						"comments"
-					]
-				}
+				"url": "localhost:8080/api/posts/{{postId}}/comments"
 			},
 			"response": []
 		},
@@ -338,27 +283,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "localhost:8080/api/posts/{{postId}}/comments/{{commentId}}",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"posts",
-						"{{postId}}",
-						"comments",
-						"{{commentId}}"
-					]
-				}
+				"url": "localhost:8080/api/posts/{{postId}}/comments/{{commentId}}"
 			},
 			"response": []
 		}
