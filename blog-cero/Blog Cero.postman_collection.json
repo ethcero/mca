@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "b9a9d153-7081-46b5-8ad1-c181e9fc0dd0",
 		"name": "Blog Cero",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -41,7 +41,67 @@
 						}
 					}
 				},
-				"url": "localhost:8080/api/posts"
+				"url": {
+					"raw": "localhost:8080/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92a430b3-024d-4420-b7b1-9fc093b33d0f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"pepito\",\n\t\"age\": 23\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/authors",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authors"
+					]
+				}
 			},
 			"response": []
 		},
@@ -58,6 +118,13 @@
 							"    var data = response.json();",
 							"    console.log(data);",
 							"    pm.environment.set(\"postId\", data[0].id);",
+							"});",
+							"",
+							"pm.sendRequest(\"localhost:8080/api/authors\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"authorId\", data[0].id);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -88,14 +155,84 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"raw": "{\n\t\"authorId\": {{authorId}},\n\t\"body\": \"comment bodys\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "localhost:8080/api/posts/{{postId}}/comments"
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all comments of author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d188e818-e0f6-47da-9c9b-244edd4b0970",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"post only contain id and body and postId\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0].id).is.not.undefined;",
+							"    pm.expect(jsonData[0].body).is.not.undefined;",
+							"    pm.expect(jsonData[0].author).is.undefined;",
+							"    pm.expect(jsonData[0].postId).is.not.undefined;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99ce296b-f311-44d7-8abf-0184e3f18dd0",
+						"exec": [
+							"pm.sendRequest(\"localhost:8080/api/authors\", function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"authorId\", data[0].id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/authors/{{authorId}}/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authors",
+						"{{authorId}}",
+						"comments"
+					]
+				}
 			},
 			"response": []
 		},
@@ -126,7 +263,17 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "localhost:8080/api/posts"
+				"url": {
+					"raw": "localhost:8080/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
 			},
 			"response": []
 		},
@@ -163,6 +310,13 @@
 							"    pm.expect(jsonData.title).is.not.undefined;",
 							"    pm.expect(jsonData.body).is.not.undefined;",
 							"    pm.expect(jsonData.comments).is.not.undefined;",
+							"});",
+							"",
+							"pm.test(\"author contain id and name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.comments[0].author.id).is.not.undefined;",
+							"    pm.expect(jsonData.comments[0].author.name).is.not.undefined;",
+							"    pm.expect(jsonData.comments[0].author.age).is.undefined;",
 							"});"
 						],
 						"type": "text/javascript"
@@ -172,7 +326,18 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "localhost:8080/api/posts/{{postId}}"
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -222,14 +387,26 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"user\": \"comment user1\",\n\t\"body\": \"comment body\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "localhost:8080/api/posts/{{postId}}/comments"
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments"
+					]
+				}
 			},
 			"response": []
 		},
@@ -264,7 +441,7 @@
 						"id": "41d178ca-53dc-4bf6-91a4-8f96bd8c078d",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
+							"    pm.response.to.have.status(204);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -290,7 +467,20 @@
 						}
 					}
 				},
-				"url": "localhost:8080/api/posts/{{postId}}/comments/{{commentId}}"
+				"url": {
+					"raw": "localhost:8080/api/posts/{{postId}}/comments/{{commentId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments",
+						"{{commentId}}"
+					]
+				}
 			},
 			"response": []
 		}
