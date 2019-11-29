@@ -1,6 +1,7 @@
 package es.ethcero.mca.blogcero.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import es.ethcero.mca.blogcero.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ import es.ethcero.mca.blogcero.services.PostService;
 public class AuthorRESTController {
 
     @Autowired
-    private PostService service;
+    private AuthorService service;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)

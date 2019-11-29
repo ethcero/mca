@@ -74,22 +74,5 @@ public class PostService {
         return this.commentRepository.findByPostId(postId);
     }
 
-    public Author addAuthor(Author author) {
-        this.authorRepository.save(author);
-        return author;
-    }
-
-    public Optional<List<Comment>> getAuthorComments(long authorId) {
-
-        if(this.authorRepository.existsById(authorId)){
-            return Optional.of(this.commentRepository.findByAuthorId(authorId));
-        }
-        return Optional.empty();
-
-    }
-
-    public List<Author> getAuthors() {
-        return this.authorRepository.findAll();
-    }
 
 }
