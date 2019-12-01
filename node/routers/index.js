@@ -11,4 +11,6 @@ router.use('/', (req, res, next) => {
     next(new HttpError(404))
 })
 
+router.use('/', require('../middlewares/handle-http-error'))
+
 module.exports = router
