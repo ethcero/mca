@@ -25,7 +25,7 @@ exports.search = (req) => {
    
 }
 
-exports.update = (req) => {}
+exports.update = (req) => postCollection.updateOne({"_id": new ObjectId(req.params.postId)}, {"$set": req.body})
 
 exports.delete = (req) => postCollection.deleteOne({"_id": new ObjectId(req.params.postId)})
 
