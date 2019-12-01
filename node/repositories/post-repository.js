@@ -29,7 +29,9 @@ exports.update = (req) => postCollection.updateOne({"_id": new ObjectId(req.para
 
 exports.delete = (req) => postCollection.deleteOne({"_id": new ObjectId(req.params.postId)})
 
-exports.createComment = (req) => {}
-
-exports.deleteComment = (req) => {}
+exports.createComment = (req) => {
+    req.body.id = new ObjectId()
+    return postCollection.updateOne({"_id": new ObjectId(req.params.postId)}, {$push: { comments: req.body }})
+}
+exports.deleteComment = (req) => postCollection.updateOne({"_id": new ObjectId(req.params.postId)}, {$pull: { comments: {"id":  new ObjectId(req.params.commentId) } }})
 

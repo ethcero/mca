@@ -24,11 +24,11 @@ router.delete('/:postId', function (req, res) {
 })
 
 router.post('/:postId/comments', function (req, res) {
-    res.send('Hello World!');
+    PostController.createComment(req, res)
 })
 
 router.delete('/:postId/comments/:commentId', function (req, res) {
-    res.send('Hello World!');
+    PostController.deleteComment(req, res)
 })
 
 

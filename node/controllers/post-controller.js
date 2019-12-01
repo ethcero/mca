@@ -27,3 +27,19 @@ exports.delete = (req, res) => PostRepository.delete(req)
         }    
         res.status(204).end()}
     )
+
+exports.createComment = (req, res) => PostRepository.createComment(req)
+    .then(ret => {
+        if (ret.modifiedCount == 0) {
+            throw new HttpError(404)
+        }    
+        res.send(ret.ops)}
+    )
+
+exports.deleteComment = (req, res) => PostRepository.deleteComment(req)
+    .then(ret => {
+        if (ret.deletedCount == 0) {
+            throw new HttpError(404)
+        }    
+        res.status(204).end()}
+    )
