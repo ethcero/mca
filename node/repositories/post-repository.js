@@ -22,7 +22,6 @@ exports.search = (req) => {
     }else {
         return postCollection.find({}).toArray()
     }
-   
 }
 
 exports.update = (req) => postCollection.updateOne({"_id": new ObjectId(req.params.postId)}, {"$set": req.body})

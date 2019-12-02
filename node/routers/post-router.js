@@ -3,33 +3,19 @@ const PostController = require('../controllers/post-controller')
 
 const router = Router()
 
-router.get('/', function (req, res) {
-    PostController.search(req,res)
-})
+router.get('/', (req, res, next) => PostController.search(req,res, next))
 
-router.get('/:postId', function (req, res) {
-    PostController.search(req,res)
-})
+router.get('/:postId', (req, res, next) => PostController.search(req,res, next))
 
-router.post('/', function (req, res) {    
-    PostController.create(req, res)    
-})
+router.post('/', (req, res, next) => PostController.create(req, res, next))
 
-router.put('/:postId', function (req, res) {
-    PostController.update(req, res)
-})
+router.put('/:postId', (req, res, next) => PostController.update(req, res, next))
 
-router.delete('/:postId', function (req, res) {
-    PostController.delete(req, res)
-})
+router.delete('/:postId', (req, res, next) => PostController.delete(req, res, next))
 
-router.post('/:postId/comments', function (req, res) {
-    PostController.createComment(req, res)
-})
+router.post('/:postId/comments', (req, res, next) => PostController.createComment(req, res, next))
 
-router.delete('/:postId/comments/:commentId', function (req, res) {
-    PostController.deleteComment(req, res)
-})
+router.delete('/:postId/comments/:commentId', (req, res, next) =>  PostController.deleteComment(req, res, next))
 
 
 module.exports = router
