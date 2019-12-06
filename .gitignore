@@ -3,3 +3,6 @@
 out/*
 */target
 node_modules
+package-lock.json
+launch.json
+settings.json
