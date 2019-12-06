@@ -36,3 +36,5 @@
 
  * Practica 1:
     - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
+ * Practica 2:
+    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
