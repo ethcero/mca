@@ -2,7 +2,11 @@ package es.ethcero.mca.worker;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import es.ethcero.mca.grpc.ToUpperCaseRequest;
+import es.ethcero.mca.grpc.ToUpperCaseResponse;
+import es.ethcero.mca.grpc.ToUpperCaseServiceGrpc;
 import es.ethcero.mca.worker.models.Task;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -17,16 +21,12 @@ public class Worker {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
-    @Autowired
-    private AmqpAdmin amqpAdmin;
+
+    @GrpcClient("toUpperCaseServer")
+    private ToUpperCaseServiceGrpc.ToUpperCaseServiceBlockingStub grpcClient;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @PostConstruct
-    public void createQueues() {
-        amqpAdmin.declareQueue(new Queue("tasks", true));
-        amqpAdmin.declareQueue(new Queue("progress", true));
-    }
 
     @RabbitListener(queues = "newTasks", ackMode = "AUTO")
     public void received(String message) throws JsonProcessingException{
@@ -45,8 +45,17 @@ public class Worker {
                 e.printStackTrace();
             }
         }
-        task.setResult("TODO EN MASYUSCULAS");
+
+        task.setResult(toUpperCase(task.getText()));
         publish(task);
+    }
+
+    private String toUpperCase(String text) {
+        ToUpperCaseRequest request = ToUpperCaseRequest.newBuilder()
+                .setText(text)
+                .build();
+        ToUpperCaseResponse response = grpcClient.toUpperCase(request);
+        return response.getResult();
     }
 
     private void publish( Object value) throws JsonProcessingException {

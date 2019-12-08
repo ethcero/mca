@@ -13,5 +13,5 @@ message ToUpperCaseResponse {
 }
 
 service ToUpperCaseService {
-    rpc hello(ToUpperCaseRequest) returns (ToUpperCaseResponse);
+    rpc toUpperCase(ToUpperCaseRequest) returns (ToUpperCaseResponse);
 }
