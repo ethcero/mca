@@ -17,7 +17,7 @@ app.post('/task', function (req, res) {
             "text": req.body.text
         }
         amqp.publish(JSON.stringify(currentTask))
-        res.json({taskId: currentTask.id })
+        res.json(currentTask)
         res.end()
     }else {
         res.status(400).end()

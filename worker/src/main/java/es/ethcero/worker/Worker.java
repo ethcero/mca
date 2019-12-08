@@ -29,7 +29,7 @@ public class Worker {
         amqpAdmin.declareQueue(new Queue("progress", true));
     }
 
-    @RabbitListener(queues = "tasks", ackMode = "AUTO")
+    @RabbitListener(queues = "newTasks", ackMode = "AUTO")
     public void received(String message) throws JsonProcessingException{
         System.out.println("Message from queue: "+message);
 
@@ -41,17 +41,17 @@ public class Worker {
             try {
                 Thread.sleep(1000);
                 task.setProgress(i*10);
-                publish("progress", task);
+                publish(task);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         task.setResult("TODO EN MASYUSCULAS");
-        publish("progress", task);
+        publish(task);
     }
 
-    private void publish(String queue, Object value) throws JsonProcessingException {
-        System.out.println("publishToQueue: " + queue + "; '" + value + "'");
-        rabbitTemplate.convertAndSend(queue, objectMapper.writeValueAsString(value));
+    private void publish( Object value) throws JsonProcessingException {
+        System.out.println("publishToQueue: '" + value + "'");
+        rabbitTemplate.convertAndSend("tasksProgress", objectMapper.writeValueAsString(value));
     }
 }

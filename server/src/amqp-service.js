@@ -3,8 +3,8 @@ const amqp = require('amqplib/callback_api');
 const CONN_URL = 'amqp://guest:guest@localhost';
 
 let ch = null;
-var taskQueue = 'tasks';
-var progressQueue = 'progress';
+var taskQueue = 'newTasks';
+var progressQueue = 'tasksProgress';
 
 process.on('exit', (code) => {
     ch.close();
