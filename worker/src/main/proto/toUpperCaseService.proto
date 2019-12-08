@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package es.ethcero.mca.grpc;
+
+message ToUpperCaseRequest {
+    string text = 1;
+}
+
+message ToUpperCaseResponse {
+    string result = 1;
+}
+
+service ToUpperCaseService {
+    rpc hello(ToUpperCaseRequest) returns (ToUpperCaseResponse);
+}
