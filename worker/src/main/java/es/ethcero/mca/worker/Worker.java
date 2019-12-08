@@ -30,7 +30,7 @@ public class Worker {
 
     @RabbitListener(queues = "newTasks", ackMode = "AUTO")
     public void received(String message) throws JsonProcessingException{
-        System.out.println("Message from queue: "+message);
+        System.out.println("Message from queue 'newTasks': "+message);
 
 
         Task task = objectMapper.readValue(message, Task.class);
@@ -59,7 +59,8 @@ public class Worker {
     }
 
     private void publish( Object value) throws JsonProcessingException {
-        System.out.println("publishToQueue: '" + value + "'");
-        rabbitTemplate.convertAndSend("tasksProgress", objectMapper.writeValueAsString(value));
+        String data = objectMapper.writeValueAsString(value);
+        System.out.println("publishToQueue 'tasksProgress': '" + data + "'");
+        rabbitTemplate.convertAndSend("tasksProgress",data );
     }
 }

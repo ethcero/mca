@@ -27,6 +27,7 @@ app.post('/task', function (req, res) {
 })
 
 app.get('/task/:id', function (req, res) {   
+    console.log('/task/:id endpoint executed')
     if(req.params.id == currentTask.id){
         if(lastMessage) {
             res.send(lastMessage)
@@ -40,7 +41,7 @@ app.get('/task/:id', function (req, res) {
 
 app.ws('/notifications', function (ws, req) {
     amqp.consume((payload) => {
-        console.log("payload of WS consumer: "+payload)
+        console.log("Sending to WS client: "+payload)
         lastMessage = payload
         ws.send(lastMessage)
     })

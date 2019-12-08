@@ -23,11 +23,13 @@ amqp.connect(CONN_URL, async function (err, conn) {
 });
 
 exports.publish = (data) => {
+    console.log('Publishing to '+ taskQueue + ': ' + data)
     ch.sendToQueue(taskQueue, Buffer.from(data));
 }
 
 exports.consume = (callback) => {
     ch.consume(progressQueue, (msg) => {
+        console.log('Consuming from ' + progressQueue + ': ' + msg.content.toString('utf8'))
         callback(msg.content.toString('utf8'))
     }, { noAck: true });
 }
