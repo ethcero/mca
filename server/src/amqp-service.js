@@ -3,6 +3,8 @@ const amqp = require('amqplib/callback_api');
 const CONN_URL = 'amqp://guest:guest@localhost';
 
 let ch = null;
+var taskQueue = 'tasks';
+var progressQueue = 'progress';
 
 process.on('exit', (code) => {
     ch.close();
@@ -11,15 +13,21 @@ process.on('exit', (code) => {
 
 
 amqp.connect(CONN_URL, async function (err, conn) {
-    ch = await conn.createChannel();
+    ch = await conn.createChannel();    
+    ch.assertQueue(taskQueue, {
+        durable: true
+      });
+    ch.assertQueue(progressQueue, {
+    durable: true
+    });
 });
 
 exports.publish = (data) => {
-    ch.sendToQueue("messages", Buffer.from(data));
+    ch.sendToQueue(taskQueue, Buffer.from(data));
 }
 
 exports.consume = (callback) => {
-    ch.consume('messages', (msg) => {
-        callback(msg.content.toString())
+    ch.consume(progressQueue, (msg) => {
+        callback(msg.content.toString('utf8'))
     }, { noAck: true });
 }

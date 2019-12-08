@@ -1,10 +1,13 @@
 
 let socket = new WebSocket("ws://"+window.location.host+"/notifications")
-var xhttp = new XMLHttpRequest()
+let xhttp = new XMLHttpRequest()
+
+let task
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        setProgress(this.responseText)
+        task = JSON.parse(this.responseText)
+        processData( task)
     }
   }
 
@@ -15,7 +18,7 @@ socket.onopen = function (e) {
 
 socket.onmessage = function (event) {
     console.log(`[message] Data received from server: ${event.data}`)
-    setProgress(event.data) 
+    processData(JSON.parse(event.data)) 
 }
 
 socket.onclose = function (event) {
@@ -38,10 +41,16 @@ function sendMessage() {
 }
 
 function getProgress() {
-    xhttp.open("GET", "http://"+window.location.host+"/task/fakeid", true)
+    xhttp.open("GET", "http://"+window.location.host+"/task/"+task.id, true)
     xhttp.send();
 }
 
-function setProgress(value) {
-    document.getElementById("progress").innerHTML = `Progress: ${value}%` 
+function processData(value) {   
+    let text = ''
+    if(value.progress < 100) {
+        text = `id: ${value.id}\nProgress: ${value.progress}%` 
+    } else if(value.result) {
+        text = `id: ${value.id}\nResult: ${value.result}` 
+    }
+    document.getElementById("progress").innerHTML = text
 }

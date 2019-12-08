@@ -6,26 +6,43 @@ const amqp = require('./amqp-service')
 app.use(express.static('./public'))
 app.use('/', express.json())
 
-let progress = 0
+let currentTask;
+let lastMessage;
 
 app.post('/task', function (req, res) {
     console.log('/task endpoint executed')
     if(req.body.text != '') {
-        amqp.publish(req.body.text)
+        currentTask = {
+            "id": 1,
+            "text": req.body.text
+        }
+        amqp.publish(JSON.stringify(currentTask))
+        res.json({taskId: currentTask.id })
+        res.end()
+    }else {
+        res.status(400).end()
     }
-    res.json({message:"Your text is: " + req.body.text})
-    res.end()
+    
+    
 })
 
 app.get('/task/:id', function (req, res) {   
-    res.send(progress)
+    if(req.params.id == currentTask.id){
+        if(lastMessage) {
+            res.send(lastMessage)
+        } else {
+            res.send("Not data yet")
+        }
+    }else{
+        res.status(404).end()
+    }
 })
 
 app.ws('/notifications', function (ws, req) {
     amqp.consume((payload) => {
         console.log("payload of WS consumer: "+payload)
-        progress = payload
-        ws.send(progress)
+        lastMessage = payload
+        ws.send(lastMessage)
     })
 })
 
