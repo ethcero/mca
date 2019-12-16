@@ -20,3 +20,18 @@ github:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
+
+google:
+  client:
+    clientId: 77986729770-ifn4ggag63st3l0957afiq4m4ptnlonk.apps.googleusercontent.com
+    clientSecret: YJgFJ7Uy1EeiDB12ys-66Jh4
+    accessTokenUri: https://oauth2.googleapis.com/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+    projectId: mca-oauth2
+    clientAuthenticationScheme: form
+    scope:
+      - openid
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo

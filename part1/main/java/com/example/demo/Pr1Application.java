@@ -1,11 +1,5 @@
 package com.example.demo;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.Filter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +8,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -29,12 +22,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CompositeFilter;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.Filter;
+
+//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+
 @SpringBootApplication
 //@EnableOAuth2Sso
 @EnableOAuth2Client
 //Enlace como anotación
 @RestController
-
 //Extends para poder hacer click en el enlace
 public class Pr1Application extends WebSecurityConfigurerAdapter {
 	 @Autowired
@@ -85,6 +85,14 @@ public class Pr1Application extends WebSecurityConfigurerAdapter {
 		  githubFilter.setTokenServices(tokenServices);
 		  filters.add(githubFilter);
 
+			OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/google");
+			OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oauth2ClientContext);
+			googleFilter.setRestTemplate(googleTemplate);
+			tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), google().getClientId());
+			tokenServices.setRestTemplate(googleTemplate);
+			googleFilter.setTokenServices(tokenServices);
+			filters.add(googleFilter);
+
 		  filter.setFilters(filters);
 		  return filter;
 	
@@ -123,4 +131,16 @@ public class Pr1Application extends WebSecurityConfigurerAdapter {
 	  public ResourceServerProperties githubResource() {
 	  	return new ResourceServerProperties();
 	  }
+
+	@Bean
+	@ConfigurationProperties("google.client")
+	public AuthorizationCodeResourceDetails google() {
+		return new AuthorizationCodeResourceDetails();
+	}
+
+	@Bean
+	@ConfigurationProperties("google.resource")
+	public ResourceServerProperties googleResource() {
+		return new ResourceServerProperties();
+	}
 }

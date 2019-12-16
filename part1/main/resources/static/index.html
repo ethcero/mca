@@ -23,6 +23,9 @@
 		<div>
     		With Github: <a href="/login/github">click here</a>
   		</div>
+		<div>
+			With Google: <a href="/login/google">click here</a>
+		</div>
 		<div class="container authenticated">
 	  	Logged in as: <span id="user"></span>
 	  		<div>
@@ -32,15 +35,15 @@
 	</div>	
 	
 	<!-- No hacer NUNCA :) -->
-	<!-- Autenticarse -->		
+	<!-- Autenticarse -->
 	<script type="text/javascript">
     $.get("/user", function(data) {
         $("#user").html(data.userAuthentication.details.name);
         $(".unauthenticated").hide()
         $(".authenticated").show()
     });
-    
-    <!-- Desautenticarse :) -->	
+
+    <!-- Desautenticarse :) -->
     var logout = function() {
         $.post("/logout", function() {
             $("#user").html('');
@@ -49,8 +52,8 @@
         })
         return true;
     }
-    
-    <!-- Cookie para evitar XSRF -->	
+
+    <!-- Cookie para evitar XSRF -->
     $.ajaxSetup({
     	beforeSend : function(xhr, settings) {
     	  if (settings.type == 'POST' || settings.type == 'PUT'
