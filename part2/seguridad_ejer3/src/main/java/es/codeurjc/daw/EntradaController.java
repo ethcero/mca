@@ -1,11 +1,5 @@
 package es.codeurjc.daw;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 
 @RestController
 @RequestMapping("/")
@@ -49,9 +49,8 @@ public class EntradaController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("{name}")
 	public List<Entrada> getEntrada(@PathVariable String name) {
-		String query = "SELECT * FROM Entrada WHERE name = '"+name+"'";
-		Query q = entityManager.createNativeQuery(query, Entrada.class);
-		return q.getResultList();
+		List<Entrada> found = repository.findByName(name);
+		return found;
 	}
 	
 	@PostMapping
