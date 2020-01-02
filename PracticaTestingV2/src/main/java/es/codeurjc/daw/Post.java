@@ -1,12 +1,12 @@
 package es.codeurjc.daw;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 public class Post {
 
@@ -33,6 +33,8 @@ public class Post {
 
 	@JsonIgnore
 	private Map<Long, Comment> commentsMap = new HashMap<>();
+
+	public Post(){}
 
 	public Post(String title, String content) {
 		this.title = title;

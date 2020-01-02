@@ -16,6 +16,8 @@ public class Comment {
 	@JsonView(Full.class)
 	private String message;
 
+	public Comment(){}
+
 	public Comment(String author, String message) {
 		this.author = author;
 		this.message = message;
