@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
@@ -17,7 +18,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.path.json.JsonPath.from;
 
 /**
  * @author fran
@@ -28,94 +28,97 @@ public class BlogRestControllerTest {
     @LocalServerPort
     int port;
 
-    Response postResponse;
+    Post fakePost;
 
     @BeforeEach
     public void setUp() {
         RestAssured.port = port;
-        postResponse = createFakePost();
+        fakePost = createFakePost();
     }
 
     @Test
     public void givenPostWhenCreateNewPostThenReturnTheCreatedPost(){
-
-       postResponse.
-                then().
-                statusCode(201).
-                contentType(ContentType.JSON).
-                body("id", notNullValue()).
-                body("title", equalTo("testTitle"));
-
-       Response getPostResponse = getFakePost();
-       getPostResponse.then().statusCode(200);
+        getFakePost()
+            .then()
+            .statusCode(200)
+            .body("id", equalTo((int)fakePost.getId()))
+            .body("title", equalTo(fakePost.getTitle()));
 
     }
 
     @Test
     public void givenPostWhenCreateNewCommentThenReturnTheCreatedComment(){
 
-        Response commentResponse = createFakeComment();
-        commentResponse.
-                then().
-                statusCode(201).
-                contentType(ContentType.JSON).
-                body("id", notNullValue()).
-                body("author", equalTo("authorTest")).
-                body("message", equalTo("messagetest"));
+        Comment comment = createFakeComment();
 
-        Response getPostResponse = getFakePost();
-
-        getPostResponse.then().
-                body("comments", not(empty()));
+        getFakePost()
+                .then()
+                .body("comments", not(empty()))
+                .body("comments.id", contains((int)comment.getId()));
 
     }
 
     @Test
     public void givenPostWithCommentsWhenDeleteCommentThenCommentDeleted(){
+        Comment comment = createFakeComment();
 
-        int postId = from(postResponse.getBody().asString()).get("id");
-
-        Response commentResponse = createFakeComment();
-        int commentId = from(commentResponse.getBody().asString()).get("id");
-
-        given().
-            request()
-                .delete("/api/post/" + postId + "/comment/" + commentId)
+        given()
+                .request()
+                .delete("/api/post/" + fakePost.getId() + "/comment/" + comment.getId())
                 .then().statusCode(204);
 
-        Response getPostResponse = getFakePost();
-        getPostResponse.then().
-                body("comments",empty());
+        getFakePost()
+                .then()
+                .body("comments",empty());
     }
 
 
-    private Response createFakePost(){
+    private Post createFakePost(){
         Post expectedPost = new Post("testTitle", "testContent");
 
-        return given().
-                body(expectedPost).
-                contentType(ContentType.JSON).
-                when().
-                post("/api/post").
-                thenReturn();
+        Response response =  given()
+                .body(expectedPost)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/post")
+                .thenReturn();
+
+        response
+                .then()
+                .statusCode(201)
+                .contentType(ContentType.JSON)
+                .body("id", notNullValue())
+                .body("title", equalTo(expectedPost.getTitle()));
+
+        return response.as(Post.class);
     }
 
-    private Response createFakeComment() {
-        int postId = from(postResponse.getBody().asString()).get("id");
+    private Comment createFakeComment() {
 
         Comment expectedComment = new Comment("authorTest", "messagetest");
 
-        return given().
-                body(expectedComment).
-                contentType(ContentType.JSON).
-                when().
-                post("/api/post/" + postId + "/comment" ).
-                thenReturn();
+        Response response = given()
+                .body(expectedComment)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/post/" + fakePost.getId() + "/comment" )
+                .thenReturn();
+
+        response
+                .then()
+                .statusCode(201)
+                .contentType(ContentType.JSON)
+                .body("id", notNullValue())
+                .body("author", equalTo(expectedComment.getAuthor()))
+                .body("message", equalTo(expectedComment.getMessage()));
+
+        return response.as(Comment.class);
     }
 
     private Response getFakePost(){
-        int postId = from(postResponse.getBody().asString()).get("id");
-
-        return given().request().get("/api/post/"+postId).thenReturn();
+        return given()
+                .request()
+                .get("/api/post/"+fakePost.getId())
+                .thenReturn();
     }
 }
