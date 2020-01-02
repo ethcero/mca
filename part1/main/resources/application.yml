@@ -23,8 +23,8 @@ github:
 
 google:
   client:
-    clientId: 77986729770-ifn4ggag63st3l0957afiq4m4ptnlonk.apps.googleusercontent.com
-    clientSecret: YJgFJ7Uy1EeiDB12ys-66Jh4
+    clientId: 77986729770-v8i0r0kpa4942mellcveuff62r4f7638.apps.googleusercontent.com
+    clientSecret: vUefHO7huNlvFkCZ7Mn5KdL9
     accessTokenUri: https://oauth2.googleapis.com/token
     userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
     projectId: mca-oauth2
