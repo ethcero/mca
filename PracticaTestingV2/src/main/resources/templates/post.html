@@ -5,10 +5,10 @@
 	<span id="postContent">{{post.content}}</span>
 	<hr>
 
-	<h2>Comentarios</h1>
+	<h2>Comentarios</h2>
 	<ul>
 		{{#post.comments}}
-		<li>{{.}}</li>
+		<li class="comment">{{.}}</li>
 		<form id="deleteCommentForm" action="/post/{{post.id}}/comment/{{id}}/delete" method="post">
 			<input type="submit" value="Borrar" />
 		</form>
@@ -19,9 +19,9 @@
 	<h1>Nuevo comentario</h1>
 	<form id="newCommentForm" action="/post/{{post.id}}/comment" method="post">
 		<p>Autor</p>
-		<input type="text" name="author"  value="{{userName}}"/>
+		<input id="author" type="text" name="author"  value="{{userName}}"/>
 		<p>Mensaje</p>
-		<textarea name="message"></textarea>
+		<textarea id="message" name="message"></textarea>
 		<input type="submit" value="Enviar" />
 	</form>
 
