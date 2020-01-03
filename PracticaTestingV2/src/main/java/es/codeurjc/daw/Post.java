@@ -34,8 +34,6 @@ public class Post {
 	@JsonIgnore
 	private Map<Long, Comment> commentsMap = new HashMap<>();
 
-
-
 	public Post(String title, String content) {
 		this.title = title;
 		this.content = content;
