@@ -25,13 +25,13 @@ public class PostPage extends Page {
     }
 
     public PostPage assertPostContent(String title, String content)  {
-        Assert.assertNotNull(findElementWithText(title));
-        Assert.assertNotNull(findElementWithText(content));
+        Assert.assertTrue(isElementPresent(title));
+        Assert.assertTrue(isElementPresent(content));
         return this;
     }
 
     public PostPage assertPostComment() {
-        Assert.assertNotNull(driver.findElement(By.className("comment")));
+        Assert.assertTrue(isElementWithClassNamePresent("comment"));
         return this;
     }
 
@@ -42,21 +42,18 @@ public class PostPage extends Page {
     }
     public PostPage submitComment() {
         driver.findElement(By.id("newCommentForm")).submit();
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("h1")));
         return this;
     }
 
     public PostPage deleteComment() {
         driver.findElement(By.id("deleteCommentForm")).submit();
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("h1")));
         return this;
     }
 
     public PostPage assertCommentDeleted() {
-        Assert.assertTrue(driver.findElements(By.className("comment")).isEmpty());
+        Assert.assertFalse(isElementWithClassNamePresent("comment"));
         return this;
-    }
-
-    public BlogPage returnHome() {
-        findElementWithText("Atrás").click();
-        return new BlogPage(this);
     }
 }

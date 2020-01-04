@@ -23,9 +23,8 @@ public class BlogPage extends Page {
         return this;
     }
 
-    public NewPostPage newPost() {
-        findElementWithText("Nuevo post").click();
-        return new NewPostPage(this);
+    public NewPostPage newPost(){
+        return new NewPostPage(this).get();
     }
 
 

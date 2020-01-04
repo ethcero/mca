@@ -31,6 +31,7 @@ public class NewPostPage extends Page {
 
     public PostPage submit() {
         driver.findElement(By.xpath("//input[@type='submit']")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("h1")));
         return new PostPage(this);
     }
 }

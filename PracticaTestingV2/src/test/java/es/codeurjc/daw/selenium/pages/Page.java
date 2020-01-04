@@ -43,6 +43,15 @@ public abstract class Page {
         }
     }
 
+    protected boolean isElementWithClassNamePresent(String className) {
+        try {
+            driver.findElement(By.className(className));
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
     protected WebElement findElementWithText(String text) {
         return driver.findElement(getConditionForText(text));
     }
