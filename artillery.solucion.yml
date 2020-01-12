@@ -61,3 +61,33 @@ scenarios:
             url: "/tweets/{{ id }}"
             expect:
                 - statusCode: 200
+  
+    - name: Borrado de un tweet propio
+      weight: 1
+      flow:
+        - get:
+            url: "/logIn"
+            auth:
+                user: "{{ username }}"
+                pass: "{{ password }}"
+            expect:
+                - statusCode: 200
+        - get:
+            url: "/users/{{ userId }}"
+            auth:
+                user: "{{ username }}"
+                pass: "{{ password }}"            
+            expect:
+                - statusCode: 200
+            capture:
+                json: "$.tweets[0].id"
+                as: "id"
+        - delete:
+            url: "/tweets/{{ id }}"
+            ifTrue: "{{ id }} not undefined"
+            expect:
+                - statusCode: 200
+        - get:
+            url: "/tweets/{{ id }}"
+            ifTrue: "{{ id }} not undefined"
+            expect: 404
