@@ -1,0 +1,25 @@
+config:
+    plugins:
+        expect: {}
+    target: 'https://localhost:8443/api'
+    http:
+        pool: 8
+    phases:
+        - duration: 40
+          arrivalRate: 5
+    ensure:
+        p95: 100
+        maxErrorRate: 0
+scenarios:
+    - name: Consulta del primer Tweet
+      weight: 5
+      flow:
+        - get:
+            url: "/tweets/"
+            capture:
+                json: "$[0].id"
+                as: "id"
+        - get:
+            url: "/tweets/{{ id }}"
+            expect:
+                - statusCode: 200
