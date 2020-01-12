@@ -10,6 +10,16 @@ config:
     ensure:
         p95: 100
         maxErrorRate: 0
+    payload:
+        - path: "./tweets.csv"
+          fields:
+            - "content"
+            - "image_link"
+        - path: "./users.csv"
+          fields:
+            - "userId"
+            - "username"
+            - "password"
 scenarios:
     - name: Consulta del primer Tweet
       weight: 5
@@ -18,6 +28,34 @@ scenarios:
             url: "/tweets/"
             capture:
                 json: "$[0].id"
+                as: "id"
+        - get:
+            url: "/tweets/{{ id }}"
+            expect:
+                - statusCode: 200
+
+    - name: Crear un nuevo tweet
+      weight: 2
+      flow:
+        - get:
+            url: "/logIn"
+            auth:
+                user: "{{ username }}"
+                pass: "{{ password }}"
+            expect:
+                - statusCode: 200
+        - post:
+            url: "/tweets/"
+            auth:
+                user: "{{ username }}"
+                pass: "{{ password }}"
+            json:
+                content: "{{ content }}"
+                image_link: "{{ image_link }}"
+            expect:
+                - statusCode: 201
+            capture:
+                json: "$.id"
                 as: "id"
         - get:
             url: "/tweets/{{ id }}"
