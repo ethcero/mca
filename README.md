@@ -42,3 +42,8 @@
     - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
  * Practica 4:
     - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
+
+## Pruebas de servicios de internet
+
+ * Practica 1:
+    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
