@@ -47,3 +47,5 @@
 
  * Practica 1:
     - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
+ * Practica 2:
+    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
