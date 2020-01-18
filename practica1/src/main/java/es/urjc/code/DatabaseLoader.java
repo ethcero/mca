@@ -39,12 +39,22 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.initDB();
 
-        // Recupera products
-        List<Product> products = productRepository.findAll();
-        System.out.println("Productos con findAll():");
-        System.out.println("----------------------------------------");
-        showData(products);
+        this.V1Queries();
 
+    }
+
+    private void V1Queries() {
+        // Listado de chats para un cliente concreto
+        List<Chat> chats = chatRepository.findByClientEmail("fulanito@f.com");
+        System.out.println("Listado de chats para un cliente concreto:");
+        System.out.println("----------------------------------------");
+        showData(chats);
+
+        //Técnicos de nivel menor que 5 que no hayan atendido a ningún cliente.
+        List<Technician> technicians = technicianRepository.findByNotAttendedAndLevelLessThan(5);
+        System.out.println("Técnicos de nivel menor que 5 que no hayan atendido a ningún cliente:");
+        System.out.println("----------------------------------------");
+        showData(technicians);
     }
 
 

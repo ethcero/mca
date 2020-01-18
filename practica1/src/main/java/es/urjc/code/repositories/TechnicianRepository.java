@@ -9,6 +9,6 @@ import java.util.List;
 public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
 
-    //@Query("select t from technician t where t.level < ?1 AND (SELECT count(*) FROM chat WHERE technician = t.id) = 0")
-    //List<Technician> findByNotAttendedAndLevelLessThan(int level);
+    @Query(value = "select * from technician t where t.level < ?1 AND (SELECT count(*) FROM chat WHERE technician = t.id) = 0", nativeQuery = true)
+    List<Technician> findByNotAttendedAndLevelLessThan(int level);
 }

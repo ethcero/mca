@@ -12,6 +12,8 @@ public class Technician {
     private String firstName;
     private int level;
 
+    public Technician(){}
+
     public Technician(String firstName, int level) {
         this.firstName = firstName;
         this.level = level;

@@ -23,6 +23,8 @@ public class Chat {
     private Product product;
     private String message;
 
+    public Chat(){}
+
     public Chat(Date datetime, char author, Client client, Technician technician, Product product, String message) {
         this.datetime = datetime;
         this.author = author;
