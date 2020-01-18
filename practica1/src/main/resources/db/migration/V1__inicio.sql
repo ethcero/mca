@@ -1,16 +1,47 @@
+
 CREATE TABLE `hibernate_sequence` (
     `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB;
 
+INSERT INTO hibernate_sequence (next_val) VALUES (1);
 
-CREATE TABLE `producto` (
+
+CREATE TABLE `product` (
     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `datos` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `brand` varchar(255) NOT NULL,
+    `price` double(10,2) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 
-INSERT INTO `producto`(`datos`) VALUES ('{\"nombre\": \"Macbook\", \"marca\": \"Apple\", \"etiquetas\":[\"Portátil\",\"Mac\"]}');
-INSERT INTO `producto`(`datos`) VALUES ('{\"nombre\": \"P30 Lite 4\", \"marca\": \"Huawei\", "\"etiquetas\":[\"Móvil\"]}');
-INSERT INTO `producto`(`datos`) VALUES ('{\"nombre\": \"iPhone 11 Pro\", \"marca\": \"Apple\", \"etiquetas\":[\"Móvil\"]}');
-INSERT INTO `producto`(`datos`) VALUES ('{\"nombre\": \"Teclado 105\", \"marca\": \"Logitech\"}');
+CREATE TABLE `client` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `first_name` varchar(255) NOT NULL,
+    `last_name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `city` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `technician` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `first_name` varchar(255) NOT NULL,
+    `level` int NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `chat` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `datetime` timestamp NOT NULL,
+    `author` char NOT NULL,
+    `client` bigint(20) NOT NULL,
+    `technician` bigint(20) NOT NULL,
+    `product` bigint(20) NOT NULL,
+    `message` varchar(255) NOT NULL,
+    FOREIGN KEY (client) REFERENCES client(id),
+    FOREIGN KEY (technician) REFERENCES technician(id),
+    FOREIGN KEY (product) REFERENCES product(id),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
