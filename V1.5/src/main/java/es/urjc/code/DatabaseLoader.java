@@ -58,6 +58,13 @@ public class DatabaseLoader implements CommandLineRunner {
     private void V1_5Queries() {
         System.out.println("#########################################");
         System.out.println("V1.5");
+
+        // Técnicos con la habilidad “Wearables”
+        List<Technician> technicians = technicianRepository.FindByLabel("\"Wearables\"");
+        System.out.println("Técnicos con la habilidad “Wearables”:");
+        System.out.println("----------------------------------------");
+        showData(technicians);
+
         // Productos que alguna vez hayan tenido un precio menor que 10 euros
         List<Product> products = productRepository.findByHistoricPriceLessThan(10D);
         System.out.println("Productos que alguna vez hayan tenido un precio menor que 10 euros:");

@@ -12,6 +12,9 @@ public class Technician {
     private String firstName;
     private int level;
 
+    @Column(columnDefinition = "json")
+    private String labels;
+
     public Technician(){}
 
     public Technician(String firstName, int level) {
@@ -25,6 +28,7 @@ public class Technician {
         sb.append("id=").append(id);
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", level=").append(level);
+        sb.append(", labels='").append(labels).append('\'');
         sb.append('}');
         return sb.toString();
     }

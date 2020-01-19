@@ -42,9 +42,4 @@ public class Product {
         sb.append('}');
         return sb.toString();
     }
-
-    public void setHistoricPrice(String historicPrice) {
-        this.historicPrice = historicPrice;
-    }
-
 }
