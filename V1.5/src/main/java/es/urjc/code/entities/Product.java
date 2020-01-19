@@ -1,9 +1,8 @@
 package es.urjc.code.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 /**
  * Entidad Product.
@@ -19,6 +18,9 @@ public class Product {
     private String name;
     private String brand;
     private Double price;
+
+    @Column(columnDefinition = "json")
+    private String historicPrice;
 
     public Product() {
     }
@@ -36,7 +38,13 @@ public class Product {
         sb.append(", name='").append(name).append('\'');
         sb.append(", brand='").append(brand).append('\'');
         sb.append(", price=").append(price);
+        sb.append(", historicPrice='").append(historicPrice).append('\'');
         sb.append('}');
         return sb.toString();
     }
+
+    public void setHistoricPrice(String historicPrice) {
+        this.historicPrice = historicPrice;
+    }
+
 }

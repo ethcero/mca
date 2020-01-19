@@ -1,12 +1,8 @@
 package es.urjc.code;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import es.urjc.code.entities.Chat;
-import es.urjc.code.entities.Client;
 import es.urjc.code.entities.Product;
 import es.urjc.code.entities.Technician;
 import es.urjc.code.repositories.ChatRepository;
@@ -37,13 +33,14 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        this.initDB();
-
         this.V1Queries();
+        this.V1_5Queries();
 
     }
 
     private void V1Queries() {
+        System.out.println("#########################################");
+        System.out.println("V1");
         // Listado de chats para un cliente concreto
         List<Chat> chats = chatRepository.findByClientEmail("fulanito@f.com");
         System.out.println("Listado de chats para un cliente concreto:");
@@ -55,8 +52,19 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println("Técnicos de nivel menor que 5 que no hayan atendido a ningún cliente:");
         System.out.println("----------------------------------------");
         showData(technicians);
+        System.out.println("#########################################");
     }
 
+    private void V1_5Queries() {
+        System.out.println("#########################################");
+        System.out.println("V1.5");
+        // Productos que alguna vez hayan tenido un precio menor que 10 euros
+        List<Product> products = productRepository.findByHistoricPriceLessThan(10D);
+        System.out.println("Productos que alguna vez hayan tenido un precio menor que 10 euros:");
+        System.out.println("----------------------------------------");
+        showData(products);
+        System.out.println("#########################################");
+    }
 
     private static void showData(List datos) {
         for (Object p : datos) {
@@ -65,51 +73,5 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println();
     }
 
-    private void initDB() {
-
-        if (productRepository.count() > 0)
-            return;
-
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("MacBook pro", "Apple",1000D ));
-        products.add(new Product("Portatil HP", "HP",500D ));
-        products.add(new Product("teclado", "Logitech",100D ));
-        products.add(new Product("pantalla", "HP",100D ));
-        products.add(new Product("raton", "Logitech",10D ));
-        products.forEach(p -> productRepository.save(p));
-
-
-        ArrayList<Client> clients = new ArrayList<>();
-        clients.add(new Client("Juanito", "Detal", "juanito@f.com", "Madrid"));
-        clients.add(new Client("Fulanito", "Detal", "fulanito@f.com", "Murcia"));
-        clients.add(new Client("Jaimito", "Borromeo", "jaimito@f.com", "Lorca"));
-        clients.add(new Client("Pepito", "Pascual", "pepito@f.com", "Alcorcon"));
-        clients.forEach(c -> clientRepository.save(c));
-
-        ArrayList<Technician> technicians = new ArrayList<>();
-        technicians.add(new Technician("Jaime",1));
-        technicians.add(new Technician("Jaime",3));
-        technicians.add(new Technician("Pedro", 10));
-        technicians.add(new Technician("Miguel", 2));
-        technicians.forEach(t -> technicianRepository.save(t));
-
-        products.remove(0);
-        clients.remove(0);
-        technicians.remove(0);
-
-        Random rand = new Random();
-        char[] author = {'C', 'T'};
-        for (int i = 0; i < 20; i++) {
-            Chat chat = new Chat(
-                    new Date(),
-                    author[rand.nextInt(author.length)],
-                    clients.get(rand.nextInt(clients.size())),
-                    technicians.get(rand.nextInt(technicians.size())),
-                    products.get(rand.nextInt(products.size())),
-                    "Message body text Nº:" + i);
-
-            chatRepository.save(chat);
-        }
-    }
 
 }

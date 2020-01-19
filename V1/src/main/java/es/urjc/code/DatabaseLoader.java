@@ -37,13 +37,13 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        this.initDB();
-
         this.V1Queries();
 
     }
 
     private void V1Queries() {
+        System.out.println("#########################################");
+        System.out.println("V1");
         // Listado de chats para un cliente concreto
         List<Chat> chats = chatRepository.findByClientEmail("fulanito@f.com");
         System.out.println("Listado de chats para un cliente concreto:");
@@ -55,6 +55,7 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println("Técnicos de nivel menor que 5 que no hayan atendido a ningún cliente:");
         System.out.println("----------------------------------------");
         showData(technicians);
+        System.out.println("#########################################");
     }
 
 
@@ -65,7 +66,7 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println();
     }
 
-    private void initDB() {
+    private void initV1(){
 
         if (productRepository.count() > 0)
             return;
@@ -93,10 +94,12 @@ public class DatabaseLoader implements CommandLineRunner {
         technicians.add(new Technician("Miguel", 2));
         technicians.forEach(t -> technicianRepository.save(t));
 
+        // un client, un tecnico y un producto no deben tener char asociado
         products.remove(0);
         clients.remove(0);
         technicians.remove(0);
 
+        // Se generan chat aleatorios
         Random rand = new Random();
         char[] author = {'C', 'T'};
         for (int i = 0; i < 20; i++) {
@@ -110,6 +113,7 @@ public class DatabaseLoader implements CommandLineRunner {
 
             chatRepository.save(chat);
         }
+
     }
 
 }
