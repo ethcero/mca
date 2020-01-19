@@ -9,10 +9,16 @@ import java.util.List;
 public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
 
-    @Query(value = "SELECT * FROM technician t WHERE t.level < ?1 AND (SELECT count(*) FROM chat WHERE technician = t.id) = 0", nativeQuery = true)
+    @Query(value = " SELECT * FROM technician t\n" +
+            "         WHERE t.level < ?1\n" +
+            "         AND (select count(*) \n" +
+            "            from chat,JSON_TABLE(chat.data, \"$\" COLUMNS(tech_id bigint PATH \"$.technician\")) AS chat_tech \n" +
+            "            where t.id = chat_tech.tech_id ) = 0", nativeQuery = true)
     List<Technician> findByNotAttendedAndLevelLessThan(int level);
 
     @Query(value = "SELECT * FROM technician t WHERE JSON_CONTAINS(t.labels,?1,'$')=1", nativeQuery = true)
     List<Technician> FindByLabel(String label);
 
 }
+
+

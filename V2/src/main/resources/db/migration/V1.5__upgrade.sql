@@ -12,8 +12,8 @@ UPDATE product SET historic_price = '[{\"date\": \"10/10/2018\", \"price\":9.50}
 
 ALTER TABLE `technician` ADD COLUMN `labels` JSON NULL;
 
-UPDATE technician SET labels = '[\"Moviles\",\"Domotica\"]' WHERE first_name = 'Jaime';
-UPDATE technician SET labels = '[\"Moviles\",\"Wearables\"]' WHERE first_name = 'Jorge';
-UPDATE technician SET labels = '[\"Moviles\",\"Domotica\"]' WHERE first_name = 'Pedro';
-UPDATE technician SET labels = '[\"Wearables\",\"Domotica\"]' WHERE first_name = 'Miguel';
+UPDATE technician SET labels = '[\"Moviles\",\"Domotica\",\"Video\"]' WHERE first_name = 'Jaime';
+UPDATE technician SET labels = '[\"Moviles\",\"Wearables\",\"Video\"]' WHERE first_name = 'Jorge';
+UPDATE technician SET labels = '[\"Moviles\",\"Domotica\",\"Video\"]' WHERE first_name = 'Pedro';
+UPDATE technician SET labels = '[\"Wearables\",\"Domotica\",\"Video\"]' WHERE first_name = 'Miguel';
 
