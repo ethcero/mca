@@ -19,7 +19,7 @@ INSERT INTO `product` VALUES
 (2,'Portatil HP','HP',500.00),
 (3,'teclado','Logitech',100.00),
 (4,'pantalla','HP',100.00),
-(5,'raton','Logitech',10.00);
+(5,'Home Pod','Logitech',10.00);
 
 
 
