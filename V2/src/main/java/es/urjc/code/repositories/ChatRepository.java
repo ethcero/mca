@@ -14,8 +14,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
    @Query(value = "SELECT chat.id, chat.data FROM client c JOIN chat JOIN JSON_TABLE(chat.data, \"$\" COLUMNS(client_id bigint PATH \"$.client\")) AS chat_client ON c.id=chat_client.client_id WHERE c.email = ?1", nativeQuery = true)
    List<Chat> findByClientEmail(String email);
 
-   @Query(value = "select * from chat c, JSON_TABLE(c.data, \"$.chat\" COLUMNS(date timestamp PATH \"$[*].date\")) AS chat_date where chat_date.date = TIMESTAMP(?1)", nativeQuery = true)
-   List<Chat> findByDate(Date date);
+   @Query(value = "select * from chat c, JSON_TABLE(c.data, \"$.chat[*]\" COLUMNS(date TIMESTAMP PATH \"$.date\")) AS chat_date where chat_date.date = TIMESTAMP(?1)", nativeQuery = true)
+   List<Chat> findByDate(String date);
 
     @Query(value = "SELECT chat.id, chat.data FROM product p JOIN chat JOIN JSON_TABLE(chat.data, \"$\" COLUMNS(product_id bigint PATH \"$.product\")) AS chat_product ON p.id=chat_product.product_id WHERE p.name = ?1", nativeQuery = true)
     List<Chat> findByProductName(String name);

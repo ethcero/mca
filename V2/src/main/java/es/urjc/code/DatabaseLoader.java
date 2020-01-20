@@ -84,7 +84,7 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println("V2");
 
         // Listado de todos los chats de una fecha dada
-        List<Chat> chats = chatRepository.findByDate(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2020-01-19 10:33:16"));
+        List<Chat> chats = chatRepository.findByDate("2020-01-19 10:33:16");
         System.out.println("Listado de todos los chats de una fecha dada:");
         System.out.println("----------------------------------------");
         showData(chats);
