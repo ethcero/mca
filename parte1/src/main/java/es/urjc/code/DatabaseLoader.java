@@ -38,7 +38,12 @@ public class DatabaseLoader implements CommandLineRunner {
         c.getProductos().forEach(p -> System.out.println(p.getProducto()));
         System.out.println("-----------------------------------------\n");
 
+        System.out.println("\n-- Ciudad cuyos clientes han realizado más compras -------\n");
+        System.out.println(clienteRepository.ciudadClientesMasCompras());
+        System.out.println("-----------------------------------------\n");
 
+        muestraDatos("Para cada cliente, mostrar su nombre, apellidos y el número de servicios que ha\n" + "comprado",
+                clienteRepository.totalServiciosPorCliente());
 
     }
 
