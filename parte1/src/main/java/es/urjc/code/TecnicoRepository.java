@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.transaction.Transactional;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 /**
  * Repositorio para técnicos.
@@ -19,9 +20,6 @@ public interface TecnicoRepository extends JpaRepository<Tecnico, Long> {
 
     @Query("select t from Tecnico t where FUNCTION('JSON_CONTAINS',t.habilidades,CONCAT('\"',?1,'\"'),'$') = 1")
     List<Tecnico> findByHabilidad(String habilidad);
-
-    @Query("select distinct t from Tecnico t, ChatJson ch where t.nivel < ?1 and FUNCTION('JSON_CONTAINS',ch.datos,FUNCTION('JSON_UNQUOTE',CONCAT('\"',t.id,'\"')),'$.tecnico') = 1")
-    List<Tecnico> findTecnicosSinChatJsonNivelMenor(int nivel);
 
     @Modifying
     @Transactional

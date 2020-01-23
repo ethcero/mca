@@ -32,6 +32,11 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws ParseException {
 
+        System.out.println("\n-- Listado del correcto almacenamiento de la info --------\n");
+        System.out.println("----- Listado de productos comprados por: pedro.garcia@email.com");
+        Cliente c = clienteRepository.findByEmail("pedro.garcia@email.com");
+        c.getProductos().forEach(p -> System.out.println(p.getProducto()));
+        System.out.println("-----------------------------------------\n");
 
 
 
@@ -46,5 +51,6 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println();
 
     }
+
 
 }

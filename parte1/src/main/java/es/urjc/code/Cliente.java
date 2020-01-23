@@ -1,8 +1,15 @@
 package es.urjc.code;
 
-import javax.persistence.*;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * Clase para cliente.
@@ -23,6 +30,10 @@ public class Cliente {
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="cliente")
     private List<Chat> chats;
+
+    // Relación
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch= FetchType.EAGER)
+    private List<ClienteProducto> productos = new ArrayList<>();
 
     public Cliente() {}
 
@@ -80,5 +91,15 @@ public class Cliente {
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
+    }
+
+    public List<ClienteProducto> getProductos() {
+        return productos;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nombre='" + nombre + '\'' + ", apellidos='" + apellidos + '\'' + ", email='" + email + '\'' + ", ciudad='" + ciudad + '\''
+                + ", productos=" + productos + '}';
     }
 }

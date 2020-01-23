@@ -1,7 +1,12 @@
 package es.urjc.code;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Clase para chat.
@@ -97,7 +102,7 @@ public class Chat {
     @Override
     public String toString() {
         return "Chat (id=" + id + ")" +
-                "\n\tproducto=" + producto.getNombre() + " " + producto.getMarca() +
+                "\n\tproducto=" + producto.getNombre() + " " +
                 "\n\tcliente=" + cliente.getNombre()+ " " + cliente.getApellidos() +
                 "\n\ttecnico=" + tecnico.getNombre() + " (Nivel " + tecnico.getNivel() + ")"+
                 "\n\tautor=" + (autor == 'C' ? "Cliente" : "Técnico" ) +
