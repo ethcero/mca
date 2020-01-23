@@ -49,3 +49,9 @@
     - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
  * Practica 2:
     - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
+    
+## Persistencia y análisis de datos
+
+ * Practica 1:
+    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
+ 
