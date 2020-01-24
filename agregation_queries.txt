@@ -1,0 +1,32 @@
+###########################
+#### Año con mayor población en España (suma de todas las provincias), indicando tanto el año como el valor
+###########################
+
+db.provincias.aggregate([
+{$unwind: "$Datos"},
+{$group: {_id: "$Datos.Anyo", suma_por_anyo: {$sum:"$Datos.Valor"}}},
+{$sort: {suma_por_anyo: -1 }},
+{$group: {_id: null, Anyo:{ $first: "$_id" }, poblacion: {$max:"$suma_por_anyo"}}}
+])
+
+
+###########################
+#### Para mostrar cómo ha evolucionado la población, se pide mostrar, en un documento
+     por provincia, la población del primer año almacenado, el último y la diferencia
+###########################
+
+
+db.provincias.aggregate([
+{$unwind: "$Datos"},
+{$sort: {"Datos.Anyo":1}},
+{$group: {_id: "$Nombre",
+    primer_anyo:{$first: "$Datos.Anyo"},
+    pob_primer_anyo: {$first: "$Datos.Valor"},
+    ultimo_anyo: {$last: "$Datos.Anyo"},
+    pob_ultimo_anyo:{$last: "$Datos.Valor"}
+}},
+{$addFields: {
+        diferencia: {$subtract:[ "$pob_ultimo_anyo", "$pob_primer_anyo" ] }
+}}
+])
+
