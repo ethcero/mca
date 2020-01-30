@@ -54,4 +54,5 @@
 
  * Practica 1:
     - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- 
+ * Practica 2:
+    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
