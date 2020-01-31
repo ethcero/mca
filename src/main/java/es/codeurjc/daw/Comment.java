@@ -1,25 +1,21 @@
 package es.codeurjc.daw;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 public class Comment {
 
-	interface Full {
-	}
-
-	@JsonView(Full.class)
 	private long id = -1;
 
-	@JsonView(Full.class)
 	private String author;
 
-	@JsonView(Full.class)
 	private String message;
+
+	public Comment() {
+	}
 
 	public Comment(String author, String message) {
 		this.author = author;
 		this.message = message;
 	}
+
 
 	public long getId() {
 		return id;

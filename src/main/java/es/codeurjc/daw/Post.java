@@ -5,38 +5,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 public class Post {
 
-	interface Basic {
-	}
 
-	interface Extended {
-	}
-
-	interface Full extends Basic, Extended {
-	}
-
-	@JsonView(Basic.class)
 	private long id = -1;
 
-	@JsonView(Basic.class)
 	private String title;
 
-	@JsonView(Extended.class)
 	private String content;
 
-	@JsonView(Extended.class)
-	private List<Comment> comments = new ArrayList<>();
-
-	@JsonIgnore
 	private Map<Long, Comment> commentsMap = new HashMap<>();
+
+	public Post() {
+	}
+
+	public Post(long id, String title, String content) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+	}
 
 	public Post(String title, String content) {
 		this.title = title;
 		this.content = content;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Map<Long, Comment> getCommentsMap() {
+		return commentsMap;
+	}
+
+	public void setCommentsMap(Map<Long, Comment> commentsMap) {
+		this.commentsMap = commentsMap;
 	}
 
 	public long getId() {
@@ -73,7 +81,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return this.title + " (" + comments.size() + " comments)";
+		return this.title + " (" + commentsMap.size() + " comments)";
 	}
 
 }

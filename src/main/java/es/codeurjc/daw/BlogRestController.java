@@ -1,8 +1,6 @@
 package es.codeurjc.daw;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,64 +12,71 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import es.codeurjc.daw.dto.BasicPostDTO;
+import es.codeurjc.daw.dto.CommentDTO;
+import es.codeurjc.daw.dto.FullPostDTO;
+import es.codeurjc.daw.dto.NewPostDTO;
 
 @RestController
 @RequestMapping("/api")
 public class BlogRestController {
 
-	interface Full extends Post.Full, Comment.Full {
-	}
 
 	@Autowired
 	private PostService postService;
 
-	@JsonView(Post.Basic.class)
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@GetMapping("/post")
-	public ResponseEntity<List<Post>> listPosts() {
-		return new ResponseEntity<>(new ArrayList<>(this.postService.getPosts().values()), HttpStatus.OK);
+	public ResponseEntity<List<BasicPostDTO>> listPosts() {
+
+		List<BasicPostDTO> list = this.postService.getPosts().stream().map(fullPostDTO -> modelMapper.map(fullPostDTO, BasicPostDTO.class)).collect(Collectors.toList());
+
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	@JsonView(Full.class)
 	@GetMapping("/post/{id}")
-	public ResponseEntity<Post> getPost(@PathVariable long id) {
-		Post post = this.postService.getPost(id);
+	public ResponseEntity<FullPostDTO> getPost(@PathVariable long id) {
+		FullPostDTO post = this.postService.getPost(id);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(this.postService.getPost(id), HttpStatus.OK);
 	}
 
-	@JsonView(Post.Basic.class)
 	@PostMapping("/post")
-	public ResponseEntity<Post> newPost(@RequestBody Post post) {
+	public ResponseEntity<BasicPostDTO> newPost(@RequestBody NewPostDTO post) {
 		this.postService.addPost(post);
-		return new ResponseEntity<>(post, HttpStatus.CREATED);
+		BasicPostDTO basc = modelMapper.map(post, BasicPostDTO.class);
+		return new ResponseEntity<>(basc, HttpStatus.CREATED);
 	}
 
-	@JsonView(Comment.Full.class)
 	@PostMapping("/post/{postId}/comment")
-	public ResponseEntity<Comment> newComment(@PathVariable long postId, @RequestBody Comment comment) {
-		Post post = this.postService.getPost(postId);
+	public ResponseEntity<CommentDTO> newComment(@PathVariable long postId, @RequestBody CommentDTO comment) {
+		FullPostDTO post = this.postService.getPost(postId);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		this.postService.setCommentId(comment);
-		post.addComment(comment);
+		this.postService.saveComment(postId, comment);
+
 		return new ResponseEntity<>(comment, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/post/{postId}/comment/{commentId}")
-	public ResponseEntity<Comment> deleteComment(@PathVariable long postId, @PathVariable long commentId) {
-		Post post = this.postService.getPost(postId);
+	public ResponseEntity<CommentDTO> deleteComment(@PathVariable long postId, @PathVariable long commentId) {
+		FullPostDTO post = this.postService.getPost(postId);
 		if (post == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		Comment comment = post.getComment(commentId);
+		CommentDTO comment = this.postService.getComment(postId, commentId);
 		if (comment == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		post.deleteComment(commentId);
+		this.postService.deleteComment(postId, commentId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
