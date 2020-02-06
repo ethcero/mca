@@ -1,0 +1,26 @@
+@startuml inssurance
+
+class Client
+class Insurance {
+  coverages[]
+}
+
+class Issue {
+  amount
+  Coverage
+}
+
+enum Coverage {
+ WINDOW
+ FACADE
+ HOME_APPLIANCE
+}
+
+Client --> "1" Insurance
+Insurance --> "many" Coverage
+
+Client --> "many" Issue
+
+Issue --> Coverage
+
+@enduml
