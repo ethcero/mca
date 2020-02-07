@@ -1,20 +1,15 @@
 
 package es.ethcero.mca.practica2.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
+import es.ethcero.mca.practica2.model.exception.InsuranceNotFoundException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -29,33 +24,43 @@ public class Client {
 
     private String name;
 
-    @OneToOne(targetEntity = Insurance.class)
-    private Insurance insurance;
+    @Embedded
+    private Address address;
 
-    @OneToMany(mappedBy = "clientId", fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = Insurance.class)
+    @CollectionTable(name = "insurances", joinColumns = @JoinColumn(name = "client_id"))
+    private Set<Insurance> insurances = new HashSet<>();
+
+    @ElementCollection(targetClass = Issue.class)
+    @CollectionTable(name = "issues", joinColumns = @JoinColumn(name = "client_id"))
     private Set<Issue> issues = new HashSet<>();
 
-    public Client(String name) {
+    public Client(String name, Address address) {
         this.name = name;
+        this.address = address;
     }
 
-    public void setInsurance(Insurance insurance){
-        this.insurance = insurance;
+    public Insurance newInsurance(Address address, List<Coverage> coverages) {
+        Insurance insurance = new Insurance(address);
+        coverages.forEach(insurance::addCoverage);
+        this.insurances.add(insurance);
+        return insurance;
     }
 
-    public Issue addIssue(Double amount, Coverage coverage) {
+    public Issue newIssue(long insuranceId, Double amount, Coverage coverage) {
 
-        Issue issue = new Issue(id, amount, coverage);
+        Issue issue = new Issue(amount, coverage);
 
         if (couldBeFraud()) {
             issue.setFraud();
         }
 
-        if (!insurance.isCovered(coverage)) {
+        if (!findInsurance(insuranceId).isCovered(coverage)) {
             issue.notCovered();
         }
 
         this.issues.add(issue);
+
         return issue;
     }
 
@@ -64,7 +69,14 @@ public class Client {
     }
 
     private Double sumIssuesAmount() {
-        return issues.stream().map(Issue::getAmount).reduce(0D, Double::sum);
+        return issues.stream()
+                .filter(Issue::isCovered)
+                .map(Issue::getAmount).reduce(0D, Double::sum);
     }
 
+    private Insurance findInsurance(long insuranceId) {
+        return insurances.stream().filter(insurance -> insuranceId == insurance.getId())
+                .findFirst()
+                .orElseThrow(InsuranceNotFoundException::new);
+    }
 }

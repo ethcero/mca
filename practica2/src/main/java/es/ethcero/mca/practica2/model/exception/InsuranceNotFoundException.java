@@ -7,5 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @author fran
  */
-@ResponseStatus(value= HttpStatus.NOT_FOUND, reason = "Client not found")
-public class ClientNotFoundException extends RuntimeException {}
+
+@ResponseStatus(value= HttpStatus.NOT_FOUND, reason = "Insurance not found")
+public class InsuranceNotFoundException extends RuntimeException {}

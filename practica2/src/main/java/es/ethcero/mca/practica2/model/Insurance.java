@@ -1,19 +1,13 @@
 
 package es.ethcero.mca.practica2.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fran
@@ -28,8 +22,15 @@ public class Insurance {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Embedded
+    private Address address;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Coverage> coverages = new ArrayList<>();
+
+    public Insurance(Address address) {
+        this.address = address;
+    }
 
     public void addCoverage(Coverage coverage) {
         if(!coverages.contains(coverage)) {

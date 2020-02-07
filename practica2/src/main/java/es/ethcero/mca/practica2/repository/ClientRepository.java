@@ -1,11 +1,8 @@
 
 package es.ethcero.mca.practica2.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import javax.transaction.Transactional;
-
 import es.ethcero.mca.practica2.model.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author fran

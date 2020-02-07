@@ -1,23 +1,19 @@
-/**
- * Copyright (C) 2020 Deveryware S.A. All Rights Reserved.
- */
+
 package es.ethcero.mca.practica2.ui.command;
 
 import es.ethcero.mca.practica2.model.Coverage;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author fran
  */
+@Getter
+@Setter
 public class NewIssueCommand {
 
+    private long insuranceId;
     private Double amount;
     private Coverage coverage;
 
-    public Double getAmount() {
-        return amount;
-    }
-
-    public Coverage getCoverage() {
-        return coverage;
-    }
 }

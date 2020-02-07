@@ -1,20 +1,18 @@
 
 package es.ethcero.mca.practica2.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import es.ethcero.mca.practica2.model.Address;
 import es.ethcero.mca.practica2.model.Client;
 import es.ethcero.mca.practica2.model.Coverage;
-import es.ethcero.mca.practica2.model.Insurance;
 import es.ethcero.mca.practica2.model.exception.ClientNotFoundException;
 import es.ethcero.mca.practica2.repository.ClientRepository;
 import es.ethcero.mca.practica2.repository.InsuranceRepository;
 import es.ethcero.mca.practica2.repository.IssueRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author fran
@@ -30,29 +28,24 @@ public class ClientProcess {
     private IssueRepository issueRepository;
 
     @Transactional
-    public void addClient(String name) {
-       clientRepository.save(new Client(name));
+    public void addClient(String name, Address address) {
+       clientRepository.save(new Client(name, address));
     }
 
     @Transactional
-    public void addIssue(long clientId, Double amount, Coverage coverage) {
+    public void addIssue(long clientId, long insuranceId, Double amount, Coverage coverage) {
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new ClientNotFoundException(clientId));
+                .orElseThrow(ClientNotFoundException::new);
 
-        issueRepository.save(client.addIssue(amount, coverage));
+        issueRepository.save(client.newIssue(insuranceId, amount, coverage));
     }
 
     @Transactional
-    public void addInsurance(long clientId, List<Coverage> coverages) {
+    public void addInsurance(long clientId, Address address,  List<Coverage> coverages) {
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new ClientNotFoundException(clientId));
+                .orElseThrow(ClientNotFoundException::new);
 
-        Insurance insurance = new Insurance();
-        coverages.forEach(insurance::addCoverage);
-        insuranceRepository.save(insurance);
-
-        client.setInsurance(insurance);
-        clientRepository.save(client);
+        insuranceRepository.save(client.newInsurance(address, coverages));
     }
 
 
