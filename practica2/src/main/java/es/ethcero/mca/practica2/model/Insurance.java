@@ -38,7 +38,7 @@ public class Insurance {
         }
     }
 
-    public boolean isCovered(Coverage coverage) {
-        return coverages.contains(coverage);
+    public void checkCovered(Issue issue) {
+       issue.checkCovered(coverages);
     }
 }

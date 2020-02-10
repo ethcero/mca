@@ -51,22 +51,15 @@ public class Client {
 
         Issue issue = new Issue(amount, coverage);
 
-        if (couldBeFraud()) {
-            issue.setFraud();
-        }
+        issue.checkFraud(this.issues.size(), this.sumIssuesAmount());
 
-        if (!findInsurance(insuranceId).isCovered(coverage)) {
-            issue.notCovered();
-        }
+        findInsurance(insuranceId).checkCovered(issue);
 
         this.issues.add(issue);
 
         return issue;
     }
 
-    private boolean couldBeFraud() {
-        return (issues.size() >= 2 && sumIssuesAmount() > 1000);
-    }
 
     private Double sumIssuesAmount() {
         return issues.stream()
