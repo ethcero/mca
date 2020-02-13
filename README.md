@@ -61,3 +61,5 @@
 
  * Practica 1:
     - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
+ * Practica 2:
+    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
