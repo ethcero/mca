@@ -1,65 +1,83 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
+## Computacion en la nube (Practica 1)
 
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+### Creación de AMI
 
-## Patrones y arquitectura software
+Se crea un AMI de AWS usando Packer. 
 
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
+La configuración de Packer parte de una imagen Debian-9 limpia donde se provisionan ficheros de configuración para Systemd y el jar de la aplicación.
 
-## Diseño y calidad software
+Se define un script de provision que se ejecutará en la máquina remota en tiempo de empaquetado que instala las dependencias de JAVA y coloca los archivos provisionados en el lugar
+ correcto para poder ser ejecutados por systemd.
 
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+### Build
+ El script `build.sh` se encarga de compilar la aplicación JAVA con Maven y mover el artefacto generado al directorio de Packer para que sea provisionado a la imagen.
+ 
+ 
+ 
+### Enunciado
 
-## Programación Extrema
+Aplicación básica (6 pts)
 
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
+Un cliente acude a CodeURJC solicitando que desarrollemos una API REST que permita
+manejar los recursos de S3 de manera sencilla, ya que están descontentos con la que usan
+actualmente. Sus aplicaciones ya usan una interfaz de API definida, por lo que debemos
+ceñirnos a ella:
 
-## Tecnologías de servicios de internet
+- `GET /api/buckets/`
+Recupera todos los buckets de nuestra cuenta.
+- `GET /api/buckets/<bucket_name>/objects`
+Recupera un bucket concreto dado su nombre
+- `POST /api/buckets/<bucket_name>`
+Crea un nuevo bucket vacío.
+- `POST /api/buckets/<bucket_name>/uploadObject`
+Sube un nuevo objeto a un bucket.
+- `DELETE /api/buckets/<bucket_name>`
+Borra un bucket (solo si está vacío)
+- `DELETE /api/buckets/<bucket_name>/<object_name>`
+Borra un objeto de un bucket
 
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
+Nos proporciona además un fichero de Postman que utilizan para probar dicha API.
+Además, se desea que esta aplicación sea desplegada en una instancia EC2 de forma que
+la API sea accesible y el cliente pueda probarla. El alumno entregará pruebas de que la
+aplicación ha estado disponible en forma de Video/GIF dónde se vea la instancia creada en
+el panel de EC2, así como que está disponible a través de su DNS público.
 
-## Pruebas de servicios de internet
+Dada nuestra extensa experiencia en la tecnología Java, hemos decidido que usaremos
+SpringBoot junto al SDK de AWS. Dado que la aplicación estará públicamente expuesta, y
+permite crear recursos en S3, debe estar securizada:
+- Es necesario que la aplicación se despliegue en el puerto 443 (puerto HTTPS por
+defecto).
+- Puede utilizarse un usuario en memoria, no es necesario utilizar base de datos.
+Estos requisitos se consideran mínimos para que la práctica se pueda considerar aprobada.
+Además, se incluyen a continuación algunos requisitos adicionales que se valorarán en la
+nota.
 
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-    
-## Persistencia y análisis de datos
+Funcionalidad adicional (1 pto)
 
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-    
-## Arquitectura de Servicios de Internet
+Aparte de los métodos descritos, el cliente quiere extender la API de la siguiente manera:
+- Permitir que en la subida de objetos a un bucket se pueda definir si el objeto es
+público o privado.
+- Implementar un nuevo método en el controlador que permita copiar archivos de un
+bucket a otro
 
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
+Utilización de security group propio para la instancia (1 pto)
+
+Se valorará el uso de un security group específico para la instancia. Se mostrará en el vídeo
+y este security group deberá filtrar los accesos entrantes de forma que no se permita
+acceder a la aplicación salvo a IPs del rango de la empresa (193.147.*.*).
+NOTA: Este rango de direcciones IP es el de la URJC, si estáis fuera de la red de la
+universidad, podeis abrir un browser (e incluso una máquina virtual) de forma gratuita en el
+portal MyApps de la URJC: https://myapps.urjc.es/myapps. Todas las aplicaciones del
+MyApps funcionan en la red interna de la universidad bajo el mismo rango de IPv4.
+
+Creación de una AMI con la aplicación (2 pts)
+
+Se valorará la creación de una AMI con la aplicación. Se obtendrá el máximo de puntos si al
+arrancar una instancia a partir de esta AMI la aplicación arranca automáticamente (los
+pasos seguidos se definirán en un archivo README.md dentro del proyecto. Se incluirá en
+el vídeo la AMI creada y cómo se arranca la instancia a partir de ella.
+Una vez grabado el video de que la aplicación funciona, se detendrá y borrará la instancia
+que contiene la aplicación para evitar costes adicionales, así como la AMI y SNAPSHOTS
+creadas 
