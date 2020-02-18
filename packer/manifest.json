@@ -1,0 +1,41 @@
+{
+  "builds": [
+    {
+      "name": "docker",
+      "builder_type": "docker",
+      "build_time": 1581709362,
+      "files": null,
+      "artifact_id": "sha256:38de416cf36ab5006c476009188f10ff9b0f482db0984f4da11235e6740ddb50",
+      "packer_run_uuid": "7063dbe1-e7a3-729c-18b9-97842ccad89e",
+      "custom_data": null
+    },
+    {
+      "name": "amazon-ebs",
+      "builder_type": "amazon-ebs",
+      "build_time": 1581782410,
+      "files": null,
+      "artifact_id": "us-east-1:ami-00bc6964551fb6250",
+      "packer_run_uuid": "9bd50ea0-27ca-1d99-578c-07812383a556",
+      "custom_data": null
+    },
+    {
+      "name": "amazon-ebs",
+      "builder_type": "amazon-ebs",
+      "build_time": 1581784886,
+      "files": null,
+      "artifact_id": "us-east-1:ami-02643652792c7138d",
+      "packer_run_uuid": "e3ca43fe-c1e0-9307-6499-d825d700d08f",
+      "custom_data": null
+    },
+    {
+      "name": "amazon-ebs",
+      "builder_type": "amazon-ebs",
+      "build_time": 1581785732,
+      "files": null,
+      "artifact_id": "us-east-1:ami-0197cb6c5ed3e9d91",
+      "packer_run_uuid": "508a2e9a-f6f4-09e8-515f-79ec0d755c22",
+      "custom_data": null
+    }
+  ],
+  "last_run_uuid": "508a2e9a-f6f4-09e8-515f-79ec0d755c22"
+}

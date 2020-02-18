@@ -63,3 +63,8 @@
     - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
  * Practica 2:
     - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
+    
+ ## Computación en la nube
+ 
+  * Practica 1:
+     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
