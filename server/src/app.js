@@ -52,9 +52,12 @@ app.ws('/notifications', function (ws, req) {
 })
 
 
+const MONGODB_URL = process.env.MONGODB || 'mongodb://localhost:27017/server';
+const RABBITMQ_URL = process.env.RABBITMQ || 'amqp://guest:guest@localhost';
+
 startup = async () => {
-    await database.connect("mongodb://localhost:27017/server")
-    await amqp.connect('amqp://guest:guest@localhost');
+    await database.connect(MONGODB_URL)
+    await amqp.connect(RABBITMQ_URL);
 
     app.listen(8080, function () {
     console.log('Server listening on port 8080!')
