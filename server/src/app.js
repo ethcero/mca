@@ -52,8 +52,8 @@ app.ws('/notifications', function (ws, req) {
 })
 
 
-const MONGODB_URL = process.env.MONGODB || 'mongodb://localhost:27017/server';
-const RABBITMQ_URL = process.env.RABBITMQ || 'amqp://guest:guest@localhost';
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/server';
+const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost';
 
 startup = async () => {
     await database.connect(MONGODB_URL)
