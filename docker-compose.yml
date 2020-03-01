@@ -15,6 +15,16 @@ services:
   externalservice:
     build: ./externalservice
 
+  worker:
+    build: ./worker
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/test?createDatabaseIfNotExist=true
+      - RABBITMQ_SERVER=rabbitmq
+      - EXTERNAL_SERVICE_URL=static://externalservice:8082
+    restart: on-failure
+    depends_on:
+      - mysql
+
   rabbitmq:
     image: rabbitmq:3.7.23-management-alpine
     ports:
