@@ -2,25 +2,29 @@ package es.ethcero.mca.worker;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.ethcero.mca.grpc.ToUpperCaseRequest;
-import es.ethcero.mca.grpc.ToUpperCaseResponse;
-import es.ethcero.mca.grpc.ToUpperCaseServiceGrpc;
-import es.ethcero.mca.worker.models.Task;
+
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Queue;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import es.ethcero.mca.grpc.ToUpperCaseRequest;
+import es.ethcero.mca.grpc.ToUpperCaseResponse;
+import es.ethcero.mca.grpc.ToUpperCaseServiceGrpc;
+import es.ethcero.mca.worker.models.Log;
+import es.ethcero.mca.worker.models.Task;
+import es.ethcero.mca.worker.repository.LogRepository;
 
 @Component
 public class Worker {
 
     @Autowired
-    RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private LogRepository logRepository;
 
     @GrpcClient("toUpperCaseServer")
     private ToUpperCaseServiceGrpc.ToUpperCaseServiceBlockingStub grpcClient;
@@ -31,7 +35,7 @@ public class Worker {
     @RabbitListener(queues = "newTasks", ackMode = "AUTO")
     public void received(String message) throws JsonProcessingException{
         System.out.println("Message from queue 'newTasks': "+message);
-
+        logRepository.save(new Log("Message from queue 'newTasks': "+message));
 
         Task task = objectMapper.readValue(message, Task.class);
         //TODO send external service
@@ -61,6 +65,7 @@ public class Worker {
     private void publish( Object value) throws JsonProcessingException {
         String data = objectMapper.writeValueAsString(value);
         System.out.println("publishToQueue 'tasksProgress': '" + data + "'");
+        logRepository.save(new Log("publishToQueue 'tasksProgress': '" + data + "'"));
         rabbitTemplate.convertAndSend("tasksProgress",data );
     }
 }
