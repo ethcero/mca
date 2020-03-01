@@ -1,8 +1,8 @@
 # Master Cloud Apps
 
-## Tecnologías de servicios de internet
+## Contenedores y orquestadores
 
-### Práctica 3
+### Práctica 1
 
 #### Install
 
@@ -18,6 +18,6 @@
 * Server Port: `8080`
 * Worker Port: `8081`
 * External Service Port: `8082`
-* AMQP Queues: 
+* AMQP Queues:
     - `newTasks`: schedule the works
     - `tasksProgress`: publish the progress and results

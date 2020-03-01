@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const expressWs = require('express-ws')(app)
 const amqp = require('./amqp-service')
+const LogCollection = require('./log-repository')
 
 app.use(express.static('./public'))
 app.use('/', express.json())
@@ -11,6 +12,7 @@ let lastMessage;
 
 app.post('/task', function (req, res) {
     console.log('/task endpoint executed')
+    LogCollection.create('/task endpoint executed. Body: '.concat(req.body.text))
     if(req.body.text != '') {
         currentTask = {
             "id": 1,
@@ -22,12 +24,13 @@ app.post('/task', function (req, res) {
     }else {
         res.status(400).end()
     }
-    
-    
+
+
 })
 
-app.get('/task/:id', function (req, res) {   
+app.get('/task/:id', function (req, res) {
     console.log('/task/:id endpoint executed')
+    LogCollection.create('/task/:id endpoint executed. taskId: '.concat(req.params.id))
     if(req.params.id == currentTask.id){
         if(lastMessage) {
             res.send(lastMessage)
