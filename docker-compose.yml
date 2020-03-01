@@ -4,7 +4,6 @@ services:
 
   server:
     build: ./server
-    container_name: server
     environment:
       - MONGODB_URL=mongodb://mongo:27017/server
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq
@@ -13,21 +12,21 @@ services:
     depends_on:
       - mongo
 
+  externalservice:
+    build: ./externalservice
+
   rabbitmq:
     image: rabbitmq:3.7.23-management-alpine
-    container_name: "rabbitmq"
     ports:
         - 5672:5672
         - 15672:15672
   mysql:
     image:  mysql:8.0
-    container_name: "mysql"
     ports:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=pass
   mongo:
     image:  mongo:4.2
-    container_name: "mongodb"
     ports:
       - 27017:27017
