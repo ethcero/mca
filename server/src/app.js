@@ -2,12 +2,13 @@ const express = require('express')
 const app = express()
 const expressWs = require('express-ws')(app)
 const amqp = require('./amqp-service')
+const database = require('./database')
 const LogCollection = require('./log-repository')
 
 app.use(express.static('./public'))
 app.use('/', express.json())
 
-let currentTask;
+let currentTask = {};
 let lastMessage;
 
 app.post('/task', function (req, res) {
@@ -51,6 +52,13 @@ app.ws('/notifications', function (ws, req) {
 })
 
 
-app.listen(8080, function () {
- console.log('Server listening on port 8080!')
-})
+startup = async () => {
+    await database.connect("mongodb://localhost:27017/server")
+    await amqp.connect('amqp://guest:guest@localhost');
+
+    app.listen(8080, function () {
+    console.log('Server listening on port 8080!')
+   })
+}
+
+startup()
