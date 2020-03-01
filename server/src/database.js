@@ -1,7 +1,7 @@
 const {MongoClient, ObjectId } = require('mongodb');
 
 const connectionOptions = {
-  reconnectInterval: 1000,
+  reconnectInterval: 3000,
   reconnectTries: 10
 }
 

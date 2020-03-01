@@ -56,8 +56,8 @@ const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/server
 const RABBITMQ_URL = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost';
 
 startup = async () => {
-    await database.connect(MONGODB_URL)
-    await amqp.connect(RABBITMQ_URL);
+    database.connect(MONGODB_URL)
+    amqp.connect(RABBITMQ_URL);
 
     app.listen(8080, function () {
     console.log('Server listening on port 8080!')
