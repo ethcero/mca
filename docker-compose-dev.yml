@@ -3,7 +3,7 @@ version: '3'
 services:
 
   server:
-    image: franco87/mca-cyo-server
+    build: ./server
     environment:
       - MONGODB_URL=mongodb://mongo:27017/server
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq
@@ -14,10 +14,10 @@ services:
       - rabbitmq
 
   externalservice:
-    image: franco87/mca-cyo-externalservice
+    build: ./externalservice
 
   worker:
-    image: franco87/mca-cyo-worker
+    build: ./worker
     environment:
       - MYSQL_URL=jdbc:mysql://mysql:3306/test?createDatabaseIfNotExist=true
       - RABBITMQ_SERVER=rabbitmq

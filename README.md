@@ -4,13 +4,21 @@
 
 ### Práctica 1
 
-#### Install
+#### Build
 
-`node install.js`
+Contruye las imagenes y las sube al registry de Docker
+
+`./build-and-publish.sh`
 
 #### Run
 
-`node exec.js`
+Ejecuta la aplicación con las imagenes de producción.
+`docker-compose -f docker-compose.yml up`
+
+#### Develop
+
+Contruye las imagenes en local y ejecuta la aplicación.
+`docker-compose -f docker-compose-dev.yml up`
 
 #### App data
 
