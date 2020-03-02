@@ -8,4 +8,5 @@ docker push franco87/mca-cyo-externalservice
 docker build -t franco87/mca-cyo-server ./server
 docker push franco87/mca-cyo-server
 
-#cd ./worker && mvn compile jib:build -Dimage=franco87/mca-cyo-worker
+# Worker
+cd ./worker && mvn compile jib:build -Dimage=franco87/mca-cyo-worker
