@@ -32,7 +32,7 @@ public class Worker {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    @RabbitListener(queues = "newTasks", ackMode = "AUTO")
+    @RabbitListener(queues = "newTasks", ackMode = "AUTO", containerFactory = "retryContainerFactory")
     public void received(String message) throws JsonProcessingException{
         System.out.println("Message from queue 'newTasks': "+message);
         logRepository.save(new Log("Message from queue 'newTasks': "+message));
