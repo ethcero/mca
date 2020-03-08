@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  labels:
+    app: cyo-practica2
+  namespace: default
+spec:
+  selector:
+    app: cyo-practica2
+    server: rabbitmq
+  type: ClusterIP
+  ports:
+  - port: 5672
+    protocol: TCP
+    targetPort: 5672
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  rabbitmq
+  labels:
+    app:  cyo-practica2
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: cyo-practica2
+        server: rabbitmq
+    spec:
+      containers:
+      - image: rabbitmq:3.7.23-management-alpine
+        name: rabbitmq
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort:  5672
+      restartPolicy: Always
+

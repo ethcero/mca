@@ -1,0 +1,42 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  externalservice
+  labels:
+    app: cyo-practica2
+  namespace: default
+spec:
+  selector:
+    app: cyo-practica2
+    server: externalservice
+  type:  ClusterIP
+  ports:
+  - port:  8082
+    targetPort:  8082
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: externalservice
+  namespace: default
+  labels:
+    app: cyo-practica2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cyo-practica2
+        server: externalservice
+    spec:
+      containers:
+      - name: server
+        image: franco87/mca-cyo-externalservice
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort: 8082

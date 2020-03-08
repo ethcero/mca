@@ -1,0 +1,48 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  server
+  labels:
+    app: cyo-practica2
+  namespace: default
+spec:
+  selector:
+    app: cyo-practica2
+    server: server
+  type:  LoadBalancer
+  ports:
+  - name:  http-alt
+    port:  8080
+    targetPort:  8080
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: server
+  namespace: default
+  labels:
+    app: cyo-practica2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cyo-practica2
+        server: server
+    spec:
+      containers:
+      - name: server
+        image: franco87/mca-cyo-server
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        env:
+        - name: MONGODB_URL
+          value: mongodb://mongo:27017/server
+        - name: RABBITMQ_URL
+          value: amqp://guest:guest@rabbitmq
+        ports:
+        - containerPort: 8080
