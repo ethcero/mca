@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+  server:
+    build: ./server
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/server
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+      - rabbitmq
+
+  externalservice:
+    build: ./externalservice
+
+  worker:
+    build: ./worker
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/test?createDatabaseIfNotExist=true
+      - RABBITMQ_SERVER=rabbitmq
+      - EXTERNAL_SERVICE_URL=static://externalservice:8082
+    restart: on-failure
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.7.23-management-alpine
+    ports:
+        - 5672:5672
+        - 15672:15672
+  mysql:
+    image:  mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+  mongo:
+    image:  mongo:4.2
+    ports:
+      - 27017:27017

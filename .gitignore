@@ -4,3 +4,7 @@ out/*
 */target
 node_modules
 .vscode
+package-lock.json
+.vscode
+.project
+!.devcontainer
