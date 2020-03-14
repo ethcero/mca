@@ -4,15 +4,23 @@ kind: Ingress
 metadata:
   name: server
   namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
 spec:
   rules:
-  - host: localhost
+  - host: mastercloudapps.es
     http:
       paths:
-      - path: /
+      - path: /server(/|$)(.*)
         backend:
           serviceName: server
           servicePort: 8080
+      - path: /(.*)
+        backend:
+          serviceName: server
+          servicePort: 8080
+
+
 
 ---
 
