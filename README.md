@@ -34,8 +34,6 @@ Contruye las imagenes en local y ejecuta la aplicación.
 
 En el directorio `k8s` se encuentran los archivos de especificaciones para el despliegue de la aplicación en Kubernetes. Cada fichero contiene el Service y el Deployment correspondiente a cada componente. Se puede desplegar todo con el comando `kubectl apply -f k8s`
 
-El en el directorio `k8s-ingress` se encuentra la misma práctica pero usando un Ingress en el componente `server`. El requisito es tener un ingress previamente desplegado en el cluster con permisos para leer los recursos del namespace en el que la aplicación es desplegada.
-
 ### Instalar Ingress
 
 Crea el componente ngnix-ingress y los roles necesarios.
@@ -51,3 +49,28 @@ Crea el servicio.
 #### Minikube
 
 `minikube addons enable ingress`
+
+## Enunciado
+
+El objetivo de esta práctica consiste en mejorar diversos aspectos de la aplicación
+Kubernetes implementada en la práctica 2.
+En concreto, se deberán ampliar los siguientes aspectos:
+
+* Incluir Ingress para el servidor sea accesible en la URL `http://www.mastercloudapps.es/server/`
+
+* Añadir PersistentVolumes para que las bases de datos puedan persistir sus datos en
+el host en las rutas /db/mongo y /db/mysql. Verificad que los datos se guardan
+correctamente añadiendo una web al server en la que se puedan consultar los datos
+persistidos en la Mongo y que al borrar y volver a desplegar la aplicación los datos
+siguen estando disponibles.
+
+* Configurar el usuario con el que se ejecutan los contenedores server, worker y
+externalservice para que sea diferente a root. En caso de que fuera necesario,
+adaptar las imágenes docker para que se ejecuten correctamente.
+
+* Definir las network-policies necesarias para que los pods únicamente se puedan
+comunicar con aquellos contenedores que deberían hacerlo según la topología de
+red:
+  * Server con Rabbit y Mongo.
+  * Worker con Rabbit y MySQL.
+  * Externalservice con Worker.
