@@ -39,4 +39,40 @@ spec:
             memory: "55M"
         ports:
         - containerPort: 27017
+        volumeMounts:
+        - name:  pvc-mongo-500m
+          mountPath:  /data/db
       restartPolicy: Always
+      volumes:
+      - name:  pvc-mongo-500m
+        persistentVolumeClaim:
+            claimName: pvc-mongo-500m
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-mongo-500m
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/Users/fran/db/mongo"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-mongo-500m
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi

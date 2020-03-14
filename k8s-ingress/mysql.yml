@@ -42,4 +42,40 @@ spec:
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: pass
+        volumeMounts:
+        - name:  pvc-mysql-500m
+          mountPath:  /var/lib/mysql
       restartPolicy: Always
+      volumes:
+      - name:  pvc-mysql-500m
+        persistentVolumeClaim:
+            claimName: pvc-mysql-500m
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-mysql-500m
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/Users/fran/db/mysql"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-mysql-500m
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
