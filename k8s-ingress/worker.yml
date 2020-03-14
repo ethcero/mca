@@ -12,6 +12,8 @@ spec:
         app: cyo-practica2
         server: worker
     spec:
+      securityContext:
+        runAsUser: 1001
       containers:
       - name: worker
         image: franco87/mca-cyo-worker

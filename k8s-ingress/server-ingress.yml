@@ -58,6 +58,8 @@ spec:
         app: cyo-practica2
         server: server
     spec:
+      securityContext:
+        runAsUser: 1001
       containers:
       - name: server
         image: franco87/mca-cyo-server
