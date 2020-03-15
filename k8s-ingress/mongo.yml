@@ -16,7 +16,7 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
@@ -24,6 +24,9 @@ metadata:
     app: cyo-practica2
   namespace: default
 spec:
+  selector:
+    matchLabels:
+      app: cyo-practica2
   template:
     metadata:
       labels:
@@ -61,7 +64,7 @@ spec:
   accessModes:
   - ReadWriteOnce
   hostPath:
-    path: "/Users/fran/db/mongo"
+    path: "/db/mongo"
 
 ---
 
@@ -76,3 +79,5 @@ spec:
   resources:
     requests:
       storage: 500Mi
+
+

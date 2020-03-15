@@ -16,7 +16,7 @@ spec:
 
 ---
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: externalservice
@@ -25,6 +25,9 @@ metadata:
     app: cyo-practica2
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cyo-practica2
   template:
     metadata:
       labels:
