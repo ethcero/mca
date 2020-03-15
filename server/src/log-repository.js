@@ -9,3 +9,8 @@ exports.create = async (message) => {
   }
    await db.getDB().collection("logs").insertOne(log)
 }
+
+exports.search = async (req,res) => {
+    let logs = await db.getDB().collection("logs").find({}).toArray()
+    res.send(logs)
+}

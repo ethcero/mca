@@ -18,7 +18,7 @@ socket.onopen = function (e) {
 
 socket.onmessage = function (event) {
     console.log(`[message] Data received from server: ${event.data}`)
-    processData(JSON.parse(event.data)) 
+    processData(JSON.parse(event.data))
 }
 
 socket.onclose = function (event) {
@@ -33,7 +33,7 @@ socket.onerror = function (error) {
     console.log(`[error] ${error.message}`)
 }
 
-function sendMessage() {    
+function sendMessage() {
     xhttp.open("POST", "http://"+window.location.host+"/task", true)
     xhttp.setRequestHeader("Content-type", "application/json")
     xhttp.send("{\"text\": \""+ document.getElementById("text").value + "\"}")
@@ -45,12 +45,12 @@ function getProgress() {
     xhttp.send();
 }
 
-function processData(value) {   
+function processData(value) {
     let text = ''
     if(value.progress < 100) {
-        text = `id: ${value.id}\nProgress: ${value.progress}%` 
+        text = `id: ${value.id}\nProgress: ${value.progress}%`
     } else if(value.result) {
-        text = `id: ${value.id}\nResult: ${value.result}` 
+        text = `id: ${value.id}\nResult: ${value.result}`
     }
     document.getElementById("progress").innerHTML = text
 }

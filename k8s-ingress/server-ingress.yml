@@ -5,13 +5,18 @@ metadata:
   name: server
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
   - host: mastercloudapps.es
     http:
       paths:
-      - path: /server(/|$)(.*)
+      - path: /server
+        backend:
+          serviceName: server
+          servicePort: 8080
+      - path: /server/(.*)
         backend:
           serviceName: server
           servicePort: 8080
@@ -65,7 +70,8 @@ spec:
         runAsUser: 1001
       containers:
       - name: server
-        image: franco87/mca-cyo-server
+        image: franco87/mca-cyo-server-p3
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: "20m"

@@ -43,6 +43,14 @@ app.get('/task/:id', function (req, res) {
     }
 })
 
+app.get('/log', async function (req, res) {
+    console.log('/log endpoint executed')
+    LogCollection.create('/log endpoint executed. ')
+
+    LogCollection.search(req,res)
+
+})
+
 app.ws('/notifications', function (ws, req) {
     amqp.consume((payload) => {
         console.log("Sending to WS client: "+payload)

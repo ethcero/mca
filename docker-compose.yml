@@ -3,7 +3,7 @@ version: '3'
 services:
 
   server:
-    image: franco87/mca-cyo-server
+    image: franco87/mca-cyo-server-p3
     environment:
       - MONGODB_URL=mongodb://mongo:27017/server
       - RABBITMQ_URL=amqp://guest:guest@rabbitmq
