@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {{ include "practica4.name" . }}-externalservice
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{ include "practica4.selectorLabels" . | nindent 4 }}
+    server: externalservice
+  type:  ClusterIP
+  ports:
+  - port:  8082
+    targetPort:  8082
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "practica4.name" . }}-externalservice
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{ include "practica4.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "practica4.selectorLabels" . | nindent 8 }}
+        server: externalservice
+    spec:
+      securityContext:
+        runAsUser: 1001
+      containers:
+      - name: server
+        image: franco87/mca-cyo-externalservice
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort: 8082

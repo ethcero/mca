@@ -1,0 +1,89 @@
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ include "practica4.name" . }}-server
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.domain }}
+    http:
+      paths:
+      - path: /server
+        backend:
+          serviceName: {{ include "practica4.name" . }}-server
+          servicePort: 8080
+      - path: /server/(.*)
+        backend:
+          serviceName: {{ include "practica4.name" . }}-server
+          servicePort: 8080
+      - path: /(.*)
+        backend:
+          serviceName: {{ include "practica4.name" . }}-server
+          servicePort: 8080
+
+
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {{ include "practica4.name" . }}-server
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+  namespace: default
+spec:
+  selector:
+    {{ include "practica4.labels" . | nindent 4 }}
+    server: server
+  type:  ClusterIP
+  ports:
+  - name:  http-alt
+    port:  8080
+    targetPort:  8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "practica4.name" . }}-server
+  namespace: default
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{ include "practica4.selectorLabels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{ include "practica4.selectorLabels" . | nindent 8 }}
+        server: server
+    spec:
+      securityContext:
+        runAsUser: 1001
+      containers:
+      - name: server
+        image: franco87/mca-cyo-server-p3
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        env:
+        - name: MONGODB_URL
+          value: mongodb://{{ include "practica4.name" . }}-mongo:27017/server
+        - name: RABBITMQ_URL
+          value: amqp://guest:guest@{{ include "practica4.name" . }}-rabbitmq
+        ports:
+        - containerPort: 8080
+
+
+

@@ -1,0 +1,81 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {{ include "practica4.name" . }}-mongo
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{ include "practica4.selectorLabels" . | nindent 4 }}
+    server: mongo
+  type:  ClusterIP
+  ports:
+  - port:  27017
+    targetPort:  27017
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "practica4.name" . }}-mongo
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{ include "practica4.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "practica4.selectorLabels" . | nindent 8 }}
+        server: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:4.2
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name:  pvc-mongo-500m
+          mountPath:  /data/db
+      restartPolicy: Always
+      volumes:
+      - name:  pvc-mongo-500m
+        persistentVolumeClaim:
+            claimName: {{ include "practica4.name" . }}-pvc-mongo-500m
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ include "practica4.name" . }}-pv-mongo-500m
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/db/mongo"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "practica4.name" . }}-pvc-mongo-500m
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+
+

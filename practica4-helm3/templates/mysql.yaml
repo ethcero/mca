@@ -1,0 +1,83 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {{ include "practica4.name" . }}-mysql
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{ include "practica4.selectorLabels" . | nindent 4 }}
+    server: mysql
+  type:  ClusterIP
+  ports:
+  - port:  3306
+    targetPort:  3306
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "practica4.name" . }}-mysql
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      {{ include "practica4.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "practica4.selectorLabels" . | nindent 8 }}
+        server: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: pass
+        volumeMounts:
+        - name:  pvc-mysql-500m
+          mountPath:  /var/lib/mysql
+      restartPolicy: Always
+      volumes:
+      - name:  pvc-mysql-500m
+        persistentVolumeClaim:
+            claimName: {{ include "practica4.name" . }}-pvc-mysql-500m
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ include "practica4.name" . }}-pv-mysql-500m
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: "/db/mysql"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "practica4.name" . }}-pvc-mysql-500m
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi

@@ -14,7 +14,13 @@
   * `newTasks`: schedule the works
   * `tasksProgress`: publish the progress and results
 
-## Kubernetes
+## Helm
+
+El directorio `k8s-ingress` contiene los fichero spec de la aplicación para cargarlos directamente en k8s.
+
+El chart de helm se encuentra en el directorio `practica4-helm3`. En la raiz se encuentra un fichero de configuración externo `config.yaml` para poder ser usado en la instalación del chart.
+
+`helm install practica4 -f config.yaml practica4-helm3`
 
 ## Enunciado
 

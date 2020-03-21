@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "practica4.name" . }}-worker
+  labels:
+    {{ include "practica4.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{ include "practica4.selectorLabels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{ include "practica4.labels" . | nindent 8 }}
+        server: worker
+    spec:
+      securityContext:
+        runAsUser: 1001
+      containers:
+      - name: worker
+        image: franco87/mca-cyo-worker
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        env:
+          - name: MYSQL_URL
+            value: jdbc:mysql://{{ include "practica4.name" . }}-mysql:3306/test?createDatabaseIfNotExist=true
+          - name: RABBITMQ_SERVER
+            value: {{ include "practica4.name" . }}-rabbitmq
+          - name: EXTERNAL_SERVICE_URL
+            value: static://{{ include "practica4.name" . }}-externalservice:8082
