@@ -75,3 +75,14 @@
 
   * Practica 1:
      - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
+  * Practica 2:
+     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
+  * Practica 3:
+     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
+  * Practica 4:
+     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
+
+ ## Escalabilidad y tolerancia a fallos
+
+  * Practica 1:
+     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
