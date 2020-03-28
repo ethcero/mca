@@ -90,7 +90,7 @@
 				<version>1.0.2</version>
 				<configuration>
 					<to>
-						<image>franco87/webapp-session-cluster</image>
+						<image>franco87/etf-practica1</image>
 						<tags>
 							<tag>0.0.6</tag>
 						</tags>
