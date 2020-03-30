@@ -1,88 +1,97 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
+## Escalabilidad y tolerancia a fallos
 
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+## Video
 
-## Patrones y arquitectura software
+<https://drive.google.com/open?id=1TOxaRdN0cuOdOMaFUk1uHyR4GkY8KjXp>
 
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
+## Resultados
 
-## Diseño y calidad software
+### Escenario 1
 
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+```text
+RPS: 15
+Duración: 60s
+Total peticiones: 900
+```
+Se usa un puerto directo al `Service`. Chaos-monkey se ejecuta en un pod que mata pods aleatoriamente cada 30 segundos.
+```bash
+artillery quick -d 60 -r 15 http://192.168.64.2:32517
+```
+```text
+Summary report @ 19:56:53(+0200) 2020-03-30
+  Scenarios launched:  900
+  Scenarios completed: 533
+  Requests completed:  533
+  Mean response/sec: 14.9
+  Response time (msec):
+    min: 5.2
+    max: 722.5
+    median: 37.5
+    p95: 161.1
+    p99: 496.6
+  Scenario counts:
+    0: 900 (100%)
+  Codes:
+    200: 533
+  Errors:
+    ECONNREFUSED: 367
+```
 
-## Programación Extrema
+Porcentaje fallos: ~40%
 
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
+### Escenario 2
 
-## Tecnologías de servicios de internet
+```text
+RPS: 15
+Duración: 60s
+Total peticiones: 900
+```
+Se usa el puerto 80 directo al **Gateway de Istio**. Chaos-monkey se ejecuta en un pod que mata pods aleatoriamente cada 30 segundos.
 
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
 
-## Pruebas de servicios de internet
+```bash
+artillery quick -d 60 -r 15 http://192.168.64.2
+```
 
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
+```text
+All virtual users finished
+Summary report @ 20:00:10(+0200) 2020-03-30
+  Scenarios launched:  900
+  Scenarios completed: 900
+  Requests completed:  900
+  Mean response/sec: 11.12
+  Response time (msec):
+    min: 6.2
+    max: 30838.6
+    median: 1780.7
+    p95: 28471.1
+    p99: 30316.8
+  Scenario counts:
+    0: 900 (100%)
+  Codes:
+    200: 900
+```
 
-## Persistencia y análisis de datos
+Porcentaje fallos: 0%
 
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
+## Enunciado
 
-## Arquitectura de Servicios de Internet
+El objetivo es crear una aplicación escalable y tolerante a fallos en Kubernetes. Partiendo
+de la aplicación ejem4-webapp-stateless (con 2 replicas), se deberá modificar de la
+siguiente forma:
 
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
+* Se usará Hazelcast en vez de MySQL para mantener la sesión.
+* Pruebas de caos:
+  * Escenario 1:
+    * Ejecutar chaos-pod-monkey.
+    * Ejecutar pruebas de “uso” con JMeter o con Artillery y medir el % de
+fallos.
+  * Escenarios 2:
+    * Se configurará el Gateway de Istio para aceptar peticiones.
+    * Se ofrecerá un valor por defecto al usuario en caso de que no haya ningún pod disponible del servicio (circuit-breaker).
+    * Ejecutar pruebas de “uso” con JMeter o con Artillery y medir el % de
+fallos.
 
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
+Se deberá entregar un vídeo demostrativo de ejecución de pruebas de carga con y sin istio.
