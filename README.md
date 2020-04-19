@@ -1,94 +1,27 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
-
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
-
-## Patrones y arquitectura software
-
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
-
-## Diseño y calidad software
-
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
-
-## Programación Extrema
-
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
-
-## Tecnologías de servicios de internet
-
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
-
-## Pruebas de servicios de internet
-
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-
-## Persistencia y análisis de datos
-
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-
-## Arquitectura de Servicios de Internet
-
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
-
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
-     
-
  ## Aplicaciones nativas en la nube
 
-  * Practica 1:
-     - Rama: [ann/practica1](https://github.com/franco87/mca/tree/ann/practica1)
+### Enunciado
+
+El objetivo de esta práctica consiste en implementar una aplicación derivada de un ejemplo
+implementado con el framework Eventuate.
+
+En concreto, se pide lo siguiente (para 7.5):
+
+- Añadir un nuevo microservicio a la [aplicación Orders - Consumers](https://github.com/eventuate-tram/eventuate-tram-sagas-examples-customers-and-orders).
+- Este nuevo microservicio se encargará de controlar el stock del producto que pide el
+usuario, de forma que si el stock no es suficiente, el pedido se rechazará.
+- Queda a libertad del alumno ampliar los datos del pedido para poder referenciar el
+producto y su stock.
+- Los productos tendrán como dato extra su nombre.
+- Será necesario implementar la API REST para el microservicio de productos de
+forma que se pueda consultar su stock.
+
+Opcional (para el 10):
+
+- Se deberá incluir un API Gateway basado en Spring API Gateway que permita
+obtener, con una única petición, información del pedido e información del producto
+en un pedido concreto
+- Además se incluirá en el API Gateway en enrutado de los servicios order, consumer
+y product.
