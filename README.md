@@ -1,6 +1,45 @@
 # Master Cloud Apps
 
  ## Aplicaciones nativas en la nube
+ 
+ 
+### NOTAS
+
+Para resolver la primera parte del enunciado, que añade control de stock, se crean dos nuevos módulos en el proyecto.
+
+- `product`: Contiene las APIs y backend del microservicio
+- `product-service`: Contiene el Controller SpringBoot
+
+Se añade el paso de verificar stock a la saga en el microservicio Orders. `CreateOrderSaga.java`
+
+Se amplian los tests E2E para añadir la nueva funcionalidad de Stock.
+
+El directorio `eventuate-tram-sagas-examples-customers-and-orders` contiene un repositorio GIT donde se puede ver el commit con la diferencia entre el proyecto original y la nueva funcionalidad.
+
+
+Paso para ponerlo a funcionar:
+
+1. Compilar la aplicación
+    ```
+    ./gradlew assemble
+    ```
+2. Lanza los servicios
+    
+    ```
+    export DOCKER_HOST_IP=...
+    ./gradlew mysqlComposeBuild
+    ./gradlew mysqlComposeUp
+    ```
+    
+    > You need to set DOCKER_HOST_IP before running Docker Compose. This must be an IP address or resolvable hostname. It cannot be localhost. See this guide to setting DOCKER_HOST_IP for more information.
+
+3. Lanza los tests E2E para verificar el funcionamiendo
+    
+    ```
+    ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test --info
+    ```
+
+
 
 ### Enunciado
 
