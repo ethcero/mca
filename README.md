@@ -12,11 +12,9 @@ Para resolver la primera parte del enunciado, que añade control de stock, se cr
 - `product-web-api`: Contiene los pojos de la interfaz rest
 - `product-api`: Contiene la interfaz de backend
 
-Se añade el paso de verificar stock a la saga en el microservicio Orders. `CreateOrderSaga.java`
+Se añade el paso de verificar stock a la saga en el microservicio Orders. Directorio `order-backend` `CreateOrderSaga.java`
 
-Se amplian los tests E2E para añadir la nueva funcionalidad de Stock.
-
-El directorio `eventuate-tram-sagas-examples-customers-and-orders` contiene un repositorio GIT donde se puede ver el commit con la diferencia entre el proyecto original y la nueva funcionalidad.
+Se amplian los tests E2E para añadir la nueva funcionalidad de Stock. Directorio `end-to-end-tests`
 
 
 Paso para ponerlo a funcionar:
