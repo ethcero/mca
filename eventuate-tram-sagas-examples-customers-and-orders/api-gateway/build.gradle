@@ -1,0 +1,13 @@
+dependencies {
+    compile project(":product-web-api")
+    compile project(":order-web-api")
+
+
+    compile "commons-lang:commons-lang:2.6"
+    compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    compile "org.springframework.cloud:spring-cloud-gateway:$springBootVersion"
+    compile "org.springframework.cloud:spring-cloud-starter-gateway:$springBootVersion"
+    compile "org.springframework.cloud:spring-cloud-gateway-core:$springBootVersion"
+
+}
+apply plugin: "org.springframework.boot"
