@@ -9,6 +9,8 @@ Para resolver la primera parte del enunciado, que añade control de stock, se cr
 
 - `product`: Contiene las APIs y backend del microservicio
 - `product-service`: Contiene el Controller SpringBoot
+- `product-web-api`: Contiene los pojos de la interfaz rest
+- `product-api`: Contiene la interfaz de backend
 
 Se añade el paso de verificar stock a la saga en el microservicio Orders. `CreateOrderSaga.java`
 
@@ -39,7 +41,21 @@ Paso para ponerlo a funcionar:
     ./gradlew :end-to-end-tests:cleanTest :end-to-end-tests:test --info
     ```
 
+#### API Gateway
 
+El API Gateway se encuentra en el módulo `api-gateway` y se ha implementado el endopoint `/orders/{orderId}/details` donde se devuelve los detalles del Order y el Product
+```
+{
+    "orderId": 1,
+    "orderState": "APPROVED",
+    "rejectionReason": null,
+    "productName": "lapiz"
+}
+```
+
+El gateway se despliega en el puerto 8080
+
+Se adjunta una colección de Postman para facilitar el testeado del API.
 
 ### Enunciado
 
