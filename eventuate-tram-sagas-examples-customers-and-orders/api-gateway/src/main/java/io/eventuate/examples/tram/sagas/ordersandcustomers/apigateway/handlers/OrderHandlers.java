@@ -21,20 +21,20 @@ import reactor.util.function.Tuple2;
  */
 public class OrderHandlers {
 
-    private OrderServiceProxy orderService;
+    private OrderServiceProxy orderServiceProxy;
     private ProductServiceProxy productServiceProxy;
 
-    public OrderHandlers(OrderServiceProxy orderService, ProductServiceProxy productServiceProxy) {
-        this.orderService = orderService;
+    public OrderHandlers(OrderServiceProxy orderServiceProxy, ProductServiceProxy productServiceProxy) {
+        this.orderServiceProxy = orderServiceProxy;
         this.productServiceProxy = productServiceProxy;
     }
 
     public Mono<ServerResponse> getOrderDetails(ServerRequest serverRequest) {
         String orderId = serverRequest.pathVariable("orderId");
 
-        Mono<GetOrderResponse> order = orderService.findOrderById(orderId);
+        Mono<GetOrderResponse> order = orderServiceProxy.findOrderById(orderId);
 
-        Mono<GetOrderDetailsResponse> responseDetails = Mono.first(orderService.findOrderDetailsById(orderId));
+        Mono<GetOrderDetailsResponse> responseDetails = Mono.first(orderServiceProxy.findOrderDetailsById(orderId));
 
         Mono<GetProductResponse> product = responseDetails.flatMap(o -> productServiceProxy.findProductById(o.getProductId()));
 
