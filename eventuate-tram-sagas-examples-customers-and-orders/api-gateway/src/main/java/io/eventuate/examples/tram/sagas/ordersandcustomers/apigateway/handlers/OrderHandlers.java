@@ -34,9 +34,9 @@ public class OrderHandlers {
 
         Mono<GetOrderResponse> order = orderService.findOrderById(orderId);
 
-        Mono<GetOrderDetailsResponse> orderDetails = orderService.findOrderDetailsById(orderId);
+        Mono<GetOrderDetailsResponse> responseDetails = Mono.first(orderService.findOrderDetailsById(orderId));
 
-        Mono<GetProductResponse> product = productServiceProxy.findProductById(orderId);
+        Mono<GetProductResponse> product = responseDetails.flatMap(o -> productServiceProxy.findProductById(o.getProductId()));
 
         Mono<Tuple2<GetOrderResponse, GetProductResponse>> combined = Mono.zip(order,product);
 

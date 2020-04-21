@@ -21,7 +21,7 @@ public class ProductServiceProxy {
 
         this.client =  webClientBuilder.baseUrl(ServiceDestinations.PRODUCTS_URI).build();
     }
-    public Mono<GetProductResponse> findProductById(String productId) {
+    public Mono<GetProductResponse> findProductById(Long productId) {
         Mono<ClientResponse> response =
                 client
                     .get()
