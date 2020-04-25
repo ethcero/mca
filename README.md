@@ -1,96 +1,58 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
-
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
-
-## Patrones y arquitectura software
-
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
-
-## Diseño y calidad software
-
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
-
-## Programación Extrema
-
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
-
-## Tecnologías de servicios de internet
-
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
-
-## Pruebas de servicios de internet
-
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-
-## Persistencia y análisis de datos
-
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-
-## Arquitectura de Servicios de Internet
-
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
-
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
-     
 
  ## Aplicaciones nativas en la nube
 
-  * Practica 1:
-     - Rama: [ann/practica1](https://github.com/franco87/mca/tree/ann/practica1)
-  * Practica 1:
-     - Rama: [ann/practica2](https://github.com/franco87/mca/tree/ann/practica2)
+### Enunciado
+El objetivo de esta práctica consiste en simular un proceso de transformación de un
+monolito a microservicios aplicando algunas de las técnicas vistas en clase.
+
+#### Fase 1: Implementar un monolito básico
+
+Con las siguientes funcionalidades:
+
+* El monolito gestiona pedidos
+* Un pedido se asocia a un cliente y a un único producto.
+* Cada cliente tiene asociado un crédito (que va bajando en cada pedido)
+* Cada producto tiene un stock (que va bajando en cada pedido)
+* Cuando se hace un pedido, sólo se crea de forma satisfactoria si el cliente tiene
+crédito y hay stock del pedido
+* El monolito ofrece una API REST de los 3 servicios
+* Existe un servicio de notificaciones por correo (que serán simuladas como escribir en
+el log)
+* Cada vez que se añade crédito a un usuario, se le envía una notificación.
+* Se usará una base de datos H2 en memoria para simplificar la persistencia.
+* Se escribirá una clase de test por entidad que verifique que las operaciones de la
+
+API REST pueden realizarse.
+
+#### Fase 2: Aplicar el patrón strangler fig para Pedidos
+
+Se pide extraer el servicio de gestión de pedidos usando el patrón strangler fig:
+
+* Se creará un microservicio que gestione los pedidos.
+* Usará el monolito para procesar el stock de productos y el créditos del cliente.
+* Hay que implementar un sistema básico de sagas con las siguientes características:
+  * El servicio de pedidos no escribe el pedido en su base de datos hasta que no
+ha verificado que hay crédito y hay stock. No es necesario que el pedido
+tenga diferentes estados.
+  * Si se reduce el crédito del cliente primero y luego no hay stock, se vuelve a
+aumentar el crédito del cliente (a modo de transacción de compensación)
+
+* Se usará un proxy para redirigir llamadas al monolito o al nuevo microservicio de
+clientes (por ejemplo NGINX).
+* Se verificará que los tests siguen funcionando.
+
+![img1](img1.png)
+
+#### Fase 3: Aplicar el patrón branch by abstraction para las notificaciones
+
+El sistema de notificaciones será extraído a un nuevo microservicio:
+
+* Se implementará un servicio de notificaciones.
+* Se utilizará un sistema de feature toggle para que se pueda cambiar de la
+implementación del monolito al microservicio.
+* El sistema de feature toggle puede utilizar cualquier técnica (desde la más
+rudimentaria a la más compleja)
+
+![img2](img2.png)
