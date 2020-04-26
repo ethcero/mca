@@ -4,7 +4,7 @@ package es.ethcero.ann.practica2.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.ethcero.ann.practica2.domain.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
 import es.ethcero.ann.practica2.domain.customer.Customer;
 import es.ethcero.ann.practica2.domain.order.Order;
 import es.ethcero.ann.practica2.domain.order.OrderDetails;

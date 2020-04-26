@@ -11,10 +11,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 
+import es.ethcero.ann.practica2.domain.common.Operation;
+import es.ethcero.ann.practica2.domain.product.InsufficientStockException;
 import es.ethcero.ann.practica2.web.product.CreateProductRequest;
 import es.ethcero.ann.practica2.web.product.CreateProductResponse;
 import es.ethcero.ann.practica2.web.product.GetProductResponse;
 import es.ethcero.ann.practica2.web.product.ProductController;
+import es.ethcero.ann.practica2.web.product.StockOperationRequest;
 
 /**
  * @author fran
@@ -32,12 +35,43 @@ public class ProductIntegrationTest {
         CreateProductResponse createProductResponse = productController.createProduct(
                 new CreateProductRequest("portatil",5));
 
-        assertProductState(createProductResponse.getId());
+        assertProductState(createProductResponse.getId(), 5);
     }
 
-    private void assertProductState(Long expectedProductId) {
+    @Test
+    public void shouldAddStock(){
+        CreateProductResponse createProductResponse = productController.createProduct(
+                new CreateProductRequest("portatil",5));
+
+        productController.changeStock(createProductResponse.getId(), new StockOperationRequest(Operation.ADD, 5));
+
+        assertProductState(createProductResponse.getId(), 10);
+
+    }
+
+    @Test
+    public void shouldSubtractStock(){
+        CreateProductResponse createProductResponse = productController.createProduct(
+                new CreateProductRequest("portatil",5));
+
+        productController.changeStock(createProductResponse.getId(), new StockOperationRequest(Operation.SUBTRACT, 5));
+
+        assertProductState(createProductResponse.getId(), 0);
+
+    }
+
+    @Test(expected = InsufficientStockException.class)
+    public void shouldFailWhenInsufficientStock(){
+        CreateProductResponse createProductResponse = productController.createProduct(
+                new CreateProductRequest("portatil",5));
+
+        productController.changeStock(createProductResponse.getId(), new StockOperationRequest(Operation.SUBTRACT, 15));
+    }
+
+    private void assertProductState(Long expectedProductId, int expectedStock) {
 
         ResponseEntity<GetProductResponse> getProductResponseEntity = productController.getProduct(expectedProductId);
         assertEquals(HttpStatus.OK, getProductResponseEntity.getStatusCode());
+        assertEquals(expectedStock, getProductResponseEntity.getBody().getStock());
     }
 }

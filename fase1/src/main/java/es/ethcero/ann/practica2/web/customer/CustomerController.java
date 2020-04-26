@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,9 +40,9 @@ public class CustomerController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("customers/{customerId}")
-    public ResponseEntity addCredit(@PathVariable long customerId, @RequestBody AddCreditRequest addCreditRequest) {
-        customerService.addCredit(customerId, addCreditRequest.getAmmount());
+    @PatchMapping("customers/{customerId}")
+    public ResponseEntity changeCredit(@PathVariable long customerId, @RequestBody CreditOperationRequest creditOperationRequest) {
+        customerService.changeCredit(customerId, creditOperationRequest.getOperation(), creditOperationRequest.getAmmount());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

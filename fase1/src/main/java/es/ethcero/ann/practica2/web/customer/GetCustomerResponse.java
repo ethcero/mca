@@ -1,7 +1,7 @@
 
 package es.ethcero.ann.practica2.web.customer;
 
-import es.ethcero.ann.practica2.domain.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

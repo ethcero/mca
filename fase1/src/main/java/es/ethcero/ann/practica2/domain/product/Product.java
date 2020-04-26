@@ -39,4 +39,8 @@ public class Product {
             throw new InsufficientStockException();
         }
     }
+
+    public void addStock(int quantity) {
+        stock += quantity;
+    }
 }

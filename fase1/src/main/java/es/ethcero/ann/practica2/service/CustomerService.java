@@ -4,7 +4,8 @@ package es.ethcero.ann.practica2.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.ethcero.ann.practica2.domain.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
+import es.ethcero.ann.practica2.domain.common.Operation;
 import es.ethcero.ann.practica2.domain.customer.Customer;
 import es.ethcero.ann.practica2.domain.customer.CustomerNotFoundException;
 import es.ethcero.ann.practica2.domain.customer.CustomerRepository;
@@ -30,9 +31,17 @@ public class CustomerService {
         return customer;
     }
 
-    public void addCredit(long customerId, Money ammount) {
+    public void changeCredit(long customerId, Operation operation, Money ammount) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(CustomerNotFoundException::new);
-        customer.addCredit(ammount);
+        switch (operation) {
+        case ADD:
+            customer.addCredit(ammount);
+            break;
+        case SUBTRACT:
+            customer.reserveCredit(ammount);
+            break;
+        }
+
         this.save(customer);
         notificationService.notify(customer.getName(), ammount, customer.getCredit());
     }

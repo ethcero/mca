@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import es.ethcero.ann.practica2.domain.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

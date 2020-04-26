@@ -11,8 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 
-import es.ethcero.ann.practica2.domain.Money;
-import es.ethcero.ann.practica2.web.customer.AddCreditRequest;
+import es.ethcero.ann.practica2.domain.common.Money;
+import es.ethcero.ann.practica2.domain.common.Operation;
+import es.ethcero.ann.practica2.domain.customer.InsufficientCreditException;
+import es.ethcero.ann.practica2.web.customer.CreditOperationRequest;
 import es.ethcero.ann.practica2.web.customer.CreateCustomerRequest;
 import es.ethcero.ann.practica2.web.customer.CreateCustomerResponse;
 import es.ethcero.ann.practica2.web.customer.CustomerController;
@@ -43,11 +45,36 @@ public class CustomerIntegrationTest {
         CreateCustomerResponse createCustomerResponse = customerController.createCustomer(
                 new CreateCustomerRequest("fulanico",new Money(5)));
 
-        customerController.addCredit(
+        customerController.changeCredit(
                 createCustomerResponse.getId(),
-                new AddCreditRequest(new Money(5)));
+                new CreditOperationRequest(Operation.ADD, new Money(5)));
 
         assertCustomerState(createCustomerResponse.getId(), new Money(10));
+    }
+
+    @Test
+    public void shouldSubtractCreditToCustomer(){
+
+        CreateCustomerResponse createCustomerResponse = customerController.createCustomer(
+                new CreateCustomerRequest("fulanico",new Money(5)));
+
+        customerController.changeCredit(
+                createCustomerResponse.getId(),
+                new CreditOperationRequest(Operation.SUBTRACT, new Money(5)));
+
+        assertCustomerState(createCustomerResponse.getId(), new Money(0));
+    }
+
+    @Test(expected = InsufficientCreditException.class)
+    public void shouldFailWhenSubtractAndInsufficientCredit(){
+
+        CreateCustomerResponse createCustomerResponse = customerController.createCustomer(
+                new CreateCustomerRequest("fulanico",new Money(5)));
+
+        customerController.changeCredit(
+                createCustomerResponse.getId(),
+                new CreditOperationRequest(Operation.SUBTRACT, new Money(15)));
+
     }
 
     private void assertCustomerState(Long expectedCustomerId, Money expectedCredit) {

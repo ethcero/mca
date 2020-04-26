@@ -1,5 +1,5 @@
 
-package es.ethcero.ann.practica2.domain;
+package es.ethcero.ann.practica2.domain.common;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;

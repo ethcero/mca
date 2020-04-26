@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import es.ethcero.ann.practica2.domain.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
 import es.ethcero.ann.practica2.domain.customer.InsufficientCreditException;
 import es.ethcero.ann.practica2.domain.product.InsufficientStockException;
 import es.ethcero.ann.practica2.web.customer.CreateCustomerRequest;
