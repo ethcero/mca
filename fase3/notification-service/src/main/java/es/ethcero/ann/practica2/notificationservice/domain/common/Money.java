@@ -1,15 +1,11 @@
 
-package es.ethcero.ann.practica2.domain.common;
+package es.ethcero.ann.practica2.notificationservice.domain.common;
 
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hamcrest.Matchers;
 
 import java.math.BigDecimal;
-
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +14,6 @@ import lombok.NoArgsConstructor;
 /**
  * @author fran
  */
-
-@Embeddable
-@Access(AccessType.FIELD)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

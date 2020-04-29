@@ -5,6 +5,11 @@ services:
 
   monolith:
     build: ./monolito
+    environment:
+      - EXTERNAL_NOTIFICATOR=true
+
+  notificationservice:
+    build: ./notification-service
 
   apigateway:
     build: ./api-gateway

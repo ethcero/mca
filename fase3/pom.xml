@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>fase2</artifactId>
+    <artifactId>fase3</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>monolito</module>
         <module>order-service</module>
         <module>api-gateway</module>
+        <module>notification-service</module>
     </modules>
 
 

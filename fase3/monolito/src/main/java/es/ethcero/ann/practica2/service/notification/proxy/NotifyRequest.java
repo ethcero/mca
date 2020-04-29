@@ -1,7 +1,7 @@
 
-package es.ethcero.ann.practica2.notificationservice.web;
+package es.ethcero.ann.practica2.service.notification.proxy;
 
-import es.ethcero.ann.practica2.notificationservice.domain.common.Money;
+import es.ethcero.ann.practica2.domain.common.Money;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,5 @@
 
-package es.ethcero.ann.practica2.orderservice.proxy;
+package es.ethcero.ann.practica2;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;

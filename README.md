@@ -1,7 +1,38 @@
 # Master Cloud Apps
 
 
- ## Aplicaciones nativas en la nube
+## Aplicaciones nativas en la nube
+ 
+### FASE 1
+
+La fase 1 se compone de un monolito que se ejecuta directamente con el jar o con Maven.
+
+Para levantar la fase 1 se ejecuta `mnv spring-boot:run` 
+
+Se provee una colección de Postman para poder testear el API. Esta configurado por defecto para usar el puerto 8080
+
+
+### FASE 2
+
+Se extrae order-service del monolito y se crea un API Gateway con Spring Gateway para distribuir las peticiones entre el monolito y el nuevo servicio.
+
+Para levantar la fase 2 se usa docker-compose.
+
+* Primero hay que compilar con `mvn install` en el directorio `fase2`
+* Levantar el entorno con `docker-compose up`
+
+Se puede ejecutar la colección Postman para testear los servicios.
+
+
+### FASE 3
+
+Se extrae el notification-service del monolito y se crea un feature toggle usando variables de entorno.
+
+Para levantar la fase 3 se usa docker-compose.
+
+* Primero hay que compilar con `mvn install` en el directorio `fase3`
+* Levantar el entorno con `docker-compose up`
+
 
 ### Enunciado
 El objetivo de esta práctica consiste en simular un proceso de transformación de un

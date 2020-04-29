@@ -1,11 +1,10 @@
 
-package es.ethcero.ann.practica2.orderservice.proxy;
+package es.ethcero.ann.practica2.service.notification.proxy;
 
 /**
  * @author fran
  */
 public class ServiceDestination {
 
-    public static final String PRODUCTS_URI= "http://monolith:8080";
-    public static final String CUSTOMERS_URI= "http://monolith:8080";
+    public static final String NOTIFICATOR_URI= "http://notificationservice:8080";
 }

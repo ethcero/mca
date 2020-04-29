@@ -9,6 +9,7 @@ import es.ethcero.ann.practica2.domain.common.Operation;
 import es.ethcero.ann.practica2.domain.customer.Customer;
 import es.ethcero.ann.practica2.domain.customer.CustomerNotFoundException;
 import es.ethcero.ann.practica2.domain.customer.CustomerRepository;
+import es.ethcero.ann.practica2.service.notification.NotificationService;
 
 /**
  * @author fran
@@ -19,7 +20,10 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired NotificationService notificationService;
+    @Autowired
+    NotificationService notificationService;
+
+
 
     public Customer createCustomer(String name, Money credit) {
         return customerRepository.save(new Customer(name, credit));

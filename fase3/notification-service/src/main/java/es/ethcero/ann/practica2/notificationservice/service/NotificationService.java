@@ -1,9 +1,9 @@
 
-package es.ethcero.ann.practica2.service;
+package es.ethcero.ann.practica2.notificationservice.service;
 
 import org.springframework.stereotype.Service;
 
-import es.ethcero.ann.practica2.domain.common.Money;
+import es.ethcero.ann.practica2.notificationservice.domain.common.Money;
 
 /**
  * @author fran
