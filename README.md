@@ -28,6 +28,9 @@ Se puede ejecutar la colección Postman para testear los servicios.
 
 Se extrae el notification-service del monolito y se crea un feature toggle usando variables de entorno.
 
+*Feature toggle*
+`EXTERNAL_NOTIFICATOR`: `true` usa notification-service. `false` usa el monolito
+
 Para levantar la fase 3 se usa docker-compose.
 
 * Primero hay que compilar con `mvn install` en el directorio `fase3`
