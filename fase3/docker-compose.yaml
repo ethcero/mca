@@ -1,0 +1,17 @@
+version: '3'
+services:
+  orderservice:
+    build: ./order-service
+
+  monolith:
+    build: ./monolito
+
+  apigateway:
+    build: ./api-gateway
+    ports:
+    - 8080:8080
+    depends_on:
+      - orderservice
+      - monolith
+
+
