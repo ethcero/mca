@@ -1,98 +1,35 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
+## Aplicaciones nativas en la nube
 
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+### Practica 3. Serverless
 
-## Patrones y arquitectura software
+### Enunciado
 
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
+El objetivo de esta práctica consiste en implementar una API REST con las tecnologías serverless ofrecidas por AWS. En concreto, se utilizarán las siguientes:
 
-## Diseño y calidad software
+* API Gateway
+* Lambda
+* DynamoDB
+* SAM
 
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+La aplicación deberá ofrecer la misma funcionalidad que la práctica 2 de la asignatura “Tecnologías de servicios de Internet”. En concreto, ofrecerá una API REST que permitirá gestionar un foro:
 
-## Programación Extrema
+* El foro está formado por 2 entidades:
+  * Entradas​. Cada entrada contiene los siguientes campos: Nombre del autor,
+Nickname del autor, Titulo, Texto, Lista de comentarios.
+  * Comentarios​. Cada comentario contiene los siguientes campos: Nickname
+del autor del comentario, Contenido, Fecha del comentario.
+* La aplicación ofrecerá ​7 endpoints REST​, a saber:
+  * Recuperación de todas las entradas
+  * Recuperación de una entrada
+  * Adición de una nueva entrada
+  * Borrado de una entrada existente
+  * Modificación de una entrada existente (se modificará la entrada al completo)
+  * Adición de un nuevo comentario a una entrada
+  * Borrado de un comentario existente
 
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
+Para simplificar la implementación de la versión serverless, se ofrece en el enunciado la práctica implementada con Node, Express y MongoDB. Además, también se ofrece una colección Postman para verificar que la implementación serverless es correcta funcionalmente.
 
-## Tecnologías de servicios de internet
-
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
-
-## Pruebas de servicios de internet
-
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-
-## Persistencia y análisis de datos
-
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-
-## Arquitectura de Servicios de Internet
-
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
-
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
-
-
- ## Aplicaciones nativas en la nube
-
-  * Practica 1:
-     - Rama: [ann/practica1](https://github.com/franco87/mca/tree/ann/practica1)
-  * Practica 2:
-     - Rama: [ann/practica2](https://github.com/franco87/mca/tree/ann/practica2)
-  * Practica 3:
-     - Rama: [ann/practica3](https://github.com/franco87/mca/tree/ann/practica3)
+Para el desarrollo de la práctica se puede obtener inspiración del ejemplo
+https://github.com/MasterCloudApps/3.4.Aplicaciones-nativas-de-la-nube.T2-Serverless/tree /master/sections/4-Databases
