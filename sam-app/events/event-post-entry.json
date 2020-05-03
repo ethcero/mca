@@ -1,0 +1,5 @@
+{
+    "httpMethod": "POST",
+    "body": "{\"_id\":\"id1\" ,\"name\":\"Jack Nicholson\",\"nickname\":\"Nicky\",\"title\":\"My Joker was good too\",\"content\":\"Respect for Heath Ledger and Joaquin Phoenix\",\"comments\":[]}"
+}
+

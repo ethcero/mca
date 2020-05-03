@@ -1,0 +1,184 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  sam-app
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  getAllEntriesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-all-entries.getAllEntriesHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+
+  getByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-by-id.getByIdHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{id}
+            Method: GET
+
+  putEntryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/put-entry.putEntryHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{id}
+            Method: PUT
+
+  postEntryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/post-entry.postEntryHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+
+  postCommentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/post-comment.postCommentHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{entryId}/comments/
+            Method: POST
+
+  deleteCommentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-comment.deleteCommentHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{entryId}/comments/{commentId}
+            Method: DELETE
+
+  deleteEntryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-entry.deleteEntryHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the EntriesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EntriesTable
+      Environment:
+        Variables:
+          # Make table name accessible as environment variable from function code during execution
+          ENTRIES_TABLE: !Ref EntriesTable
+          AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{entryId}
+            Method: DELETE
+
+  # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
+  EntriesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: _id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

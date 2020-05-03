@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "4a742508-c76e-4ef8-b809-d0b31ef3245e",
+		"name": "MasterCloudApps-Tema2-Practica-2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fdc7066e-b800-46d9-bac5-8748470fcfb7",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"_id\": \"id1\",\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Nicky\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix\",\n\t\"comments\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{APP_URL}}/",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91dd13b0-3016-428a-9015-8157b6f8b24f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"contain _id and nickname\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]._id).is.not.undefined;",
+							"    pm.expect(jsonData[0].nickname).is.not.undefined;",
+							"   ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{APP_URL}}/",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f2f45d7-4b8c-486b-b3b3-7eb1225b622c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\" contains _id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData._id).is.not.undefined;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "52932d3f-be88-4fdd-bf7b-9e363e9565aa",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"APP_URL\"), function (err, response) {",
+							"",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"ID\", data[0]._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{APP_URL}}/{{ID}}",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2d21ed59-00c2-4f44-9427-d190f107c73f",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"APP_URL\"), function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"ID\", data[0]._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f29fc2e-ecf0-44cf-99df-c65c34fe3811",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200,304);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"_id\": \"id1\",\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Mr. John Joseph Nicholson\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix 2\",\n\t\"comments\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{APP_URL}}/{{ID}}",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /ID/comments",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e6dd97e1-091c-40d3-b306-ae4d5d09c602",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"APP_URL\"), function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"ID\", data[0]._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a24315cc-f930-4b5d-925d-c568fb3cb774",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"_id\": \"commentId1\",\n\t\"nickname\": \"Random Internet Guy\",\n\t\"comment\": \"Here is Johnny!\",\n\t\"creationDate\": \"2019-11-26 10:15:55\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{APP_URL}}/{{ID}}/comments/",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						"{{ID}}",
+						"comments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /ID/comments/ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "85278f15-d06a-4014-b159-27bc66b52c3a",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"APP_URL\"), function (err, response) {",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"ID\", data[0]._id);",
+							"    ",
+							"     pm.environment.set(\"ID_COMMENT\", data[0].comments[0]._id);",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b4db1da-afa7-4d1a-997e-d19fbec4abb7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{APP_URL}}/{{ID}}/comments/{{ID_COMMENT}}",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						"{{ID}}",
+						"comments",
+						"{{ID_COMMENT}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "db30b9b2-3435-4087-a0ff-96b68a7bc887",
+						"exec": [
+							"pm.sendRequest(pm.environment.get(\"APP_URL\"), function (err, response) {",
+							"    ",
+							"    var data = response.json();",
+							"    console.log(data);",
+							"    pm.environment.set(\"ID\", data[0]._id);",
+							"    ",
+							"  ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e92d7400-4a30-4022-924d-14d64e74666f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Nicky\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix\",\n\t\"comments\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{APP_URL}}/{{ID}}",
+					"host": [
+						"{{APP_URL}}"
+					],
+					"path": [
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a4102b71-f372-4fae-9d8e-b7bbf8ba694a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "69bfa2a9-ecd3-489e-ac9a-d8f86634ae4c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "850e7573-5a73-4939-86ea-6865e0c7e0ff",
+			"key": "APP_URL",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
