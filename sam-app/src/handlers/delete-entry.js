@@ -14,15 +14,24 @@ exports.deleteEntryHandler = async (event) => {
     const id = event.pathParameters.entryId;
     var params = {
         TableName: tableName,
-        Key: {_id: id}
+        Key: {_id: id},
+        ConditionExpression: '#id = :id',
+        ExpressionAttributeNames: {
+            "#id":"_id"
+        },
+        ExpressionAttributeValues: {
+            ':id': id
+        },
+        ReturnValues: "ALL_OLD"
     };
 
-    const result = await docClient.delete(params).promise();
-
-    const response = {
-        statusCode: 204,
-        body: id
-    };
+    let response = {};
+    try {
+        await docClient.delete(params).promise();
+        response.statusCode = 204;
+    } catch (error) {
+        response.statusCode = 404;
+    }
 
     // All log statements are written to CloudWatch
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);

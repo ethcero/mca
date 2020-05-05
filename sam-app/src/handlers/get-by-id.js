@@ -14,13 +14,16 @@ exports.getByIdHandler = async (event) => {
     TableName : tableName,
     Key: { _id: id },
   };
-  const data = await docClient.get(params).promise();
-  const item = data.Item;
 
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify(item)
-  };
+  let response = {};
+  try {
+    const data = await docClient.get(params).promise();
+    const item = data.Item;
+    response.statusCode = 200;
+    response.body = JSON.stringify(item);
+  } catch (error) {
+    response.statusCode = 404;
+  }
 
   console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
   return response;

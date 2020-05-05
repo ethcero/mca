@@ -1,4 +1,5 @@
 const dynamodb = require('aws-sdk/clients/dynamodb');
+const uuid = require('uuid');
 
 const docClient = process.env.AWS_DYNAMODB_LOCAL ? new dynamodb.DocumentClient({
     endpoint: process.env.AWS_DYNAMODB_LOCAL
@@ -13,17 +14,20 @@ exports.postEntryHandler = async (event) => {
     }
     console.info('received:', event);
 
-    const body = JSON.parse(event.body)
+    const body = JSON.parse(event.body);
+    body._id = uuid.v1();
+    console.info(body);
     var params = {
         TableName: tableName,
-        Item: body
+        Item: body,
+        ReturnValues: "ALL_OLD"
     };
 
     const result = await docClient.put(params).promise();
 
     const response = {
         statusCode: 200,
-        body: JSON.stringify(body)
+        body: JSON.stringify(result)
     };
 
     // All log statements are written to CloudWatch

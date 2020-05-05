@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"_id\": \"id1\",\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Nicky\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix\",\n\t\"comments\": []\n}",
+					"raw": "{\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Nicky\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix\",\n\t\"comments\": []\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -187,7 +187,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"_id\": \"id1\",\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Mr. John Joseph Nicholson\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix 2\",\n\t\"comments\": []\n}",
+					"raw": "{\n\t\"name\": \"Jack Nicholson\",\n\t\"nickname\": \"Mr. John Joseph Nicholson\",\n\t\"title\": \"My Joker was good too\",\n\t\"content\": \"Respect for Heath Ledger and Joaquin Phoenix 2\",\n\t\"comments\": []\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -409,7 +409,7 @@
 	],
 	"variable": [
 		{
-			"id": "850e7573-5a73-4939-86ea-6865e0c7e0ff",
+			"id": "c9006926-0c92-4252-9faa-72afb287bc83",
 			"key": "APP_URL",
 			"value": "localhost:8080",
 			"type": "string"

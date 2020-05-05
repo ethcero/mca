@@ -16,15 +16,25 @@ exports.putEntryHandler = async (event) => {
     var params = {
         TableName: tableName,
         Key: {_id: id},
-        Item: body
+        Item: body,
+        ConditionExpression: '#id = :id',
+        ExpressionAttributeNames: {
+            "#id":"_id"
+        },
+        ExpressionAttributeValues: {
+            ':id': id
+        },
+        ReturnValues: "ALL_NEW"
     };
 
-    const result = await docClient.update(params).promise();
-
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify(body)
-    };
+    let response = {};
+    try {
+        const result = await docClient.update(params).promise();
+        response.statusCode = 200;
+        response.body = JSON.stringify(result.Attributes)
+    } catch (error) {
+        response.statusCode = 404;
+    }
 
     // All log statements are written to CloudWatch
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);

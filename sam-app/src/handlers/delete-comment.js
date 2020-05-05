@@ -26,17 +26,25 @@ exports.deleteCommentHandler = async (event) => {
     var params = {
         TableName : tableName,
         Key: { _id: id },
+        ConditionExpression: '#id = :id',
+        ExpressionAttributeNames: {
+            "#id":"_id"
+        },
         UpdateExpression: "SET comments = :comments",
         ExpressionAttributeValues: {
-            ":comments": comments
+            ":comments": comments,
+            ':id': id
         },
+        ReturnValues: "ALL_NEW"
     };
 
-    const result = await docClient.update(params).promise();
-
-    const response = {
-        statusCode: 204
-    };
+    let response = {};
+    try {
+        await docClient.update(params).promise();
+        response.statusCode = 204;
+    } catch (error) {
+        response.statusCode = 404;
+    }
 
     // All log statements are written to CloudWatch
     console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
