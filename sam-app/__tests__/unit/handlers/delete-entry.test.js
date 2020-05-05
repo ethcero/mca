@@ -21,7 +21,7 @@ describe('Test deleteEntryHandler', function () {
         const event = {
             httpMethod: 'DELETE',
             pathParameters: {
-                id: "id1"
+                entryId: "id1"
             }
         };
 

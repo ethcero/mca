@@ -9,7 +9,7 @@ exports.getByIdHandler = async (event) => {
     throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
   }
   console.info('received:', event);
-  const id = event.pathParameters.id;
+  const id = event.pathParameters.entryId;
   var params = {
     TableName : tableName,
     Key: { _id: id },

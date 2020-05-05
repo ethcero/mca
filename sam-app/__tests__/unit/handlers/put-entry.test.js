@@ -21,7 +21,7 @@ describe('Test putEntryHandler', function () {
         const event = {
             httpMethod: 'PUT',
             pathParameters: {
-                id: 'id1'
+                entryId: 'id1'
             },
             body: '{"_id": "id1","name": "name1"}'
         };

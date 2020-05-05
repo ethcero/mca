@@ -22,7 +22,7 @@ describe('Test getByIdHandler', () => {
         const event = {
             httpMethod: 'GET',
             pathParameters: {
-                id: 'id1'
+                entryId: 'id1'
             }
         }
         const result = await lambda.getByIdHandler(event);

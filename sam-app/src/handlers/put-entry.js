@@ -12,7 +12,7 @@ exports.putEntryHandler = async (event) => {
     console.info('received:', event);
 
     const body = JSON.parse(event.body)
-    const id = event.pathParameters.id;
+    const id = event.pathParameters.entryId;
     var params = {
         TableName: tableName,
         Key: {_id: id},

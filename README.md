@@ -4,6 +4,46 @@
 
 ### Practica 3. Serverless
 
+#### Despliegue en AWS
+
+```bash
+sam build
+sam deploy --guided
+```
+
+#### Cleanup
+
+To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
+
+```bash
+aws cloudformation delete-stack --stack-name sam-app
+```
+
+#### Pruebas en local
+
+AWS SAM CLI puede emular el API de la aplicación. Usamos el comando `sam local start-api` para ejecutar el API localmente en el puerto 3000.
+
+Para ejecutar correctamente la aplicación en local necesitamos una instancia de DynamoDB. El script `init_local_dynamodb.sh` levanta un docker con DynamoDB e inicializa la tabla que necesita la aplicación.
+
+Después podemos inicializar la aplicación en local usando el template `template-local.yaml`.
+
+El fichero `template-local.yaml` contiene una variable de entorno configurada en cada Function para indicar el acceso a DynamoDB en local.
+
+```bash
+AWS_DYNAMODB_LOCAL: http://host.docker.internal:8000
+```
+
+La secuencia completa sería dentro del directorio `sam-app`:
+
+```bash
+my-application$ sam build -t template-local.yaml
+my-application$ ./init_local_dynamodb.sh
+my-application$ sam local start-api -t template-local.yaml
+my-application$ curl http://localhost:3000/
+```
+
+Se puede usar la colección Postman configurando el parámetro `APP_URL=http://localhost:3000` para testear la aplicación completa.
+
 ### Enunciado
 
 El objetivo de esta práctica consiste en implementar una API REST con las tecnologías serverless ofrecidas por AWS. En concreto, se utilizarán las siguientes:
