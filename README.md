@@ -96,3 +96,8 @@
      - Rama: [ann/practica2](https://github.com/franco87/mca/tree/ann/practica2)
   * Practica 3:
      - Rama: [ann/practica3](https://github.com/franco87/mca/tree/ann/practica3)
+
+## DevOps, integración y despliegue continuo
+
+  * Practica 1:
+     - Rama: [devop/practica1](https://github.com/franco87/mca/tree/devop/practica1)
