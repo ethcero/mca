@@ -101,3 +101,8 @@
 
   * Practica 1:
      - Rama: [devop/practica1](https://github.com/franco87/mca/tree/devop/practica1)
+
+##  Repositorios y modelos de desarrollo
+
+  * Practica 1:
+     - Rama: [rmd/practica1](https://github.com/franco87/mca/tree/rmd/practica1)
