@@ -1,108 +1,38 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
+## Repositorios y modelos de desarrollo
 
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
+### Enunciado
 
-## Patrones y arquitectura software
+Se encuentra trabajando en la empresa Codes&Bricks, y al equipo se le ha encomendado el
+desarrollo de una nueva aplicación de comercio electrónico para un cliente. Para comenzar
+es necesario realizar tres funcionalidades f1, f2 y f3.
 
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
+La funcionalidad f1 deben entregarse tan pronto como sea posible, de forma que se realiza
+en primer lugar y se libera una primera versión con ella. Esta La funcionalidad f1 está
+compuesta de tres commits que implican la creación de los ficheros a, b y c (el contenido es
+indiferente). Una vez terminada se debe generar una release de la misma.
 
-## Diseño y calidad software
+Las funcionalidades f2 y f3 se desarrollan en paralelo.
 
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
+La funcionalidad f2 está compuesta de dos commits que implican la creación del fichero d
+(el contenido es indiferente) y la modificación del fichero a, donde se debe cambiar la
+primera línea añadiendo al principio “f2”.
 
-## Programación Extrema
+La funcionalidad f3 está compuesta de dos commits que implican la creación del fichero e
+(el contenido es indiferente) y la modificación del fichero a, donde se debe cambiar la
+primera línea añadiendo al final “f3”.
 
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
+Ambas funcionalidades se desarrollan en paralelo por desarrolladores diferentes (no es
+necesario simular este punto). En un momento dado, se termina f2 y se integra con el resto
+de la aplicación. Mientras se sigue desarrollando f3. se saca una release con f2.
+Inmediatamente tras la release con f2, se notifica una incidencia (bug) en producción, y se
+desarrolla un hotfix consistente en añadir el fichero f al repositorio. Este hotfix se integra
+donde corresponda y se saca una nueva release. Finalmente f3 se da por terminado y se
+integra con el resto de la aplicación, dando lugar a una nueva release.
 
-## Tecnologías de servicios de internet
+Se pide
+Desarrollar este escenario siguiendo dos modelos de desarrollo:
 
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
-
-## Pruebas de servicios de internet
-
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-
-## Persistencia y análisis de datos
-
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-
-## Arquitectura de Servicios de Internet
-
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
-
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
-
-
- ## Aplicaciones nativas en la nube
-
-  * Practica 1:
-     - Rama: [ann/practica1](https://github.com/franco87/mca/tree/ann/practica1)
-  * Practica 2:
-     - Rama: [ann/practica2](https://github.com/franco87/mca/tree/ann/practica2)
-  * Practica 3:
-     - Rama: [ann/practica3](https://github.com/franco87/mca/tree/ann/practica3)
-
-## DevOps, integración y despliegue continuo
-
-  * Practica 1:
-     - Rama: [devop/practica1](https://github.com/franco87/mca/tree/devop/practica1)
-
-##  Repositorios y modelos de desarrollo
-
-  * Practica 1:
-     - Rama: [rmd/practica1](https://github.com/franco87/mca/tree/rmd/practica1)
+- Trunk-based development
+- Git flow
