@@ -42,7 +42,7 @@ public class SeleniumTest {
 		}
 	}
 
-	@Test
+//	@Test
 	@DisplayName("Crear un post y verificar que se crea correctamente")
 	public void createPostTest() throws Exception{
 
@@ -54,7 +54,7 @@ public class SeleniumTest {
 
 		String postTitle = "Mi titulo";
 		String postContent = "Mi contenido";
-		
+
 		driver.findElement(By.name("title")).sendKeys(postTitle);
 		driver.findElement(By.name("content")).sendKeys(postContent);
 		driver.findElement(By.tagName("form")).submit();
@@ -66,7 +66,7 @@ public class SeleniumTest {
 		// COMPROBAMOS QUE EXISTE EN LA PÁGINA PRINCIPAL
 		driver.get("http://localhost:"+this.port+"/");
 		assertNotNull(findElementWithText(postTitle));
-		
+
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class SeleniumTest {
 
 		String postTitle = "Mi titulo";
 		String postContent = "Mi contenido";
-		
+
 		driver.findElement(By.name("title")).sendKeys(postTitle);
 		driver.findElement(By.name("content")).sendKeys(postContent);
 		driver.findElement(By.tagName("form")).submit();
@@ -112,7 +112,7 @@ public class SeleniumTest {
 	private WebElement findElementWithText(String text) {
         return driver.findElement(getConditionForText(text));
 	}
-	
+
 	protected By getConditionForText(String text) {
         return By.xpath(format("//*[text()='%s']", text));
     }
