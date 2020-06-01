@@ -2,6 +2,12 @@
 
 ## Repositorios y modelos de desarrollo
 
+### Repositorios
+
+[GitFlow](https://github.com/franco87/fj.franco.2019-gf)
+
+[Trunk-based development](https://github.com/franco87/fj.franco.2019-gf)
+
 ### Enunciado
 
 Se encuentra trabajando en la empresa Codes&Bricks, y al equipo se le ha encomendado el
