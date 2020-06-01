@@ -2,6 +2,10 @@
 
 ## Integración y entrega continua
 
+## Notas
+
+La práctica se realiza en un repositorio GitHub separado para poder integrarlo facilmente con otras herramientas. Aquí se matiene como un submódulo.
+
 ## Enunciado
 
 ### Configuración de un pipeline de integración continua
