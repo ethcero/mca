@@ -4,7 +4,9 @@
 
 ## Notas
 
-La práctica se realiza en un repositorio GitHub separado para poder integrarlo facilmente con otras herramientas. Aquí se matiene como un submódulo.
+La práctica se realiza en un repositorio GitHub separado para poder integrarlo facilmente con otras herramientas. En esta rama se matiene como un submódulo.
+
+https://github.com/franco87/fj.franco.2019-CI
 
 ## Enunciado
 
