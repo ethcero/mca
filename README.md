@@ -1,118 +1,25 @@
 # Master Cloud Apps
 
-## Diseño y calidad software
-
- * Practica 1:
-    - Rama: [MastermindV1](https://github.com/franco87/mca/tree/mastermindV1)
- * Practica 2:
-    - Rama: [MastermindV2](https://github.com/franco87/mca/tree/mastermindV2)
-
-## Patrones y arquitectura software
-
- * Practica 3:
-    - Rama: [MastermindV3](https://github.com/franco87/mca/tree/mastermindV3)
- * Practica 4:
-    - Rama: [MastermindV4](https://github.com/franco87/mca/tree/mastermindV4)
- * Practica 5:
-    - Rama: [MastermindV5](https://github.com/franco87/mca/tree/mastermindV5)
- * Practica 6:
-    - Rama: [MastermindV6](https://github.com/franco87/mca/tree/mastermindV6)
-
-## Diseño y calidad software
-
- * Practica 7:
-    - Rama: [CheckersTestV1](https://github.com/franco87/mca/tree/checkersTestsV1)
- * Practica 8:
-    - Rama: [draughtsV2](https://github.com/franco87/mca/tree/draughtsV2)
-
-## Programación Extrema
-
- * Practica 9:
-    - Rama: [draughtsV3-refactoring](https://github.com/franco87/mca/tree/draughtsV3-refactoring)
- * Practica 10:
-    - Rama: [draughtsV4-tdd](https://github.com/franco87/mca/tree/draughtsV4-tdd)
-
-## Tecnologías de servicios de internet
-
- * Practica 1:
-    - Rama: [tsi/practica1](https://github.com/franco87/mca/tree/tsi/practica1)
- * Practica 2:
-    - Rama: [tsi/practica2](https://github.com/franco87/mca/tree/tsi/practica2)
- * Practica 3:
-    - Rama: [tsi/practica3](https://github.com/franco87/mca/tree/tsi/practica3)
- * Practica 4:
-    - Rama: [tsi/practica4](https://github.com/franco87/mca/tree/tsi/practica4)
-
-## Pruebas de servicios de internet
-
- * Practica 1:
-    - Rama: [psi/practica1](https://github.com/franco87/mca/tree/psi/practica1)
- * Practica 2:
-    - Rama: [psi/practica2](https://github.com/franco87/mca/tree/psi/practica2)
-
-## Persistencia y análisis de datos
-
- * Practica 1:
-    - Rama: [pyad/practica1](https://github.com/franco87/mca/tree/pyad/practica1)
- * Practica 2:
-    - Rama: [pyad/practica2](https://github.com/franco87/mca/tree/pyad/practica2)
-
-## Arquitectura de Servicios de Internet
-
- * Practica 1:
-    - Rama: [pasi/practica1](https://github.com/franco87/mca/tree/pasi/practica1)
- * Practica 2:
-    - Rama: [pasi/practica2](https://github.com/franco87/mca/tree/pasi/practica2)
-
- ## Computación en la nube
-
-  * Practica 1:
-     - Rama: [celn/practica1](https://github.com/franco87/mca/tree/celn/practica1)
-  * Practica 2:
-     - Rama: [celn/practica2](https://github.com/franco87/mca/tree/celn/practica2)
-
- ## Contenedores y orquestadores
-
-  * Practica 1:
-     - Rama: [cyo/practica1](https://github.com/franco87/mca/tree/cyo/practica1)
-  * Practica 2:
-     - Rama: [cyo/practica2](https://github.com/franco87/mca/tree/cyo/practica2)
-  * Practica 3:
-     - Rama: [cyo/practica3](https://github.com/franco87/mca/tree/cyo/practica3)
-  * Practica 4:
-     - Rama: [cyo/practica4](https://github.com/franco87/mca/tree/cyo/practica4)
-
- ## Escalabilidad y tolerancia a fallos
-
-  * Practica 1:
-     - Rama: [etf/practica1](https://github.com/franco87/mca/tree/etf/practica1)
-
-
- ## Aplicaciones nativas en la nube
-
-  * Practica 1:
-     - Rama: [ann/practica1](https://github.com/franco87/mca/tree/ann/practica1)
-  * Practica 2:
-     - Rama: [ann/practica2](https://github.com/franco87/mca/tree/ann/practica2)
-  * Practica 3:
-     - Rama: [ann/practica3](https://github.com/franco87/mca/tree/ann/practica3)
-
-## DevOps, integración y despliegue continuo
-
-  * Practica 1:
-     - Rama: [devop/practica1](https://github.com/franco87/mca/tree/devop/practica1)
-
-##  Repositorios y modelos de desarrollo
-
-  * Practica 1:
-     - Rama: [rmd/practica1](https://github.com/franco87/mca/tree/rmd/practica1)
-
-##  Integración y entrega continua
-
-  * Practica 1:
-     - Rama: [iec/practica1](https://github.com/franco87/mca/tree/iec/practica1)
-
 ##  Despliegue continuo
 
-  * Practica 1:
-     - Rama: [dc/practica1](https://github.com/franco87/mca/tree/dc/practica1)
+## Enunciando
+
+###   Técnicas y herramientas para despliegue continuo
+
+### Objetivo
+
+El objetivo de la práctica es que el alumno afiance los conceptos y problemas relativos al despliegue continuo de aplicaciones.
+
+### Se pide
+
+Existen diferentes técnicas y herramientas para ayudar a actualizar aplicaciones en producción, y es difícil cubrir todas ellas. Por ejemplo, a la hora de actualizar, las técnicas son diferentes si la aplicación tiene estado o si no lo tiene. Además, hay herramientas que se focalizan en técnicas o tecnologías concretas. Por ejemplo, Nomad permite actualizar tanto aplicaciones dockerizadas como aplicaciones que se ejecutan de forma nativa, sin Docker.
+
+El objetivo de la práctica es que el alumno investigue y elija alguna de estas técnicas o tecnologías y las describa o aplique. En el primer caso, bastará con describir la técnica con referencias a las fuentes, y describiendo cómo podría aplicarse con algún ejemplo concreto. En el segundo caso, se proporcionará un ejemplo práctico que pueda aplicarse en un entorno de pruebas. Si esto no fuera posible, al menos se deberían proporcionar los recursos que supuestamente permitirían aplicar el ejemplo en un entorno estándar.
+
+Algunos ejemplos de trabajos que se pueden hacer incluyen:
+- Despliegue continuo en un pipeline de CI: extender el pipeine de CI de la asignatura
+de CI incluyendo despliegue automático de la aplicación de cada release. El despliegue puede basarse en un minikube con kubectl, o en Istio, o en cualqueir otra tecnología.
+- Actualización de aplicaciones en Kubernetes con StatefulSets. Los StatefulSets con similares a los ReplicaSets, pero asumen que la aplicación tiene estado (por ejemplo un cluster de MySQL) y aplican ciertas restricciones en la creación y eliminación de pods. Estudiar técnicas de actualización con StatefulSets y describir con algún ejemplo cómo se podría aplicar.
+- Despliegue continuo de aplicaciones con herramientas GitOps como FluxCD
+- Despliegue continuo de aplicaciones o infraestructura con Nomad, CloudFormation,
+Terraform, ...
